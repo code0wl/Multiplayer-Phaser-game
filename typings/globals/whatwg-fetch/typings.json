@@ -1,0 +1,8 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/c1353a7887ca29a5d81b148c1c1163b7ca77cd00/whatwg-fetch/index.d.ts",
+    "raw": "registry:dt/whatwg-fetch#0.0.0+20161120230953",
+    "typings": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/c1353a7887ca29a5d81b148c1c1163b7ca77cd00/whatwg-fetch/index.d.ts"
+  }
+}

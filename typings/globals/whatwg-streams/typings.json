@@ -1,0 +1,8 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/0a8e31370ee500b629718fd66d58ea02c2ff9dda/whatwg-streams/index.d.ts",
+    "raw": "registry:dt/whatwg-streams#0.0.0+20161214010628",
+    "typings": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/0a8e31370ee500b629718fd66d58ea02c2ff9dda/whatwg-streams/index.d.ts"
+  }
+}
