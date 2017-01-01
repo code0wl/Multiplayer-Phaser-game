@@ -1,5 +1,3 @@
-import {UserSearch} from './chapter-one/user-search';
-import {StopWatch} from './chapter-two/stop-watch';
+import Game from './shooter/game';
 
-// UserSearch;
-StopWatch;
+const game = new Game();
