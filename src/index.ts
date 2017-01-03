@@ -1,3 +1,3 @@
-import Game from './shooter/game';
+import { Stage } from './stage';
 
-const game = new Game();
+this.game = new Stage();
