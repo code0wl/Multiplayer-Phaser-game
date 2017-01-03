@@ -1,20 +1,23 @@
 import { Player } from './actors/player/player.class';
 
 export class Stage {
-    private canvas: HTMLCanvasElement = document.createElement('canvas');
-    public context: CanvasRenderingContext2D = this.canvas.getContext('2d');
+    private canvas: HTMLCanvasElement;
+    public ctx: CanvasRenderingContext2D;
     private playerOne: Player;
 
     constructor() {
+        this.canvas = document.createElement('canvas');
+        this.ctx = this.canvas.getContext('2d');
+        document.body.appendChild(this.canvas);
         this.loadGame();
     }
 
     loadGame() {
         this.playerOne = new Player('1', 'oscar');
-        this.render();
     }
 
-    render() {
-        document.body.appendChild(this.canvas);
+    contextAdd(element, h, w) {
+        this.ctx.drawImage(element, h, w);
     }
+
 }
