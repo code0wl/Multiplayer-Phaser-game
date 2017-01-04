@@ -4,14 +4,15 @@ import { Player } from './actors/player/player.class';
 export class Stage {
     private canvas: HTMLCanvasElement;
     public ctx: CanvasRenderingContext2D;
-    public gameLoopSubscription$: Subscription = new Subscription();
+    public gameLoop$: Subscription;
     private players: Array<Player>;
 
     constructor() {
-        this.gameLoopSubscription$ = Observable
-            .interval(1000)
-            .take(10)
+        this.gameLoop$ = Observable
+            .interval(6)
             .map(this.runGame)
+            .publish()
+            .refCount()
             .subscribe();
 
         Observable
@@ -25,25 +26,16 @@ export class Stage {
         this.canvas.height = window.innerHeight;
     }
 
-    public destroy() {
-        this.gameLoopSubscription$.unsubscribe();
-    }
-
     private createActors() {
         this.players = [new Player('1', 'Oscar')];
     }
 
     private createStage(): Promise<Object> {
         const resolver = (resolve, reject) => {
-            const background: HTMLImageElement = new Image();
             this.canvas = document.createElement('canvas');
             this.ctx = this.canvas.getContext('2d');
             this.fitToWindow();
-            background.src = '../../../../assets/background.jpg';
-            document.body.appendChild(this.canvas)
-            background.onload = () => {
-                resolve(this.ctx.drawImage(background, 0, 0, this.canvas.width, this.canvas.height));
-            }
+            resolve(document.body.appendChild(this.canvas))
         }
         return new Promise(resolver);
     }

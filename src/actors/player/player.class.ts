@@ -9,22 +9,24 @@ export class Player {
     private canvasRef: HTMLCanvasElement = document.querySelector('canvas');
     private contextRef: CanvasRenderingContext2D = this.canvasRef.getContext('2d');
     private controls: KeyBoardControl;
+    private gameSubscription$: Subscription = new Subscription();
     private positionSubscription$: Subscription = new Subscription();
     private health: number = 100;
 
     constructor(private id: string, private name: string) {
         this.controls = new KeyBoardControl();
-        this.positionSubscription$ = this.controls.bindControls().map(this.move).subscribe()
+        this.positionSubscription$ = this.controls.bindControls().map(this.move).subscribe();
         this.render();
     }
 
     private move = (coordinates) => {
-        this.ship.style.left = coordinates.x;
-        this.ship.style.top = coordinates.y;
+        this.contextRef.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        this.contextRef.drawImage(this.ship, coordinates.x, coordinates.y, 60, 150);
     }
 
     destroy() {
         this.positionSubscription$.unsubscribe();
+        this.gameSubscription$.unsubscribe();
     }
 
     render() {
@@ -34,6 +36,5 @@ export class Player {
         this.ship.onload = () => {
             this.contextRef.drawImage(this.ship, 0, 0, 60, 150);
         }
-        console.log('what am i?', Game);
     }
 }

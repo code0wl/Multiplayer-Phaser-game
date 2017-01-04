@@ -10,10 +10,10 @@ export class KeyBoardControl {
     private movePlayer(key) {
         switch (key) {
             case 87:
-                this.coordinates.y += this.speed;
+                this.coordinates.y -= this.speed;
                 break;
             case 83:
-                this.coordinates.y -= this.speed;
+                this.coordinates.y += this.speed;
                 break;
             case 65:
                 this.coordinates.x -= this.speed;
@@ -22,9 +22,7 @@ export class KeyBoardControl {
                 this.coordinates.x += this.speed;
                 break;
         };
-
         return this.coordinates;
-
     }
 
     bindControls(): Observable<any> {
