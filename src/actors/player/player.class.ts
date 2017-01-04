@@ -18,9 +18,8 @@ export class Player {
     }
 
     private move = (coordinates) => {
-        this.ship.onload = () => {
-            this.contextRef.drawImage(this.ship, coordinates.x, coordinates.y);
-        }
+        this.ship.style.left = coordinates.x;
+        this.ship.style.top = coordinates.y;
     }
 
     destroy() {
