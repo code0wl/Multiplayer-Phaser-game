@@ -9,10 +9,8 @@ export class Stage {
 
     constructor() {
         this.gameLoop$ = Observable
-            .interval(6)
+            .interval()
             .map(this.runGame)
-            .publish()
-            .refCount()
             .subscribe();
 
         Observable
