@@ -1,4 +1,4 @@
-export interface ship {
+export interface Ship {
     model: string,
     condition: string,
     speed: number,

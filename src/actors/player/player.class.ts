@@ -1,4 +1,5 @@
-import { ship } from './../ship/ship.model';
+import { Game } from './../../index';
+import { Ship } from './../ship/ship.model';
 import { Observable, Subscription } from 'rxjs';
 import { KeyBoardControl } from '../../controls/keyboard.class';
 
@@ -33,5 +34,6 @@ export class Player {
         this.ship.onload = () => {
             this.contextRef.drawImage(this.ship, 0, 0, 60, 150);
         }
+        console.log('what am i?', Game);
     }
 }
