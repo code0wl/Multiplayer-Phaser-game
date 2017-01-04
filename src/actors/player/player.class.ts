@@ -21,7 +21,8 @@ export class Player {
 
     private move = (coordinates) => {
         this.contextRef.clearRect(0, 0, window.innerWidth, window.innerHeight);
-        this.contextRef.drawImage(this.ship, coordinates.x, coordinates.y, 60, 150);
+        this.contextRef.rotate(coordinates.r);
+        this.contextRef.drawImage(this.ship, coordinates.r, coordinates.y, 60, 150);
     }
 
     destroy() {

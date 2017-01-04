@@ -4,8 +4,9 @@ import { Controls } from './keyboard.model';
 export class KeyBoardControl {
 
     private controls: Observable<any>;
-    private coordinates: { x: number, y: number } = {x: 1, y: 1} // extract to ship model
+    private coordinates: { y: number, r: number } = {y: 1, r: 1} // extract to coordinates model
     private speed: number = 20;
+    private rotateSpeed: number = 0;
 
     private movePlayer(key) {
         switch (key) {
@@ -16,10 +17,10 @@ export class KeyBoardControl {
                 this.coordinates.y += this.speed;
                 break;
             case 65:
-                this.coordinates.x -= this.speed;
+                this.coordinates.r -= this.rotateSpeed;
                 break;
             case 68:
-                this.coordinates.x += this.speed;
+                this.coordinates.r += this.rotateSpeed;
                 break;
         };
         return this.coordinates;
