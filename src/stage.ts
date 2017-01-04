@@ -5,7 +5,6 @@ export class Stage {
     private canvas: HTMLCanvasElement;
     public ctx: CanvasRenderingContext2D;
     public gameLoopSubscription$: Subscription = new Subscription();
-    private gameCreation$ = new Observable();
     private playerOne: Player;
 
     constructor() {
@@ -15,7 +14,12 @@ export class Stage {
             .map(this.runGame)
             .subscribe();
 
-        this.createStage().then(this.createActors);
+        Observable
+            .fromPromise(this.createStage())
+            .map(this.createActors)
+            .subscribe();
+
+        // this.createStage().then(this.createActors);
     }
 
     private fitToWindow() {
@@ -27,7 +31,7 @@ export class Stage {
         this.gameLoopSubscription$.unsubscribe();
     }
 
-    private createActors = () => {
+    private createActors() {
         this.playerOne = new Player('1', 'oscar');
     }
 
