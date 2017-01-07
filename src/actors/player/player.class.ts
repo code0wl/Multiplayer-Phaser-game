@@ -1,3 +1,4 @@
+import { Coordinates } from './../../controls/coordinates';
 import { Game } from './../../index';
 import { Ship } from './../ship/ship.model';
 import { Observable, Subscription } from 'rxjs';
@@ -12,6 +13,7 @@ export class Player {
     private gameSubscription$: Subscription = new Subscription();
     private positionSubscription$: Subscription = new Subscription();
     private health: number = 100;
+    public shipCoordinates: Coordinates;
 
     constructor(private id: string, private name: string) {
         this.controls = new KeyBoardControl();
@@ -19,10 +21,15 @@ export class Player {
         this.render();
     }
 
-    private move = (coordinates) => {
-        this.contextRef.clearRect(0, 0, window.innerWidth, window.innerHeight);
-        this.contextRef.rotate(coordinates.r);
-        this.contextRef.drawImage(this.ship, coordinates.r, coordinates.y, 60, 150);
+    private move = (coordinates: Coordinates) => {
+        this.contextRef.save();
+        this.contextRef.clearRect(0, 0, this.canvasRef.width, this.canvasRef.height);
+
+        this.contextRef.translate(coordinates.x + this.ship.width / 2, coordinates.y + this.ship.height / 2);
+        this.contextRef.rotate(coordinates.r * (Math.PI / 180));
+        
+        this.contextRef.drawImage(this.ship, -(this.ship.width / 2), -(this.ship.height / 2));
+        this.contextRef.restore();
     }
 
     destroy() {
@@ -35,7 +42,7 @@ export class Player {
         this.ship.src = '../../../../assets/ship1.png';
         this.controls.bindControls();
         this.ship.onload = () => {
-            this.contextRef.drawImage(this.ship, 0, 0, 60, 150);
+            this.contextRef.drawImage(this.ship, 0, 0);
         }
     }
 }

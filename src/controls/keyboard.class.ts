@@ -1,12 +1,12 @@
+import { Coordinates } from './coordinates';
 import { Observable, Subscription } from 'rxjs';
 import { Controls } from './keyboard.model';
 
 export class KeyBoardControl {
-
     private controls: Observable<any>;
-    private coordinates: { y: number, r: number } = {y: 1, r: 1} // extract to coordinates model
+    private coordinates: Coordinates = { x: 0, y: 0, r: 1 };
     private speed: number = 20;
-    private rotateSpeed: number = 0;
+    private rotateSpeed: number = 10;
 
     private movePlayer(key) {
         switch (key) {
