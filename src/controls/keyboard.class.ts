@@ -3,7 +3,8 @@ import { Observable, Subscription } from 'rxjs';
 import { Controls } from './keyboard.model';
 
 export class KeyBoardControl {
-    private controls: Observable<any>;
+    private controls: Observable<Coordinates>;
+    private fire: Observable<number>;
     private coordinates: Coordinates = { x: 0, y: 0, r: 1 };
     private speed: number = 20;
     private rotateSpeed: number = 10;
@@ -26,7 +27,14 @@ export class KeyBoardControl {
         return this.coordinates;
     }
 
-    bindControls(): Observable<any> {
+    shoot(): Observable<number> {
+        return this.fire = Observable
+            .fromEvent(document.body, 'keydown')
+            .map((event: KeyboardEvent) => event.keyCode)
+            .filter((key: number) => key === Controls.fire);
+    }
+
+    move(): Observable<Coordinates> {
         return this.controls = Observable
             .fromEvent(document.body, 'keydown')
             .map((event: KeyboardEvent) => event.keyCode)

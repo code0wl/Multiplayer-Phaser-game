@@ -1,45 +1,36 @@
-import { Subscription, Observable } from 'rxjs';
-import { Player } from './actors/player/player.class';
-
-export class Stage {
-    private canvas: HTMLCanvasElement;
-    public ctx: CanvasRenderingContext2D;
-    public gameLoop$: Subscription;
-    private players: Array<Player>;
-
+"use strict";
+const rxjs_1 = require("rxjs");
+const player_class_1 = require("./actors/player/player.class");
+class Stage {
     constructor() {
-        this.gameLoop$ = Observable
+        this.gameLoop$ = rxjs_1.Observable
             .interval()
             .map(this.runGame)
             .subscribe();
-
-        Observable
+        rxjs_1.Observable
             .fromPromise(this.createStage())
             .map(this.createActors)
             .subscribe();
     }
-
-    private fitToWindow() {
+    fitToWindow() {
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
     }
-
-    private createActors() {
-        this.players = [new Player('1', 'Oscar')];
+    createActors() {
+        this.players = [new player_class_1.Player('1', 'Oscar')];
     }
-
-    private createStage(): Promise<Object> {
+    createStage() {
         const resolver = (resolve, reject) => {
             this.canvas = document.createElement('canvas');
             this.ctx = this.canvas.getContext('2d');
             this.fitToWindow();
             resolve(document.body.appendChild(this.canvas));
-        }
+        };
         return new Promise(resolver);
     }
-
     runGame() {
         return window.requestAnimationFrame(this.runGame);
     }
-
 }
+exports.Stage = Stage;
+//# sourceMappingURL=stage.js.map

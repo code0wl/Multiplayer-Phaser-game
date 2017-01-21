@@ -1,23 +1,22 @@
 import { Coordinates } from './../../controls/coordinates';
-import { Game } from './../../index';
-import { Ship } from './../ship/ship.model';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { KeyBoardControl } from '../../controls/keyboard.class';
+import * as uuid from 'uuid';
 
 export class Player {
-    score: number;
     private ship: HTMLImageElement;
     private canvasRef: HTMLCanvasElement = document.querySelector('canvas');
     private contextRef: CanvasRenderingContext2D = this.canvasRef.getContext('2d');
     private controls: KeyBoardControl;
     private gameSubscription$: Subscription = new Subscription();
     private positionSubscription$: Subscription = new Subscription();
-    private health: number = 100;
-    public shipCoordinates: Coordinates;
 
     constructor(private id: string, private name: string) {
+        this.id = uuid();
+        this.name = name;
         this.controls = new KeyBoardControl();
-        this.positionSubscription$ = this.controls.bindControls().map(this.move).subscribe();
+        this.positionSubscription$ = this.controls.move().map(this.move).subscribe();
+        this.positionSubscription$ = this.controls.shoot().map(this.shoot).subscribe();
         this.render();
     }
 
@@ -27,9 +26,13 @@ export class Player {
 
         this.contextRef.translate(coordinates.x + this.ship.width / 2, coordinates.y + this.ship.height / 2);
         this.contextRef.rotate(coordinates.r * (Math.PI / 180));
-        
+
         this.contextRef.drawImage(this.ship, -(this.ship.width / 2), -(this.ship.height / 2));
         this.contextRef.restore();
+    };
+
+    private shoot() {
+        console.log('shooting');
     }
 
     destroy() {
@@ -40,7 +43,6 @@ export class Player {
     render() {
         this.ship = new Image();
         this.ship.src = '../../../../assets/ship1.png';
-        this.controls.bindControls();
         this.ship.onload = () => {
             this.contextRef.drawImage(this.ship, 0, 0);
         }
