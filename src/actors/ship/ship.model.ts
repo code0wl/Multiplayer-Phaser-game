@@ -3,4 +3,4 @@ export interface Ship {
     condition: string,
     speed: number,
     color: string;
-};
+}

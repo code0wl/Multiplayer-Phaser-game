@@ -10,6 +10,7 @@ class Player {
         this.contextRef = this.canvasRef.getContext('2d');
         this.gameSubscription$ = new rxjs_1.Subscription();
         this.positionSubscription$ = new rxjs_1.Subscription();
+        this.shootingSubscription$ = new rxjs_1.Subscription();
         this.move = (coordinates) => {
             this.contextRef.save();
             this.contextRef.clearRect(0, 0, this.canvasRef.width, this.canvasRef.height);
@@ -22,7 +23,7 @@ class Player {
         this.name = name;
         this.controls = new keyboard_class_1.KeyBoardControl();
         this.positionSubscription$ = this.controls.move().map(this.move).subscribe();
-        this.positionSubscription$ = this.controls.shoot().map(this.shoot).subscribe();
+        this.shootingSubscription$ = this.controls.shoot().map(this.shoot).subscribe();
         this.render();
     }
     shoot() {
@@ -31,6 +32,7 @@ class Player {
     destroy() {
         this.positionSubscription$.unsubscribe();
         this.gameSubscription$.unsubscribe();
+        this.shootingSubscription$.unsubscribe();
     }
     render() {
         this.ship = new Image();

@@ -10,13 +10,14 @@ export class Player {
     private controls: KeyBoardControl;
     private gameSubscription$: Subscription = new Subscription();
     private positionSubscription$: Subscription = new Subscription();
+    private shootingSubscription$: Subscription = new Subscription();
 
     constructor(private id: string, private name: string) {
         this.id = uuid();
         this.name = name;
         this.controls = new KeyBoardControl();
         this.positionSubscription$ = this.controls.move().map(this.move).subscribe();
-        this.positionSubscription$ = this.controls.shoot().map(this.shoot).subscribe();
+        this.shootingSubscription$ = this.controls.shoot().map(this.shoot).subscribe();
         this.render();
     }
 
@@ -38,6 +39,7 @@ export class Player {
     destroy() {
         this.positionSubscription$.unsubscribe();
         this.gameSubscription$.unsubscribe();
+        this.shootingSubscription$.unsubscribe();
     }
 
     render() {

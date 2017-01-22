@@ -1,45 +1,47 @@
-import { Subscription, Observable } from 'rxjs';
 import { Player } from './actors/player/player.class';
+import { GameLifeCycle } from './game/life-cycle';
+import { Observable } from 'rxjs';
+
+declare const Phaser;
 
 export class Stage {
-    private canvas: HTMLCanvasElement;
     public ctx: CanvasRenderingContext2D;
-    public gameLoop$: Subscription;
-    private players: Array<Player>;
+    public game: any;
+    private playerOne: any;
+    private gameLifeCycle: GameLifeCycle;
 
-    constructor() {
-        this.gameLoop$ = Observable
-            .interval()
-            .map(this.runGame)
-            .subscribe();
-
-        Observable
-            .fromPromise(this.createStage())
-            .map(this.createActors)
-            .subscribe();
+    public constructor() {
+        this.gameLifeCycle = new GameLifeCycle();
+        this.createStage()
+            .then(this.addPhysics)
+            .then(this.createActors)
     }
 
-    private fitToWindow() {
-        this.canvas.width = window.innerWidth;
-        this.canvas.height = window.innerHeight;
-    }
+    private createActors = () => {
+        console.log('create actor')
+        setTimeout(() => {
+            this.playerOne = this.game.add.sprite(this.game.width / 2, this.game.height / 2, 'player');
+            this.playerOne.anchor.setTo(0.5, 0.5);
+            this.game.physics.arcade.enable(this.playerOne);
+            this.playerOne.body.gravity.y = 1;
+        }, 1000);
+    };
 
-    private createActors() {
-        this.players = [new Player('1', 'Oscar')];
-    }
+    private addPhysics = () => {
+        console.log('create physics')
+        setTimeout(() => {
+            this.gameLifeCycle.create(this.game);
+            this.gameLifeCycle.preload(this.game);
+            this.game.physics.startSystem(Phaser.Physics.ARCADE);
+            this.game.renderer.renderSession.roundPixels = true;
+        }, 1000);
+    };
 
     private createStage(): Promise<Object> {
-        const resolver = (resolve, reject) => {
-            this.canvas = document.createElement('canvas');
-            this.ctx = this.canvas.getContext('2d');
-            this.fitToWindow();
-            resolve(document.body.appendChild(this.canvas));
-        }
-        return new Promise(resolver);
-    }
-
-    runGame() {
-        return window.requestAnimationFrame(this.runGame);
+        this.game = new Phaser.Game(window.innerWidth, window.innerHeight);
+        this.game.state.add('main', this.gameLifeCycle);
+        this.game.state.start('main');
+        return Promise.resolve(this.game);
     }
 
 }

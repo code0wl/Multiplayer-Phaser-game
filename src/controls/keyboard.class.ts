@@ -1,5 +1,5 @@
 import { Coordinates } from './coordinates';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Controls } from './keyboard.model';
 
 export class KeyBoardControl {

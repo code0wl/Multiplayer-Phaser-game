@@ -1,35 +1,35 @@
 "use strict";
-const rxjs_1 = require("rxjs");
-const player_class_1 = require("./actors/player/player.class");
+const life_cycle_1 = require("./game/life-cycle");
 class Stage {
     constructor() {
-        this.gameLoop$ = rxjs_1.Observable
-            .interval()
-            .map(this.runGame)
-            .subscribe();
-        rxjs_1.Observable
-            .fromPromise(this.createStage())
-            .map(this.createActors)
-            .subscribe();
-    }
-    fitToWindow() {
-        this.canvas.width = window.innerWidth;
-        this.canvas.height = window.innerHeight;
-    }
-    createActors() {
-        this.players = [new player_class_1.Player('1', 'Oscar')];
+        this.createActors = () => {
+            console.log('create actor');
+            setTimeout(() => {
+                this.playerOne = this.game.add.sprite(this.game.width / 2, this.game.height / 2, 'player');
+                this.playerOne.anchor.setTo(0.5, 0.5);
+                this.game.physics.arcade.enable(this.playerOne);
+                this.playerOne.body.gravity.y = 1;
+            }, 1000);
+        };
+        this.addPhysics = () => {
+            console.log('create physics');
+            setTimeout(() => {
+                this.gameLifeCycle.create(this.game);
+                this.gameLifeCycle.preload(this.game);
+                this.game.physics.startSystem(Phaser.Physics.ARCADE);
+                this.game.renderer.renderSession.roundPixels = true;
+            }, 1000);
+        };
+        this.gameLifeCycle = new life_cycle_1.GameLifeCycle();
+        this.createStage()
+            .then(this.addPhysics)
+            .then(this.createActors);
     }
     createStage() {
-        const resolver = (resolve, reject) => {
-            this.canvas = document.createElement('canvas');
-            this.ctx = this.canvas.getContext('2d');
-            this.fitToWindow();
-            resolve(document.body.appendChild(this.canvas));
-        };
-        return new Promise(resolver);
-    }
-    runGame() {
-        return window.requestAnimationFrame(this.runGame);
+        this.game = new Phaser.Game(window.innerWidth, window.innerHeight);
+        this.game.state.add('main', this.gameLifeCycle);
+        this.game.state.start('main');
+        return Promise.resolve(this.game);
     }
 }
 exports.Stage = Stage;
