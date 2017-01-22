@@ -1,3 +1,3 @@
 import { Stage } from './stage';
 
-new Stage();
+export const Game = new Stage();

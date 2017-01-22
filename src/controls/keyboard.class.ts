@@ -1,44 +1,45 @@
-import { Coordinates } from './coordinates';
 import { Observable } from 'rxjs';
 import { Controls } from './keyboard.model';
+import { Game } from '../index';
+import { ShipControl } from './ship-control.model';
 
 export class KeyBoardControl {
-    private controls: Observable<Coordinates>;
-    private fire: Observable<number>;
-    private coordinates: Coordinates = { x: 0, y: 0, r: 1 };
+    private shipControl: ShipControl = { x: 0, y: 0, r: 1, f: false};
     private speed: number = 20;
+    private cursor: any;
     private rotateSpeed: number = 10;
 
+    constructor() {
+        this.cursor = Game.gameWorld().input.keyboard.createCursorKeys();
+    }
+
     private movePlayer(key) {
+        this.shipControl.f = false;
         switch (key) {
-            case 87:
-                this.coordinates.y -= this.speed;
+            case Controls.down:
+                this.shipControl.y -= this.speed;
                 break;
-            case 83:
-                this.coordinates.y += this.speed;
+            case Controls.up:
+                this.shipControl.y += this.speed;
                 break;
-            case 65:
-                this.coordinates.r -= this.rotateSpeed;
+            case Controls.right:
+                this.shipControl.r -= this.rotateSpeed;
                 break;
-            case 68:
-                this.coordinates.r += this.rotateSpeed;
+            case Controls.left:
+                this.shipControl.r += this.rotateSpeed;
                 break;
-        };
-        return this.coordinates;
+            case Controls.fire:
+                this.shipControl.f = true;
+                break;
+        }
+        return this.shipControl;
     }
 
-    shoot(): Observable<number> {
-        return this.fire = Observable
+    public move(): Observable<ShipControl> {
+        return Observable
             .fromEvent(document.body, 'keydown')
             .map((event: KeyboardEvent) => event.keyCode)
-            .filter((key: number) => key === Controls.fire);
-    }
-
-    move(): Observable<Coordinates> {
-        return this.controls = Observable
-            .fromEvent(document.body, 'keydown')
-            .map((event: KeyboardEvent) => event.keyCode)
-            .filter((key: number) => Object.keys(Controls).includes(key.toString())) // fixtype
+            .filter((key: number) => Object.keys(Controls).includes(key.toString()))
             .map(key => this.movePlayer(key));
     }
 }

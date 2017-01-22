@@ -1,14 +1,14 @@
-export class GameLifeCycle {
-    public preload(context) {
+export const GameLifeCycle = {
+    preload(context) {
         context.load.image('player', 'assets/ship1.png');
         context.load.image('background', 'assets/background.jpg');
-    }
+    },
 
-    public create(context) {
+    create(context) {
         context.add.tileSprite(0, 0, window.innerWidth, window.innerHeight, 'background');
-    }
+    },
 
-    public update() {
-        console.log('updating')
+    update() {
+        console.log('update called')
     }
 }
