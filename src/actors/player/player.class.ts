@@ -32,7 +32,6 @@ export class Player {
 
     render() {
         this.player.anchor.setTo(0.5, 0.5);
-        Game.gameWorld().physics.arcade.enable(this.player);
         this.player.body.gravity.y = 1;
     }
 }
