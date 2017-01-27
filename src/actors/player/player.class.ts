@@ -1,15 +1,15 @@
+import { PlayerModel } from './player.model';
 import { ShipControl } from './../../controls/ship-control.model';
 import { Subscription } from 'rxjs';
 import { KeyBoardControl } from '../../controls/keyboard.class';
 import * as uuid from 'uuid';
-import * as p2 from '../../../node_modules/p2/build/p2.min.js'; // fix export 
 import { Game } from '../../index';
+import * as p2 from '../../../node_modules/p2/build/p2.min.js';
 
 export class Player {
     private controls: KeyBoardControl;
-    public player: any;
+    public player: PlayerModel;
     private positionSubscription$: Subscription = new Subscription();
-    private shootingSubscription$: Subscription = new Subscription();
 
     constructor(private id: string, private name: string) {
         this.id = uuid();
@@ -26,12 +26,14 @@ export class Player {
 
     public destroy() {
         this.positionSubscription$.unsubscribe();
-        this.shootingSubscription$.unsubscribe();
     }
 
     public render() {
-        console.log(p2);
-        console.log('p2');
-        console.log('render ship')
+        const ship = new Image();
+        ship.src = '../../../../assets/ship1.png';
+        
+        ship.onload = () => {
+            Game.gameWorld().drawImage(ship, window.innerWidth / 2 * (-1), window.innerHeight/ 2 * (-1), 100,100);
+        };
     }
 }

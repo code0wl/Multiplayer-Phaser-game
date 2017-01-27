@@ -1,6 +1,5 @@
 import { Observable } from 'rxjs';
 import { Controls } from './keyboard.model';
-import { Game } from '../index';
 import { ShipControl } from './ship-control.model';
 
 export class KeyBoardControl {

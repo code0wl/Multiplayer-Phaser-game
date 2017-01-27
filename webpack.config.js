@@ -1,6 +1,6 @@
 module.exports = {
   entry: ['whatwg-fetch', './main'],
-  output: {filename: 'bundle.min.js'},
+  output: {filename: 'bundle.js'},
   resolve: {
     extensions: ['.js', '.ts', '']
   },

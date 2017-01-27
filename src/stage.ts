@@ -1,5 +1,5 @@
-import { Observable } from 'rxjs';
 import { Player } from './actors/player/player.class';
+import { log } from 'typings/dist/support/cli';
 
 export class Stage {
     private game: HTMLCanvasElement;
@@ -7,8 +7,9 @@ export class Stage {
 
     public constructor() {
         this.gameLoop();
-        this.createStage(window.innerWidth, window.innerHeight)
-            .then(this.createActors)
+
+        this.createStage()
+            .then(this.createActors);
     }
 
     private createActors = () => {
@@ -19,16 +20,24 @@ export class Stage {
         return this.contextInstance;
     }
 
-    private createStage(width, height): Promise<Object> {
-        this.game = document.createElement('canvas');
-        this.game.width = width;
-        this.game.height = height;
-        this.game.style.backgroundImage = '../assets/background.jpg';
-        this.contextInstance = this.game.getContext('2d');
-        return Promise.resolve(document.body.appendChild(this.game));
+    private createStage(): Promise<Object> {
+        return new Promise((resolve, reject) => {
+            const background = new Image();
+            background.src = "../assets/background.jpg";
+            this.game = document.createElement('canvas');
+            this.game.width = window.innerWidth;
+            this.game.height = window.innerHeight;
+            this.contextInstance = this.game.getContext('2d');
+            background.onload = () => {
+                this.contextInstance.drawImage(background, 0, 0);
+            };
+            resolve(document.body.appendChild(this.game));
+            reject(e => console.error(e));
+        });
     }
 
     private gameLoop = () => {
+        console.log('still running')
         window.requestAnimationFrame(this.gameLoop);
     }
 
