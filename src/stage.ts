@@ -1,35 +1,35 @@
+import { Observable } from 'rxjs';
 import { Player } from './actors/player/player.class';
-import { GameLifeCycle } from './game/life-cycle';
 
 export class Stage {
     private game: HTMLCanvasElement;
-    private context: CanvasRenderingContext2D;
+    private contextInstance: CanvasRenderingContext2D;
 
     public constructor() {
         this.gameLoop();
-        this.createStage()
-            .then(this.addPhysics)
+        this.createStage(window.innerWidth, window.innerHeight)
             .then(this.createActors)
     }
 
     private createActors = () => {
-        setTimeout(() => {
-            const player = new Player('1', 'Oz');
-        }, 1000);
+        const player = new Player('1', 'Oz');
     };
 
     public gameWorld() {
-        return this.context;
+        return this.contextInstance;
     }
 
-    private createStage(): Promise<Object> {
+    private createStage(width, height): Promise<Object> {
         this.game = document.createElement('canvas');
-        return Promise.resolve(document.appendChild(this.game));
+        this.game.width = width;
+        this.game.height = height;
+        this.game.style.backgroundImage = '../assets/background.jpg';
+        this.contextInstance = this.game.getContext('2d');
+        return Promise.resolve(document.body.appendChild(this.game));
     }
 
-    public gameLoop() {
-        console.log('gameloop started');
-        requestAnimationFrame(this.gameLoop);
+    private gameLoop = () => {
+        window.requestAnimationFrame(this.gameLoop);
     }
 
 }

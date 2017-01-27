@@ -2,6 +2,7 @@ import { ShipControl } from './../../controls/ship-control.model';
 import { Subscription } from 'rxjs';
 import { KeyBoardControl } from '../../controls/keyboard.class';
 import * as uuid from 'uuid';
+import * as p2 from '../../../node_modules/p2/build/p2.min.js'; // fix export 
 import { Game } from '../../index';
 
 export class Player {
@@ -15,14 +16,12 @@ export class Player {
         this.name = name;
         this.controls = new KeyBoardControl();
         this.positionSubscription$ = this.controls.move().map(this.controlPlayer).subscribe();
-        this.player = Game.gameWorld().add.sprite(Game.gameWorld().width / 2, Game.gameWorld().height / 2, 'player');
         this.render();
     }
 
     private controlPlayer = (coordinates: ShipControl) => {
-        console.log(coordinates);
-        this.player.body.velocity.x = coordinates.x;
-        this.player.body.velocity.y = coordinates.y;
+        this.player.velocity.x = coordinates.x;
+        this.player.velocity.y = coordinates.y;
     };
 
     public destroy() {
@@ -30,8 +29,9 @@ export class Player {
         this.shootingSubscription$.unsubscribe();
     }
 
-    render() {
-        this.player.anchor.setTo(0.5, 0.5);
-        this.player.body.gravity.y = 1;
+    public render() {
+        console.log(p2);
+        console.log('p2');
+        console.log('render ship')
     }
 }

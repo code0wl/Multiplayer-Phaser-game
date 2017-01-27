@@ -1,13 +1,11 @@
 "use strict";
 const rxjs_1 = require("rxjs");
 const keyboard_model_1 = require("./keyboard.model");
-const index_1 = require("../index");
 class KeyBoardControl {
     constructor() {
         this.shipControl = { x: 0, y: 0, r: 1, f: false };
         this.speed = 20;
         this.rotateSpeed = 10;
-        this.cursor = index_1.Game.gameWorld().input.keyboard.createCursorKeys();
     }
     movePlayer(key) {
         this.shipControl.f = false;

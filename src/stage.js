@@ -1,33 +1,24 @@
 "use strict";
 const player_class_1 = require("./actors/player/player.class");
-const life_cycle_1 = require("./game/life-cycle");
 class Stage {
     constructor() {
         this.createActors = () => {
-            setTimeout(() => {
-                const player = new player_class_1.Player('1', 'Oz');
-            }, 1000);
+            const player = new player_class_1.Player('1', 'Oz');
         };
-        this.addPhysics = (game) => {
-            setTimeout(() => {
-                life_cycle_1.GameLifeCycle.create(game);
-                life_cycle_1.GameLifeCycle.preload(game);
-                game.physics.startSystem(Phaser.Physics.ARCADE);
-                game.renderer.renderSession.roundPixels = true;
-            }, 1000);
+        this.gameLoop = () => {
+            window.requestAnimationFrame(this.gameLoop);
         };
+        this.gameLoop();
         this.createStage()
-            .then(this.addPhysics)
             .then(this.createActors);
     }
     gameWorld() {
-        return this.game;
+        return this.contextInstance;
     }
     createStage() {
-        this.game = new Phaser.Game(window.innerWidth, window.innerHeight);
-        this.game.state.add('main', life_cycle_1.GameLifeCycle);
-        this.game.state.start('main');
-        return Promise.resolve(this.game);
+        this.game = document.createElement('canvas');
+        this.contextInstance = this.game.getContext('2d');
+        return Promise.resolve(document.body.appendChild(this.game));
     }
 }
 exports.Stage = Stage;

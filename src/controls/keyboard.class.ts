@@ -5,13 +5,8 @@ import { ShipControl } from './ship-control.model';
 
 export class KeyBoardControl {
     private shipControl: ShipControl = { x: 0, y: 0, r: 1, f: false};
-    private speed: number = 20;
-    private cursor: any;
+    private speed: number = 20; 
     private rotateSpeed: number = 10;
-
-    constructor() {
-        this.cursor = Game.gameWorld().input.keyboard.createCursorKeys();
-    }
 
     private movePlayer(key) {
         this.shipControl.f = false;
