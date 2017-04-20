@@ -1,44 +1,51 @@
 import { Player } from './actors/player/player.class';
-import { log } from 'typings/dist/support/cli';
+import * as p2 from '../node_modules/p2/build/p2.min.js';
 
 export class Stage {
     private game: HTMLCanvasElement;
+    private world: any;
     private contextInstance: CanvasRenderingContext2D;
 
     public constructor() {
-        this.gameLoop();
-
         this.createStage()
-            .then(this.createActors);
+            .then(this.createActors)
+            .then(this.gameLoop)
     }
 
-    private createActors = () => {
+    private createActors() {
         const player = new Player('1', 'Oz');
-    };
+    }
 
-    public gameWorld() {
+    public stageContext() {
         return this.contextInstance;
     }
 
-    private createStage(): Promise<Object> {
-        return new Promise((resolve, reject) => {
+    public gameWorld() {
+        return this.world;
+    }
+
+    private createStage() {
+        return new Promise(resolve => {
+
+            this.world = new p2.World({
+                gravity: [0, 0]
+            });
+
             const background = new Image();
             background.src = "../assets/background.jpg";
             this.game = document.createElement('canvas');
             this.game.width = window.innerWidth;
             this.game.height = window.innerHeight;
             this.contextInstance = this.game.getContext('2d');
+
             background.onload = () => {
                 this.contextInstance.drawImage(background, 0, 0);
+                resolve(document.body.appendChild(this.game));
             };
-            resolve(document.body.appendChild(this.game));
-            reject(e => console.error(e));
         });
     }
 
     private gameLoop = () => {
-        console.log('still running')
         window.requestAnimationFrame(this.gameLoop);
     }
-
 }

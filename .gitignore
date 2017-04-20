@@ -2,3 +2,6 @@ wnode_modules/
 .vscode/
 .idea/
 bundle.js
+*.log
+src/**/*.js
+.DS_Store

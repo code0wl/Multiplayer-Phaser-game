@@ -9,6 +9,7 @@ import * as p2 from '../../../node_modules/p2/build/p2.min.js';
 export class Player {
     private controls: KeyBoardControl;
     public player: PlayerModel;
+    private ship: any;
     private positionSubscription$: Subscription = new Subscription();
 
     constructor(private id: string, private name: string) {
@@ -20,20 +21,43 @@ export class Player {
     }
 
     private controlPlayer = (coordinates: ShipControl) => {
-        this.player.velocity.x = coordinates.x;
-        this.player.velocity.y = coordinates.y;
+        this.ship.body.applyForceLocal([0, 2]);
+        this.ship.body.angularVelocity = coordinates.r;
+        Game.stageContext().drawImage(this.ship.model, coordinates.x, coordinates.y);
+        Game.gameWorld().step(1 / 60);
     };
 
     public destroy() {
         this.positionSubscription$.unsubscribe();
     }
 
+    private attachPhysics() {
+        this.ship = new p2.Circle({
+            radius: 65
+        });
+
+        this.ship.body = new p2.Body({
+            mass: 1,
+            position: [0, 0],
+            angularVelocity: 1
+        });
+
+        this.ship.collisionGroup = Math.pow(2, 1);
+        Game.gameWorld().addBody(this.ship.body);
+    }
+
     public render() {
-        const ship = new Image();
-        ship.src = '../../../../assets/ship1.png';
-        
-        ship.onload = () => {
-            Game.gameWorld().drawImage(ship, window.innerWidth / 2 * (-1), window.innerHeight/ 2 * (-1), 100,100);
+        this.attachPhysics();
+        const x = this.ship.body.position[0];
+        const y = this.ship.body.position[1];
+
+        Game.stageContext().save();
+        Game.stageContext().translate(x, y);
+
+        this.ship.model = new Image();
+        this.ship.model.src = './../../../assets/ship1.png';
+        this.ship.model.onload = () => {
+            Game.stageContext().drawImage(this.ship.model, window.innerWidth / 2, window.innerHeight / 2, 65, 100);
         };
     }
 }
