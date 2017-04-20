@@ -1,22 +1,26 @@
-var webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
 
-module.exports = {
-	devtool: 'inline-sourcemap',
-	context: __dirname,
-	entry: "./main",
+const config = {
+	entry: './main',
 	output: {
-		filename: "bundle.js"
+		path: path.resolve(__dirname, 'dist'),
+		filename: './bundle.js'
+	},
+	resolve: {
+		extensions: ['.ts', '.js'] // note if using webpack 1 you'd also need a '' in the array as well
 	},
 	module: {
 		rules: [
 			{
-				test: /\.js$/,
-				exclude: /node_modules/,
+				test: /\.ts?$/,
 				loader: 'ts-loader',
-				query: {
-					presets: ['es2015']
+				options: {
+					transpileOnly: true
 				}
 			}
 		]
 	}
 };
+
+module.exports = config;
