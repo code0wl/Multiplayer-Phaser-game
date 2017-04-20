@@ -3,5 +3,5 @@ wnode_modules/
 .idea/
 bundle.js
 *.log
-src/**/*.js
+/src/*.js
 .DS_Store
