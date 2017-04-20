@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "target": "es6",
-        "module": "commonjs",
+        "module": "es2015",
         "allowJs": true,
         "sourceMap": true,
         "lib": [

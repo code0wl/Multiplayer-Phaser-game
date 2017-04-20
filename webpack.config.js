@@ -1,15 +1,22 @@
+var webpack = require('webpack');
+
 module.exports = {
-  entry: ['whatwg-fetch', './main'],
-  output: {filename: 'bundle.js'},
-  resolve: {
-    extensions: ['.js', '.ts', '']
-  },
-  module: {
-    loaders: [
-      {
-        test: /.ts$/,
-        loader: 'ts-loader'
-      }
-    ]
-  }
+	devtool: 'inline-sourcemap',
+	context: __dirname,
+	entry: "./main",
+	output: {
+		filename: "bundle.js"
+	},
+	module: {
+		rules: [
+			{
+				test: /\.js$/,
+				exclude: /node_modules/,
+				loader: 'ts-loader',
+				query: {
+					presets: ['es2015']
+				}
+			}
+		]
+	}
 };
