@@ -5,3 +5,4 @@ bundle.js
 *.log
 /src/**/*.js
 .DS_Store
+*.iml
