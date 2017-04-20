@@ -1,9 +1,9 @@
 "use strict";
-const rxjs_1 = require("rxjs");
-const keyboard_class_1 = require("../../controls/keyboard.class");
-const uuid = require("uuid");
-const index_1 = require("../../index");
-const p2 = require("../../../node_modules/p2/build/p2.min.js");
+const rxjs_1 = require('rxjs');
+const keyboard_class_1 = require('../../controls/keyboard.class');
+const uuid = require('uuid');
+const index_1 = require('../../index');
+const p2 = require('../../../node_modules/p2/build/p2.min.js');
 class Player {
     constructor(id, name) {
         this.id = id;

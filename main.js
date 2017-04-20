@@ -1,3 +1,3 @@
 "use strict";
-require("./src/index");
+require('./src/index');
 //# sourceMappingURL=main.js.map

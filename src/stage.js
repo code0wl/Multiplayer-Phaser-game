@@ -1,6 +1,6 @@
 "use strict";
-const player_class_1 = require("./actors/player/player.class");
-const p2 = require("../node_modules/p2/build/p2.min.js");
+const player_class_1 = require('./actors/player/player.class');
+const p2 = require('../node_modules/p2/build/p2.min.js');
 class Stage {
     constructor() {
         this.gameLoop = () => {

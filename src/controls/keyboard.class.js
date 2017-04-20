@@ -1,6 +1,6 @@
 "use strict";
-const rxjs_1 = require("rxjs");
-const keyboard_model_1 = require("./keyboard.model");
+const rxjs_1 = require('rxjs');
+const keyboard_model_1 = require('./keyboard.model');
 class KeyBoardControl {
     constructor() {
         this.shipControl = { x: 0, y: 0, r: 1, f: false };
