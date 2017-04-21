@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm i && webpack-dev-server --watch --inline"
+    "start": "yarn && webpack-dev-server --watch --inline"
   },
   "repository": {
     "type": "git",
