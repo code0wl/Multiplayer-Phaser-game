@@ -1,3 +1,3 @@
-import { Stage } from './stage';
+import { Game } from './game';
 
-export const Game = new Stage();
+export const game = new Game();

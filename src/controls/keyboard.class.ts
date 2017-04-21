@@ -11,10 +11,10 @@ export class KeyBoardControl {
         this.shipControl.f = false;
         switch (key) {
             case Controls.down:
-                this.shipControl.y -= this.speed;
+                this.shipControl.y += this.speed;
                 break;
             case Controls.up:
-                this.shipControl.y += this.speed;
+                this.shipControl.y -= this.speed;
                 break;
             case Controls.right:
                 this.shipControl.r -= this.rotateSpeed;
