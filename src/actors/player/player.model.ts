@@ -1,4 +1,444 @@
 export interface PlayerModel {
-    velocity: {x: number, y: number};
-    health: number;
+	velocity: {x: number, y: number};
+	health: number;
 }
+//
+//
+// var canvas, ctx, w, h, zoom,
+// 	shipSize = 0.3, spaceWidth = 16, spaceHeight = 9, hideShip = false, allowShipCollision = true,
+// 	world, shipShape, shipBody, shipReloadTime = 0.1, shipTurnSpeed = 4,
+// 	bulletBodies = [], bulletShape, bulletRadius = 0.03, bulletLifeTime = 2,
+// 	asteroidShapes = [], numAsteroidLevels = 4, asteroidRadius = 0.9, maxAsteroidSpeed = 2, asteroids = [], numAsteroidVerts = 10,
+// 	SHIP = Math.pow(2, 1),
+// 	BULLET = Math.pow(2, 2),
+// 	ASTEROID = Math.pow(2, 3),
+// 	initSpace = asteroidRadius * 2,
+// 	level = 1, lives = 3;
+//
+// var keyLeft, keyRight, keyUp, keyDown, keyShoot, lastShootTime = 0;
+//
+// init();
+// animate();
+//
+// function init() {
+//
+// 	// Init canvas
+// 	canvas = document.createElement("canvas");
+// 	canvas.width = window.innerWidth;
+// 	canvas.height = window.innerHeight;
+// 	document.body.insertBefore(canvas, document.getElementById("logo"));
+// 	w = canvas.width;
+// 	h = canvas.height;
+//
+// 	zoom = h / spaceHeight;
+// 	if (w / spaceWidth < zoom) zoom = w / spaceWidth;
+//
+// 	ctx = canvas.getContext("2d");
+// 	ctx.lineWidth = 1 / zoom; // Yields 1px lines for all zoom values
+// 	ctx.strokeStyle = ctx.fillStyle = 'white';
+//
+// 	// Init p2.js
+// 	world = new p2.World({
+// 		gravity: [0, 0],
+// 	});
+//
+// 	// Add ship physics
+// 	shipShape = new p2.Circle({radius: shipSize});
+// 	shipBody = new p2.Body({mass: 1, position: [0, 0], angularVelocity: 1});
+// 	turnOffDamping(shipBody);
+// 	shipBody.addShape(shipShape);
+// 	shipShape.collisionGroup = SHIP;
+// 	shipShape.collisionMask = ASTEROID;
+// 	world.addBody(shipBody);
+//
+// 	// Init asteroid shapes
+// 	addAsteroids();
+//
+// 	// Update the text boxes
+// 	updateLevel();
+// 	updateLives();
+// }
+//
+// // Animation loop
+// function animate() {
+// 	requestAnimationFrame(animate);
+//
+// 	updatePhysics();
+//
+// 	// Render scene
+// 	render();
+// }
+//
+// function updatePhysics() {
+//
+// 	allowShipCollision = true;
+//
+// 	// Set velocities
+// 	if (keyLeft) shipBody.angularVelocity = shipTurnSpeed;
+// 	else if (keyRight) shipBody.angularVelocity = -shipTurnSpeed;
+// 	else              shipBody.angularVelocity = 0;
+//
+// 	// Thrust: add some force in the ship direction
+// 	if (keyUp) {
+// 		shipBody.applyForceLocal([0, 2]);
+// 	}
+//
+// 	// Shoot
+// 	if (keyShoot && !hideShip && world.time - lastShootTime > shipReloadTime) {
+//
+// 		// Create a bullet body
+// 		var bulletBody = new p2.Body({mass: 0.05, position: shipBody.position});
+// 		turnOffDamping(bulletBody);
+//
+// 		// Create bullet shape
+// 		bulletShape = new p2.Circle({radius: bulletRadius});
+// 		bulletShape.collisionGroup = BULLET;
+// 		bulletShape.collisionMask = ASTEROID;
+//
+// 		bulletBody.addShape(bulletShape);
+// 		bulletBodies.push(bulletBody);
+// 		var magnitude = 2,
+// 			angle = shipBody.angle + Math.PI / 2;
+//
+// 		// Give it initial velocity in the ship direction
+// 		bulletBody.velocity[0] += magnitude * Math.cos(angle) + shipBody.velocity[0];
+// 		bulletBody.velocity[1] += magnitude * Math.sin(angle) + shipBody.velocity[1];
+// 		bulletBody.position[0] = shipShape.radius * Math.cos(angle) + shipBody.position[0];
+// 		bulletBody.position[1] = shipShape.radius * Math.sin(angle) + shipBody.position[1];
+// 		world.addBody(bulletBody);
+//
+// 		// Keep track of the last time we shot
+// 		lastShootTime = world.time;
+//
+// 		// Remember when we should delete this bullet
+// 		bulletBody.dieTime = world.time + bulletLifeTime;
+// 	}
+//
+// 	for (var i = 0; i !== bulletBodies.length; i++) {
+// 		var b = bulletBodies[i];
+//
+// 		// If the bullet is old, delete it
+// 		if (b.dieTime <= world.time) {
+// 			bulletBodies.splice(i, 1);
+// 			world.removeBody(b);
+// 			i--;
+// 			continue;
+// 		}
+//
+// 		// If any body is out of bounds, move it to the other end
+// 		warp(b);
+// 	}
+//
+// 	// Warp all asteroids
+// 	for (var i = 0; i !== asteroids.length; i++) {
+// 		var a = asteroids[i];
+// 		warp(a);
+// 	}
+//
+// 	// Warp the ship
+// 	warp(shipBody);
+//
+// 	// Move physics bodies forward in time
+// 	world.step(1 / 60);
+// }
+//
+// function turnOffDamping(body) {
+// 	body.damping = body.angularDamping = 0;
+// }
+//
+// // If the body is out of space bounds, warp it to the other side
+// function warp(body) {
+// 	var p = body.position;
+// 	if (p[0] > spaceWidth / 2) p[0] = -spaceWidth / 2;
+// 	if (p[1] > spaceHeight / 2) p[1] = -spaceHeight / 2;
+// 	if (p[0] < -spaceWidth / 2) p[0] = spaceWidth / 2;
+// 	if (p[1] < -spaceHeight / 2) p[1] = spaceHeight / 2;
+// }
+//
+// function render() {
+// 	// Clear the canvas
+// 	ctx.clearRect(0, 0, w, h);
+//
+// 	// Transform the canvas
+// 	// Note that we need to flip the y axis since Canvas pixel coordinates
+// 	// goes from top to bottom, while physics does the opposite.
+// 	ctx.save();
+// 	ctx.translate(w / 2, h / 2);  // Translate to the center
+// 	ctx.scale(zoom, -zoom);       // Zoom in and flip y axis
+//
+// 	// Draw all things
+// 	drawShip();
+// 	drawBullets();
+// 	drawBounds();
+// 	drawAsteroids();
+//
+// 	// Restore transform
+// 	ctx.restore();
+// }
+//
+// function drawShip() {
+// 	if (!hideShip) {
+// 		var x = shipBody.position[0],
+// 			y = shipBody.position[1],
+// 			radius = shipShape.radius;
+// 		ctx.save();
+// 		ctx.translate(x, y);         // Translate to the ship center
+// 		ctx.rotate(shipBody.angle); // Rotate to ship orientation
+// 		ctx.moveTo(-radius * 0.6, -radius);
+// 		ctx.lineTo(0, radius);
+// 		ctx.lineTo(radius * 0.6, -radius);
+// 		ctx.moveTo(-radius * 0.5, -radius * 0.5);
+// 		ctx.lineTo(radius * 0.5, -radius * 0.5);
+// 		ctx.stroke();
+// 		ctx.restore();
+// 	}
+// }
+//
+// function drawAsteroids() {
+// 	for (var i = 0; i !== asteroids.length; i++) {
+// 		var a = asteroids[i],
+// 			x = a.position[0],
+// 			y = a.position[1],
+// 			radius = a.shapes[0].radius;
+// 		ctx.save();
+// 		ctx.translate(x, y);  // Translate to the center
+// 		ctx.rotate(a.angle);
+//
+// 		ctx.beginPath();
+//
+// 		for (var j = 0; j !== numAsteroidVerts; j++) {
+// 			var xv = a.verts[j][0],
+// 				yv = a.verts[j][1];
+// 			if (j == 0) ctx.moveTo(xv, yv);
+// 			else     ctx.lineTo(xv, yv);
+// 		}
+//
+// 		ctx.closePath();
+// 		ctx.stroke();
+// 		ctx.restore();
+// 	}
+// }
+//
+// function drawBullets() {
+// 	for (var i = 0; i !== bulletBodies.length; i++) {
+// 		var bulletBody = bulletBodies[i],
+// 			x = bulletBody.position[0],
+// 			y = bulletBody.position[1];
+// 		ctx.beginPath();
+// 		ctx.arc(x, y, bulletRadius, 0, 2 * Math.PI);
+// 		ctx.fill();
+// 		ctx.closePath();
+// 	}
+// }
+//
+// function drawBounds() {
+// 	ctx.moveTo(-spaceWidth / 2, -spaceHeight / 2);
+// 	ctx.lineTo(-spaceWidth / 2, spaceHeight / 2);
+// 	ctx.lineTo(spaceWidth / 2, spaceHeight / 2);
+// 	ctx.lineTo(spaceWidth / 2, -spaceHeight / 2);
+// 	ctx.lineTo(-spaceWidth / 2, -spaceHeight / 2);
+// 	ctx.stroke();
+// }
+//
+// function updateLevel() {
+// 	var el = document.getElementById("level");
+// 	el.innerHTML = "Level " + level;
+// }
+//
+// function updateLives() {
+// 	var el = document.getElementById("lives");
+// 	el.innerHTML = "Lives " + lives;
+// }
+//
+// // Returns a random number between -0.5 and 0.5
+// function rand() {
+// 	return Math.random() - 0.5;
+// }
+//
+// // Adds some asteroids to the scene.
+// function addAsteroids() {
+// 	for (var i = 0; i < level; i++) {
+// 		var x = rand() * spaceWidth,
+// 			y = rand() * spaceHeight,
+// 			vx = rand() * maxAsteroidSpeed,
+// 			vy = rand() * maxAsteroidSpeed,
+// 			va = rand() * maxAsteroidSpeed;
+//
+// 		// Aviod the ship!
+// 		if (Math.abs(x - shipBody.position[0]) < initSpace) {
+// 			if (y - shipBody.position[1] > 0) {
+// 				y += initSpace;
+// 			} else {
+// 				y -= initSpace;
+// 			}
+// 		}
+//
+// 		// Create asteroid body
+// 		var asteroidBody = new p2.Body({
+// 			mass: 10,
+// 			position: [x, y],
+// 			velocity: [vx, vy],
+// 			angularVelocity: va,
+// 		});
+// 		turnOffDamping(asteroidBody);
+// 		asteroidBody.addShape(createAsteroidShape(0));
+// 		asteroids.push(asteroidBody);
+// 		world.addBody(asteroidBody);
+// 		asteroidBody.level = 1;
+// 		addAsteroidVerts(asteroidBody);
+// 	}
+// }
+//
+// function createAsteroidShape(level) {
+// 	var shape = new p2.Circle({radius: asteroidRadius * (numAsteroidLevels - level) / numAsteroidLevels});
+// 	shape.collisionGroup = ASTEROID;
+// 	shape.collisionMask = BULLET | SHIP;
+// 	return shape;
+// }
+//
+// // Adds random .verts to an asteroid body
+// function addAsteroidVerts(asteroidBody) {
+// 	asteroidBody.verts = [];
+// 	var radius = asteroidBody.shapes[0].radius;
+// 	for (var j = 0; j !== numAsteroidVerts; j++) {
+// 		var angle = j * 2 * Math.PI / numAsteroidVerts,
+// 			xv = radius * Math.cos(angle) + rand() * radius * 0.4,
+// 			yv = radius * Math.sin(angle) + rand() * radius * 0.4;
+// 		asteroidBody.verts.push([xv, yv]);
+// 	}
+// }
+//
+// // Catch key down events
+// window.onkeydown = function (evt) {
+// 	handleKey(evt.keyCode, true);
+// }
+//
+// // Catch key up events
+// window.onkeyup = function (evt) {
+// 	handleKey(evt.keyCode, false);
+// }
+//
+// // Handle key up or down
+// function handleKey(code, isDown) {
+// 	switch (code) {
+// 		case 32:
+// 			keyShoot = isDown;
+// 			break;
+// 		case 37:
+// 			keyLeft = isDown;
+// 			break;
+// 		case 38:
+// 			keyUp = isDown;
+// 			document.getElementById("instructions").classList.add("hidden");
+// 			break;
+// 		case 39:
+// 			keyRight = isDown;
+// 			break;
+// 		case 40:
+// 			keyDown = isDown;
+// 			break;
+// 	}
+// }
+//
+// // Catch impacts in the world
+// // Todo: check if several bullets hit the same asteroid in the same time step
+// world.on("impact", function (evt) {
+// 	var bodyA = evt.bodyA,
+// 		bodyB = evt.bodyB;
+//
+// 	if (!hideShip && allowShipCollision && (bodyA.id == shipBody.id || bodyB.id == shipBody.id)) {
+// 		// Ship collided with something
+// 		allowShipCollision = false;
+//
+// 		var s = bodyA.shapes[0].collisionGroup == SHIP ? bodyA : bodyB,
+// 			otherBody = bodyB == s ? bodyA : bodyB;
+// 		if (otherBody.shapes[0].collisionGroup == ASTEROID) {
+// 			lives--;
+// 			updateLives();
+//
+// 			// Remove the ship body for a while
+// 			world.removeBody(shipBody);
+// 			hideShip = true;
+//
+// 			if (lives > 0) {
+// 				var interval = setInterval(function () {
+// 					// Check if the ship position is free from asteroids
+// 					var free = true;
+// 					for (var i = 0; i < asteroids.length; i++) {
+// 						var a = asteroids[i];
+// 						if (Math.pow(a.position[0] - shipBody.position[0], 2) + Math.pow(a.position[1] - shipBody.position[1], 2) < initSpace) {
+// 							free = false;
+// 						}
+// 					}
+// 					if (free) {
+// 						// Add ship again
+// 						shipBody.force[0] =
+// 							shipBody.force[1] =
+// 								shipBody.velocity[0] =
+// 									shipBody.velocity[1] =
+// 										shipBody.angularVelocity =
+// 											shipBody.angle = 0;
+// 						hideShip = false;
+// 						world.addBody(shipBody);
+// 						clearInterval(interval);
+// 					}
+// 				}, 100);
+// 			} else {
+// 				document.getElementById('gameover').classList.remove('hidden');
+// 			}
+// 		}
+//
+// 	} else if (bodyA.shapes[0].collisionGroup == BULLET || bodyB.shapes[0].collisionGroup == BULLET) {
+// 		// Bullet collided with something
+// 		var bulletBody = bodyA.shapes[0].collisionGroup == BULLET ? bodyA : bodyB,
+// 			otherBody = bodyB == bulletBody ? bodyA : bodyB;
+//
+// 		if (otherBody.shapes[0].collisionGroup == ASTEROID) {
+// 			explode(otherBody, bulletBody);
+// 		}
+// 	}
+// });
+//
+// function explode(asteroidBody, bulletBody) {
+// 	var aidx = asteroids.indexOf(asteroidBody);
+// 	var idx = bulletBodies.indexOf(bulletBody);
+// 	if (aidx != -1 && idx != -1) {
+// 		// Remove asteroid
+// 		world.removeBody(asteroidBody);
+// 		asteroids.splice(aidx, 1);
+//
+// 		// Remove bullet
+// 		world.removeBody(bulletBody);
+//
+// 		bulletBodies.splice(idx, 1);
+//
+// 		// Add new sub-asteroids
+// 		var x = asteroidBody.position[0],
+// 			y = asteroidBody.position[1];
+// 		if (asteroidBody.level < 4) {
+// 			var angleDisturb = Math.PI / 2 * Math.random();
+// 			for (var i = 0; i < 4; i++) {
+// 				var angle = Math.PI / 2 * i + angleDisturb;
+// 				var shape = createAsteroidShape(asteroidBody.level);
+// 				var r = asteroidBody.shapes[0].radius - shape.radius;
+// 				var subAsteroidBody = new p2.Body({
+// 					mass: 10,
+// 					position: [x + r * Math.cos(angle), y + r * Math.sin(angle)],
+// 					velocity: [rand(), rand()],
+// 				});
+// 				turnOffDamping(subAsteroidBody);
+// 				subAsteroidBody.addShape(shape);
+// 				subAsteroidBody.level = asteroidBody.level + 1;
+// 				world.addBody(subAsteroidBody);
+// 				addAsteroidVerts(subAsteroidBody);
+// 				asteroids.push(subAsteroidBody);
+// 			}
+// 		}
+// 	}
+//
+// 	if (asteroids.length == 0) {
+// 		level++;
+// 		updateLevel();
+// 		addAsteroids();
+// 	}
+// }

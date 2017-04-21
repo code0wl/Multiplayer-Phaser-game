@@ -1,12 +1,15 @@
 {
-    "compilerOptions": {
-        "target": "es6",
-        "module": "es2015",
-        "allowJs": true,
-        "sourceMap": true,
-        "lib": [
-            "dom",
-            "es7"
-        ]
-    }
+  "compilerOptions": {
+    "target": "es6",
+    "module": "es2015",
+    "allowJs": true,
+    "sourceMap": true,
+    "lib": [
+      "dom",
+      "es7"
+    ],
+    "exclude": [
+      "./node_modules"
+    ]
+  }
 }

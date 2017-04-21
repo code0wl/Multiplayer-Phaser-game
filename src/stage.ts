@@ -1,10 +1,9 @@
-import { Player } from './actors/player/player.class';
-import * as p2 from '../node_modules/p2/build/p2.min.js';
-import {Enemy} from "./actors/enemy/enemy.model";
+import {Player} from "./actors/player/player.class";
+import * as p2 from "../node_modules/p2/build/p2.min.js";
 
 export class Stage {
     private game: HTMLCanvasElement;
-    private world: any;
+    private space: any;
     private contextInstance: CanvasRenderingContext2D;
 
     public constructor() {
@@ -14,8 +13,8 @@ export class Stage {
     }
 
     private createActors() {
-        const player = new Player('1', 'Oz');
-        const enemy = new Enemy();
+        const player = new Player('Oz');
+        console.log(player);
     }
 
     public stageContext() {
@@ -23,15 +22,17 @@ export class Stage {
     }
 
     public gameWorld() {
-        return this.world;
+        return this.space;
     }
 
     private createStage() {
         return new Promise(resolve => {
 
-            this.world = new p2.World({
+            this.space = new p2.World({
                 gravity: [0, 0]
             });
+
+            console.log(this.space)
 
             const background = new Image();
             background.src = "../assets/background.jpg";

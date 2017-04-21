@@ -1,19 +1,19 @@
-import { PlayerModel } from './player.model';
-import { ShipControl } from './../../controls/ship-control.model';
-import { Subscription } from 'rxjs';
-import { KeyBoardControl } from '../../controls/keyboard.class';
-import * as uuid from 'uuid';
-import { Game } from '../../index';
-import * as p2 from '../../../node_modules/p2/build/p2.min.js';
+import {PlayerModel} from "./player.model";
+import {ShipControl} from "./../../controls/ship-control.model";
+import {Subscription} from "rxjs";
+import {KeyBoardControl} from "../../controls/keyboard.class";
+import {Game} from "../../index";
+import * as p2 from "../../../node_modules/p2/build/p2.min.js";
 
 export class Player {
     private controls: KeyBoardControl;
     public player: PlayerModel;
     private ship: any;
+    private coordinates = {x: window.innerWidth / 2, y: window.innerHeight / 2};
+    private size: number = 100;
     private positionSubscription$: Subscription = new Subscription();
 
-    constructor(private id: string, private name: string) {
-        this.id = uuid();
+    constructor(private name: string) {
         this.name = name;
         this.controls = new KeyBoardControl();
         this.positionSubscription$ = this.controls.move().map(this.controlPlayer).subscribe();
@@ -23,7 +23,7 @@ export class Player {
     private controlPlayer = (coordinates: ShipControl) => {
         this.ship.body.applyForceLocal([0, 2]);
         this.ship.body.angularVelocity = coordinates.r;
-        Game.stageContext().drawImage(this.ship.model, coordinates.x, coordinates.y);
+        Game.stageContext().drawImage(this.ship.model, this.coordinates.x + coordinates.x, this.coordinates.y + coordinates.y, 65 , this.size);
         Game.gameWorld().step(1 / 60);
     };
 
@@ -57,7 +57,7 @@ export class Player {
         this.ship.model = new Image();
         this.ship.model.src = './../../../assets/ship1.png';
         this.ship.model.onload = () => {
-            Game.stageContext().drawImage(this.ship.model, window.innerWidth / 2, window.innerHeight / 2, 65, 100);
+            Game.stageContext().drawImage(this.ship.model, this.coordinates.x, this.coordinates.y, 65, this.size);
         };
     }
 }
