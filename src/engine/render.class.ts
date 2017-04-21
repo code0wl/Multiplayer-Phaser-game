@@ -21,10 +21,11 @@ export class Render extends Game {
 
     private create(): void {
         super.gameProperties(this.game);
+        super.loadActors(this.game);
     }
 
     private update() {
-        console.log('updating');
+        super.shipMovement(this.game);
     }
 
 }
