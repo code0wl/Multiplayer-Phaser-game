@@ -1,10 +1,12 @@
+import {Game} from "../game";
 declare const Phaser: any;
 
-export class Render {
+export class Render extends Game {
 
     private game: any;
 
     constructor() {
+        super();
         this.game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.AUTO, '', {
             preload: this.preload,
             create: this.create,
@@ -12,20 +14,16 @@ export class Render {
         });
     }
 
-    private preload = () => {
+    private preload(): void {
         this.game.load.image('space', 'assets/background.jpg');
     };
 
-    private create = () => {
-        this.loadAssets();
+    private create(): void {
+        super.loadAssets(this.game);
     };
 
-    private update = () => {
+    private update() {
         console.log('updating');
     };
-
-    private loadAssets() {
-        this.game.add.sprite(0, 0, 'space');
-    }
 
 }

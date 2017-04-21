@@ -10,4 +10,8 @@ export class Game {
         const player = new Player('Oz');
     }
 
+    protected loadAssets(game) {
+        game.add.sprite(0, 0, 'space');
+    }
+
 }
