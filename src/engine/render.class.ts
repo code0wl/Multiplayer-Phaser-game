@@ -16,14 +16,15 @@ export class Render extends Game {
 
     private preload(): void {
         this.game.load.image('space', 'assets/background.jpg');
-    };
+        this.game.load.spritesheet('spaceship-one', 'assets/ship1.png');
+    }
 
     private create(): void {
-        super.loadAssets(this.game);
-    };
+        super.gameProperties(this.game);
+    }
 
     private update() {
         console.log('updating');
-    };
+    }
 
 }
