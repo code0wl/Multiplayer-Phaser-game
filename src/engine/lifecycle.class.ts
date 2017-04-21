@@ -12,4 +12,4 @@ export class LifeCycle {
         console.log('updating');
     }
 
-};
+}

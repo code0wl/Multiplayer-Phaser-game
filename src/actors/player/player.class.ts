@@ -20,8 +20,7 @@ export class Player {
     }
 
     private controlPlayer = (coordinates: ShipControl) => {
-        // this.gameContext.clearRect(0, 0, window.innerWidth, window.innerHeight);
-        // this.gameContext.drawImage(this.ship.model, this.coordinates.x + coordinates.x, this.coordinates.y + coordinates.y, this.shipHeight, this.shipWidth);
+        console.log(coordinates);
     };
 
     public destroy() {
