@@ -1,19 +1,31 @@
-import {LifeCycle} from "./lifecycle.class";
 declare const Phaser: any;
 
-export class Render extends LifeCycle {
+export class Render {
 
     private game: any;
 
     constructor() {
-        super();
+        this.game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.AUTO, '', {
+            preload: this.preload,
+            create: this.create,
+            update: this.update
+        });
     }
 
-    public createStage(): Promise<boolean> {
-        return new Promise(resolve => {
-            this.game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.AUTO, '', {preload: super.preload, create: super.create, update: super.update});
-            resolve(this.game);
-        });
+    private preload = () => {
+        this.game.load.image('space', 'assets/background.jpg');
+    };
+
+    private create = () => {
+        this.loadAssets();
+    };
+
+    private update = () => {
+        console.log('updating');
+    };
+
+    private loadAssets() {
+        this.game.add.sprite(0, 0, 'space');
     }
 
 }
