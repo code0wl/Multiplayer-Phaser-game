@@ -32,8 +32,6 @@ export class Stage {
                 gravity: [0, 0]
             });
 
-            console.log(this.space)
-
             const background = new Image();
             background.src = "../assets/background.jpg";
             this.game = document.createElement('canvas');
@@ -49,6 +47,8 @@ export class Stage {
     }
 
     private gameLoop = () => {
+        const fixedTimeStep = 1 / 60;
+        this.space.step(fixedTimeStep);
         window.requestAnimationFrame(this.gameLoop);
     }
 }

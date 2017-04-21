@@ -21,10 +21,10 @@ export class Player {
     }
 
     private controlPlayer = (coordinates: ShipControl) => {
+        console.log(coordinates);
         this.ship.body.applyForceLocal([0, 2]);
         this.ship.body.angularVelocity = coordinates.r;
-        Game.stageContext().drawImage(this.ship.model, this.coordinates.x + coordinates.x, this.coordinates.y + coordinates.y, 65 , this.size);
-        Game.gameWorld().step(1 / 60);
+        // Game.stageContext().drawImage(this.ship.model, this.coordinates.x + coordinates.x, this.coordinates.y + coordinates.y, 65 , this.size);
     };
 
     public destroy() {
