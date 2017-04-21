@@ -2198,12 +2198,6 @@ osenv@0, osenv@^0.1.4:
     os-homedir "^1.0.0"
     os-tmpdir "^1.0.0"
 
-p2@^0.7.1:
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/p2/-/p2-0.7.1.tgz#25f2474d9bc3a6d3140a1da26a67c9e118ac9543"
-  dependencies:
-    poly-decomp "0.1.1"
-
 package-json@^4.0.0:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/package-json/-/package-json-4.0.1.tgz#8869a0401253661c4c4ca3da6c2121ed555f5eed"
@@ -2304,6 +2298,10 @@ performance-now@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-0.2.0.tgz#33ef30c5c77d4ea21c5a53869d91b56d8f2555e5"
 
+phaser@^2.6.2:
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/phaser/-/phaser-2.6.2.tgz#eb39121725a2149c49f46b5d144318c22bc09249"
+
 pify@^2.0.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/pify/-/pify-2.3.0.tgz#ed141a6ac043a849ea588498e7dca8b15330e90c"
@@ -2317,10 +2315,6 @@ pinkie-promise@^2.0.0:
 pinkie@^2.0.0:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/pinkie/-/pinkie-2.0.4.tgz#72556b80cfa0d48a974e80e77248e80ed4f7f870"
-
-poly-decomp@0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/poly-decomp/-/poly-decomp-0.1.1.tgz#9f68c4fa558663791c9ba4c2df7283f3096c23c9"
 
 popsicle-proxy-agent@^3.0.0:
   version "3.0.0"

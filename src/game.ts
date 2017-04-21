@@ -1,20 +1,19 @@
 import {Player} from "./actors/player/player.class";
-import {Draw} from "./engine/draw/draw.class";
+import {Render} from "./engine/render.class";
 
 export class Game {
 
-    private space: any;
-    private draw: Draw;
+    private render: Render;
 
     public constructor() {
-        this.draw = new Draw();
-        this.draw.createStage()
+        this.render = new Render();
+        this.render.createStage()
             .then(() => this.createActors())
             .then(() => this.gameLoop())
     }
 
     private createActors() {
-        const player = new Player('Oz', this.draw.context);
+        const player = new Player('Oz');
     }
 
     private gameLoop = () => {

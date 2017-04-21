@@ -12,7 +12,7 @@ export class Player {
     private shipHeight: number = 65;
     private positionSubscription$: Subscription = new Subscription();
 
-    constructor(private name: string, private gameContext: CanvasRenderingContext2D) {
+    constructor(private name: string) {
         this.name = name;
         this.controls = new KeyBoardControl();
         this.positionSubscription$ = this.controls.move().map(this.controlPlayer).subscribe();
@@ -20,8 +20,8 @@ export class Player {
     }
 
     private controlPlayer = (coordinates: ShipControl) => {
-        this.gameContext.clearRect(0, 0, window.innerWidth, window.innerHeight);
-        this.gameContext.drawImage(this.ship.model, this.coordinates.x + coordinates.x, this.coordinates.y + coordinates.y, this.shipHeight, this.shipWidth);
+        // this.gameContext.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        // this.gameContext.drawImage(this.ship.model, this.coordinates.x + coordinates.x, this.coordinates.y + coordinates.y, this.shipHeight, this.shipWidth);
     };
 
     public destroy() {
@@ -32,7 +32,7 @@ export class Player {
         this.ship.model = new Image();
         this.ship.model.src = './../../../assets/ship1.png';
         this.ship.model.onload = () => {
-            this.gameContext.drawImage(this.ship.model, this.coordinates.x, this.coordinates.y, this.shipHeight, this.shipWidth);
+            // this.gameContext.drawImage(this.ship.model, this.coordinates.x, this.coordinates.y, this.shipHeight, this.shipWidth);
         };
     }
 }
