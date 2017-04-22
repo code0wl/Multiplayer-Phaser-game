@@ -5,25 +5,26 @@ export class Game {
     private player: any;
     private cursors: any;
 
-    protected loadActors(game): void {
-        // The player and its settings
-        this.player = game.add.sprite(32, 100, 'spaceship-one');
+    protected loadActors(gameInstance): void {
+        // move to ship creation class
+        this.player = gameInstance.add.sprite(135, 80, 'spaceship-one');
+        gameInstance.physics.arcade.enable(this.player);
 
-        game.physics.arcade.enable(this.player);
+        this.player.animations.add('accelerating', [1,2], 50, false);
 
         this.player.body.bounce.y = 0;
         this.player.body.gravity.y = 0;
-        this.player.anchor.set(0.5);
-        this.player.body.drag.set(100);
-        this.player.rotation = 180;
+        this.player.anchor.setTo(0.5, 0.5);
+
+        this.player.body.drag.set(80);
         this.player.body.maxVelocity.set(200);
         this.player.body.collideWorldBounds = true;
     }
 
-    protected shipMovement(game) {
-
+    protected shipMovement(arcade) {
         if (this.cursors.up.isDown) {
-            game.physics.arcade.accelerationFromRotation(this.player.rotation, 200, this.player.body.acceleration);
+            arcade.accelerationFromRotation(this.player.rotation, 200, this.player.body.acceleration);
+            this.player.animations.play('accelerating');
         } else {
             this.player.body.acceleration.set(0);
         }
@@ -42,6 +43,7 @@ export class Game {
     protected gameProperties(game): void {
         this.cursors = game.input.keyboard.createCursorKeys();
         game.add.sprite(0, 0, 'space');
+        game.time.desiredFps = 60;
         game.renderer.clearBeforeRender = false;
         game.renderer.roundPixels = true;
         game.physics.startSystem(Phaser.Physics.ARCADE);
