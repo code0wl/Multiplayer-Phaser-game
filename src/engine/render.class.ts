@@ -17,13 +17,12 @@ export class Render extends Game {
     private preload(): void {
         this.game.load.crossOrigin = 'anonymous';
         this.game.load.image('space', 'assets/background.jpg');
-        this.game.load.spritesheet('spaceship-one', 'assets/ship1-sprite.png', 135, 80);
+        this.game.load.spritesheet('spaceship-one', 'assets/ship1-sprite-small.png', 83, 49);
     }
 
     private create(): void {
         super.gameProperties(this.game);
         super.loadActors(this.game);
-
     }
 
     private update() {

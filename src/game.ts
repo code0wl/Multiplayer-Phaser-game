@@ -1,42 +1,33 @@
+import {Participant} from "./actors/participant/participant.class";
 declare const Phaser: any;
 
 export class Game {
 
-    private player: any;
     private cursors: any;
+    private playerOne: Participant;
 
     protected loadActors(gameInstance): void {
         // move to ship creation class
-        this.player = gameInstance.add.sprite(135, 80, 'spaceship-one');
-        gameInstance.physics.arcade.enable(this.player);
-
-        this.player.animations.add('accelerating', [1,2], 50, false);
-
-        this.player.body.bounce.y = 0;
-        this.player.body.gravity.y = 0;
-        this.player.anchor.setTo(0.5, 0.5);
-
-        this.player.body.drag.set(80);
-        this.player.body.maxVelocity.set(200);
-        this.player.body.collideWorldBounds = true;
+        this.playerOne = new Participant(gameInstance);
     }
 
     protected shipMovement(arcade) {
         if (this.cursors.up.isDown) {
-            arcade.accelerationFromRotation(this.player.rotation, 200, this.player.body.acceleration);
-            this.player.animations.play('accelerating');
+            arcade.accelerationFromRotation(this.playerOne.player.rotation, 200, this.playerOne.player.body.acceleration);
+            this.playerOne.player.animations.play('accelerating');
         } else {
-            this.player.body.acceleration.set(0);
+            console.log(this.playerOne);
+            this.playerOne.player.body.acceleration.set(0);
         }
 
         if (this.cursors.left.isDown) {
-            this.player.body.angularVelocity = -300;
+            this.playerOne.player.body.angularVelocity = -300;
         }
 
         else if (this.cursors.right.isDown) {
-            this.player.body.angularVelocity = 300;
+            this.playerOne.player.body.angularVelocity = 300;
         } else {
-            this.player.body.angularVelocity = 0;
+            this.playerOne.player.body.angularVelocity = 0;
         }
     }
 
