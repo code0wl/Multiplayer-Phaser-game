@@ -1,5 +1,6 @@
-import {Participant} from "./actors/participant/participant.class";
-import {optionOne, optionTwo} from "./actors/participant/temp-ship-options";
+import {Participant} from "../actors/participant/participant.class";
+import {optionOne} from "../actors/participant/temp-ship-options";
+
 declare const Phaser: any;
 
 export class Game {
@@ -12,7 +13,7 @@ export class Game {
     }
 
     protected playerUpdate() {
-        this.playerOne.movementStream$();
+        this.playerOne.movementStream();
     }
 
     protected gameProperties(game): void {
