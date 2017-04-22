@@ -9,10 +9,9 @@ export class Game {
 
     protected loadActors(gameInstance): void {
         this.playerOne = new Participant(optionOne, gameInstance);
-        this.playerTwo = new Participant(optionTwo, gameInstance);
     }
 
-    protected playerUpdate(arcade) {
+    protected playerUpdate() {
         this.playerOne.movementStream$();
     }
 

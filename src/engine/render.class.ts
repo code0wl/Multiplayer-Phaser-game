@@ -1,5 +1,5 @@
 import {Game} from "../game";
-import {LifeCycle} from "./LifeCycle";
+import {LifeCycle} from "./lifecycle";
 declare const Phaser: any;
 
 export class Render extends Game implements LifeCycle {
@@ -18,6 +18,7 @@ export class Render extends Game implements LifeCycle {
     preload(): void {
         this.game.load.crossOrigin = 'anonymous';
         this.game.load.image('space', 'assets/background.jpg');
+        this.game.load.spritesheet('projectile', 'assets/laser-sprite.png', 50, 30);
         this.game.load.spritesheet('spaceship-one', 'assets/ship1-sprite-small.png', 83, 49);
     }
 
@@ -26,8 +27,8 @@ export class Render extends Game implements LifeCycle {
         super.loadActors(this.game);
     }
 
-    update() {
-        super.playerUpdate(this.game.physics.arcade);
+    update(): void {
+        super.playerUpdate();
     }
 
 }
