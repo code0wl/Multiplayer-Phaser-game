@@ -3,7 +3,7 @@ import {PlayerModel} from "./participant.model";
 
 declare const Phaser: any;
 
-export class Participant {
+export class Player {
     public player: any;
     private weapon: any;
     private controls: KeyBoardControl;
@@ -14,22 +14,23 @@ export class Participant {
     }
 
     public createPlayer(gameInstance, shipOptions) {
-        this.player = gameInstance.add.sprite(83, 49, 'spaceship-one');
+        this.player = gameInstance.add.sprite(50, 50, 'shooter-sprite');
         gameInstance.physics.arcade.enable(this.player);
 
-        this.player.animations.add('accelerating', [1, 2], 50, false);
         this.player.name = shipOptions.name;
         this.player.body.bounce.y = 0;
         this.player.body.gravity.y = 0;
         this.player.anchor.setTo(0.5, 0.5);
 
+        this.player.animations.add('accelerating', [1, 0], 50, false);
         this.player.body.drag.set(80);
         this.player.body.maxVelocity.set(100);
         this.player.body.collideWorldBounds = true;
+        this.addWeapon(gameInstance);
     }
 
     public addWeapon(game, type?): void {
-        this.weapon = game.add.weapon(100, 'projectile');
+        this.weapon = game.add.weapon(-1, 'laser');
         this.weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
         this.weapon.bulletSpeed = 200;
         this.weapon.fireRate = 1000;
