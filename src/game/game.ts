@@ -1,7 +1,6 @@
 import {Player} from "../actors/player/player.class";
 import {optionOne} from "../actors/player/temp-ship-options";
 import {PickUp} from "./pick-up.class";
-import {game} from "../index";
 
 declare const Phaser: any;
 

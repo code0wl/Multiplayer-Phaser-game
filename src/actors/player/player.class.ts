@@ -1,16 +1,15 @@
 import {KeyBoardControl} from "../../controls/keyboard.class";
 import {PlayerModel} from "./player.model";
-
-declare const Phaser: any;
+import {Laser} from "../../props/weapon/laser.class";
 
 export class Player {
     public player: any;
-    private weapon: any;
+    private laser: Laser;
     private controls: KeyBoardControl;
 
     constructor(private options: PlayerModel, private gameInstance: any) {
-        this.controls = new KeyBoardControl(gameInstance);
-        this.createPlayer(gameInstance, options);
+        this.controls = new KeyBoardControl(this.gameInstance);
+        this.createPlayer(this.gameInstance, options);
     }
 
     public createPlayer(gameInstance, shipOptions) {
@@ -26,18 +25,13 @@ export class Player {
         this.player.body.drag.set(80);
         this.player.body.maxVelocity.set(100);
         this.player.body.collideWorldBounds = true;
-        this.addWeapon(gameInstance);
-    }
-
-    public addWeapon(game, type?): void {
-        this.weapon = game.add.weapon(-1, 'laser');
-        this.weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
-        this.weapon.bulletSpeed = 200;
-        this.weapon.fireRate = 1000;
-        this.weapon.trackSprite(this.player, 0, 0, true);
+        this.assignPickup(this.player, gameInstance);
     }
 
     public view() {
+
+        //detect if player hits pickup and then create the weapon
+
         if (this.controls.gameControls.cursors.up.isDown) {
             this.gameInstance.physics.arcade.accelerationFromRotation(this.player.rotation, 100, this.player.body.acceleration);
             this.player.animations.play('accelerating');
@@ -56,10 +50,14 @@ export class Player {
         }
 
         if (this.controls.gameControls.fireWeapon.isDown) {
-            if (this.weapon) {
-                this.weapon.fire();
+            if (this.laser) {
+                this.laser.weapon.fire();
             }
         }
+    }
+
+    private assignPickup(player, game) {
+        this.laser = new Laser(player, game);
     }
 
 }
