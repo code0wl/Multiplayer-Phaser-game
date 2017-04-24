@@ -1,4 +1,4 @@
-import {PlayerModel} from "./participant.model";
+import {PlayerModel} from "./player.model";
 
 export const optionOne: PlayerModel = {
     health: 100,

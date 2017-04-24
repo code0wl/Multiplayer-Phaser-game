@@ -1,5 +1,5 @@
 import {KeyBoardControl} from "../../controls/keyboard.class";
-import {PlayerModel} from "./participant.model";
+import {PlayerModel} from "./player.model";
 
 declare const Phaser: any;
 
@@ -37,7 +37,7 @@ export class Player {
         this.weapon.trackSprite(this.player, 0, 0, true);
     }
 
-    public movementStream() {
+    public view() {
         if (this.controls.gameControls.cursors.up.isDown) {
             this.gameInstance.physics.arcade.accelerationFromRotation(this.player.rotation, 100, this.player.body.acceleration);
             this.player.animations.play('accelerating');

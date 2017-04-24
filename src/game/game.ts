@@ -1,6 +1,7 @@
-import {Player} from "../actors/participant/participant.class";
-import {optionOne} from "../actors/participant/temp-ship-options";
+import {Player} from "../actors/player/player.class";
+import {optionOne} from "../actors/player/temp-ship-options";
 import {PickUp} from "./pick-up.class";
+import {game} from "../index";
 
 declare const Phaser: any;
 
@@ -11,11 +12,11 @@ export class Game {
 
     protected loadActors(gameInstance): void {
         this.playerOne = new Player(optionOne, gameInstance);
-        this.pickUp = new PickUp();
+        this.pickUp = new PickUp(gameInstance);
     }
 
     protected playerUpdate() {
-        this.playerOne.movementStream();
+        this.playerOne.view();
         this.pickUp.generatePickup();
     }
 
