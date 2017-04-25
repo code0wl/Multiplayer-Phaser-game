@@ -1,22 +1,18 @@
 import {Player} from "../actors/player/player.class";
 import {optionOne} from "../actors/player/temp-ship-options";
-import {PickUp} from "./pick-up.class";
 
 declare const Phaser: any;
 
 export class Game {
 
     private playerOne: Player;
-    private pickUp: PickUp;
 
     protected loadActors(gameInstance): void {
         this.playerOne = new Player(optionOne, gameInstance);
-        this.pickUp = new PickUp(gameInstance);
     }
 
     protected playerUpdate() {
         this.playerOne.view();
-        this.pickUp.generatePickup();
     }
 
     protected gameProperties(game): void {

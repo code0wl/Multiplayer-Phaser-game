@@ -1,11 +1,12 @@
 import {KeyBoardControl} from "../../controls/keyboard.class";
 import {PlayerModel} from "./player.model";
-import {Laser} from "../../props/weapon/laser.class";
+import {Projectile} from "../../props/powers/projectile/projectile.class";
 
 export class Player {
     public player: any;
-    private laser: Laser;
     private controls: KeyBoardControl;
+    private powerUp = []; // of type powerup
+    private projectile;
 
     constructor(private options: PlayerModel, private gameInstance: any) {
         this.controls = new KeyBoardControl(this.gameInstance);
@@ -50,14 +51,16 @@ export class Player {
         }
 
         if (this.controls.gameControls.fireWeapon.isDown) {
-            if (this.laser) {
-                this.laser.weapon.fire();
+            if (this.projectile.weapon.bullets.children.length) {
+                this.projectile.weapon.fire();
+                //calc bullets left
             }
         }
     }
 
     private assignPickup(player, game) {
-        this.laser = new Laser(player, game);
+        this.projectile = new Projectile(game, player);
+        this.powerUp.push(this.projectile);
     }
 
 }
