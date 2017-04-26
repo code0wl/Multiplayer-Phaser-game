@@ -5,9 +5,3 @@ export const optionOne: PlayerModel = {
     name: 'Ozy',
     shipType: 'heavy'
 };
-
-export const optionTwo: PlayerModel = {
-    health: 100,
-    name: 'someOther dude',
-    shipType: 'light'
-};

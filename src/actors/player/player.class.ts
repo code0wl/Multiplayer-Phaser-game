@@ -1,18 +1,21 @@
 import {KeyBoardControl} from "../../controls/keyboard.class";
 import {PlayerModel} from "./player.model";
 import {Projectile} from "../../props/powers/projectile/projectile.class";
+import {Hud} from "../../hud/hud.class";
 
 export class Player {
     public player: any;
     private controls: KeyBoardControl;
-    private powerUp = []; // of type powerup
-    private projectile;
+    private powerUp = [];
+    private projectile: Projectile;
+    private hud: Hud;
 
     constructor(private options: PlayerModel, private gameInstance: any) {
         this.controls = new KeyBoardControl(this.gameInstance);
         this.createPlayer(this.gameInstance, options);
     }
 
+    // player stream rxjs
     public createPlayer(gameInstance, shipOptions) {
         this.player = gameInstance.add.sprite(50, 50, 'shooter-sprite');
         gameInstance.physics.arcade.enable(this.player);
@@ -26,13 +29,12 @@ export class Player {
         this.player.body.drag.set(80);
         this.player.body.maxVelocity.set(100);
         this.player.body.collideWorldBounds = true;
-        this.assignPickup(this.player, gameInstance);
+        this.hud = new Hud(gameInstance, this.player);
+        this.assignPickup(gameInstance, this.player);
     }
 
     public view() {
-
-        //detect if player hits pickup and then create the weapon
-
+        // @TODO detect if player hits pickup and then create the weapon
         if (this.controls.gameControls.cursors.up.isDown) {
             this.gameInstance.physics.arcade.accelerationFromRotation(this.player.rotation, 100, this.player.body.acceleration);
             this.player.animations.play('accelerating');
@@ -51,14 +53,13 @@ export class Player {
         }
 
         if (this.controls.gameControls.fireWeapon.isDown) {
-            if (this.projectile.weapon.bullets.children.length) {
-                this.projectile.weapon.fire();
-                //calc bullets left
+            if (this.projectile) {
+                this.projectile.fireWeapon();
             }
         }
     }
 
-    private assignPickup(player, game) {
+    private assignPickup(game, player) {
         this.projectile = new Projectile(game, player);
         this.powerUp.push(this.projectile);
     }
