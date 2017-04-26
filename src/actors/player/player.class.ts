@@ -8,7 +8,6 @@ export class Player {
     private controls: KeyBoardControl;
     private powerUp = [];
     private projectile: Projectile;
-    private hud: Hud;
 
     constructor(private options: PlayerModel, private gameInstance: any) {
         this.controls = new KeyBoardControl(this.gameInstance);
@@ -29,7 +28,7 @@ export class Player {
         this.player.body.drag.set(80);
         this.player.body.maxVelocity.set(100);
         this.player.body.collideWorldBounds = true;
-        this.hud = new Hud(gameInstance, this.player);
+        Hud.view(gameInstance, this.player);
         this.assignPickup(gameInstance, this.player);
     }
 
