@@ -2,6 +2,6 @@ import {PlayerModel} from "./player.model";
 
 export const optionOne: PlayerModel = {
     health: 100,
-    name: 'Ozy',
+    name: 'Oscar',
     shipType: 'heavy'
 };
