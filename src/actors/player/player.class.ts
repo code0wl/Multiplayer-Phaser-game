@@ -6,11 +6,14 @@ declare const socket;
 
 export class Player {
     public player: any;
+    public storage: any;
+
     private controls: KeyBoardControl;
     private powerUp = [];
     private projectile: Projectile;
 
     constructor(private gameInstance: any) {
+        this.storage = window.localStorage;
         this.controls = new KeyBoardControl(this.gameInstance);
         this.createPlayer(this.gameInstance);
     }
@@ -27,7 +30,7 @@ export class Player {
         this.player.body.drag.set(80);
         this.player.body.maxVelocity.set(100);
         this.player.body.collideWorldBounds = true;
-        this.player.name = window.localStorage.getItem('name');
+        this.player.name = this.storage.getItem('name');
         this.player.health = 100;
         Hud.view(gameInstance, this.player);
     }

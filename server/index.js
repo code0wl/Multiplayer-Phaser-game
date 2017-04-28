@@ -13,11 +13,11 @@ io.on('connection', socket => {
     console.log('user connection');
 
     socket.on('authentication:successful', msg => {
-        socket.emit('add:player');
+        io.emit('add:player');
     });
 
     socket.on('player:coordinates', msg => {
-        console.log('mssage', msg)
+        // console.log('mssage', msg)
     });
 
     socket.on('disconnect', () => {
@@ -26,5 +26,5 @@ io.on('connection', socket => {
 });
 
 http.listen(3000, () => {
-    console.log('listening on *:3000');
+    console.log('listening on localhost:3000');
 });
