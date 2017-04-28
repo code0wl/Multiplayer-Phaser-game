@@ -16,14 +16,9 @@ app.get('/game', (req, res) => {
 io.on('connection', socket => {
     console.log('user connection');
 
-    socket.on('authentication:successful', (msg) => {
-        console.log(msg);
-    });
-
     socket.on('disconnect', () => {
         console.log('user disconnected');
     });
-
 });
 
 http.listen(3000, () => {

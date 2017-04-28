@@ -12,7 +12,9 @@ export class Game {
     }
 
     protected playerUpdate() {
-        this.player.view();
+        if (this.player) {
+            this.player.view();
+        }
     }
 
     protected gameProperties(game): void {
