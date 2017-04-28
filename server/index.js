@@ -6,15 +6,15 @@ const io = require('socket.io')(http);
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-    res.sendfile(`./src/scenes/login.html`);
-});
-
-app.get('/game', (req, res) => {
     res.sendfile(`./index.html`);
 });
 
 io.on('connection', socket => {
     console.log('user connection');
+
+    socket.on('add:player', msg => {
+        console.log(msg);
+    });
 
     socket.on('disconnect', () => {
         console.log('user disconnected');
