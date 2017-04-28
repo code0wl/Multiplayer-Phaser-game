@@ -12,10 +12,14 @@
     </style>
 </head>
 
-<body id="space-shooter">
-<script src="node_modules/rxjs/bundles/Rx.min.js"></script>
-<script src="node_modules/phaser/build/phaser.min.js"></script>
-<script src="public/dist/bundle.js"></script>
+<body>
+<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+<script src="dist/Rx.min.js"></script>
+<script src="dist/phaser.min.js"></script>
+<script src="dist/bundle.js"></script>
+<script>
+    var socket = io();
+</script>
 </body>
 
 </html>

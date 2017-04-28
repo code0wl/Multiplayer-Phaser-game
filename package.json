@@ -28,6 +28,7 @@
     "rxjs": "^5.3.0",
     "serve-static": "^1.12.2",
     "socket.io": "^1.7.3",
+    "socket.io-client": "^1.7.3",
     "socketio": "^1.0.0",
     "uuid": "^3.0.1",
     "whatwg-fetch": "^2.0.1"

@@ -10,7 +10,8 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', socket => {
-    socket.on('chat message', (msg) => {
+    console.log('user connection');
+    socket.on('authentication', (msg) => {
         io.emit('player:connected', msg);
     });
     socket.on('disconnect', () => {

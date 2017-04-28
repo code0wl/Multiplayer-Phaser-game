@@ -8,6 +8,7 @@ export class Game {
     private playerOne: Player;
 
     protected loadActors(gameInstance): void {
+
         this.playerOne = new Player(optionOne, gameInstance);
     }
 

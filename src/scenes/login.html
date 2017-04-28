@@ -8,7 +8,6 @@
     <title>Document</title>
 </head>
 <body>
-
 <form action="">
     <label>
         Your name
@@ -23,8 +22,12 @@
     </label>
     <button> Join game </button>
 </form>
+<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
 <script src="dist/Rx.min.js"></script>
 <script src="dist/phaser.min.js"></script>
 <script src="dist/bundle.js"></script>
+<script>
+    var socket = io();
+</script>
 </body>
 </html>
