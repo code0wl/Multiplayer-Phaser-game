@@ -1,14 +1,13 @@
 const path = require('path');
-const webpack = require('webpack');
 
 const config = {
     entry: './main',
     output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: './bundle.js'
+        path: path.resolve(__dirname, 'public/dist'),
+        filename: 'bundle.js'
     },
     resolve: {
-        extensions: ['.ts', '.js'] // note if using webpack 1 you'd also need a '' in the array as well
+        extensions: ['.ts', '.js']
     },
     module: {
         rules: [

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:dev": "yarn && webpack-dev-server --watch --inline",
+    "start:dev": "webpack-dev-server --watch --inline",
     "start": "node server/index.js"
   },
   "repository": {
@@ -21,10 +21,12 @@
   "dependencies": {
     "@types/rx": "^4.1.1",
     "@types/socket.io": "1.4.29",
+    "connect": "^3.6.1",
     "express": "4.15.2",
     "phaser": "^2.6.2",
     "rx": "^4.1.0",
     "rxjs": "^5.3.0",
+    "serve-static": "^1.12.2",
     "socket.io": "^1.7.3",
     "socketio": "^1.0.0",
     "uuid": "^3.0.1",
