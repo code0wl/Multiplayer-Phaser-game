@@ -1,14 +1,20 @@
 import {Player} from "../actors/player/player.class";
-import {playerOptions} from "../actors/player/player.config";
+import {PlayerModel} from "../actors/player/player.model";
 
 declare const Phaser: any;
+declare const socket: any;
 
 export class Game {
-
     private player: Player;
 
     protected loadActors(gameInstance): void {
-        this.player = new Player(playerOptions, gameInstance);
+        socket.on('add:player', () => {
+            const playerOptions: PlayerModel = {
+                name: window.localStorage.getItem('name'),
+                health: 100
+            };
+            this.player = new Player(playerOptions, gameInstance);
+        });
     }
 
     protected playerUpdate() {

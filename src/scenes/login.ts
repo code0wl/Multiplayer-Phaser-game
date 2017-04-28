@@ -1,13 +1,11 @@
-declare const io: any;
+declare const socket: any;
 
 export class Login {
 
-    socket: any;
     name: any;
     formContainer: any;
 
     constructor() {
-        this.socket = io();
         this.formContainer = document.querySelector('.login-form');
         const form = document.querySelector('form');
         this.name = document.querySelector('#your-name');
@@ -19,7 +17,7 @@ export class Login {
     createPlayer(e): void {
         e.preventDefault();
         window.localStorage.setItem('name', this.name.value);
-        this.socket.emit('authentication:successful', this.name.value);
+        socket.emit('authentication:successful', this.name.value);
         this.toggleLogin();
     }
 

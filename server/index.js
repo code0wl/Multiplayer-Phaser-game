@@ -12,8 +12,8 @@ app.get('/', (req, res) => {
 io.on('connection', socket => {
     console.log('user connection');
 
-    socket.on('add:player', msg => {
-        console.log(msg);
+    socket.on('authentication:successful', msg => {
+        socket.emit('add:player');
     });
 
     socket.on('disconnect', () => {
