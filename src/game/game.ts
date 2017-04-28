@@ -1,5 +1,4 @@
 import {Player} from "../actors/player/player.class";
-import {PlayerModel} from "../actors/player/player.model";
 
 declare const Phaser: any;
 declare const socket: any;
@@ -9,6 +8,10 @@ export class Game {
 
     protected loadActors(gameInstance): void {
         socket.on('add:player', () => {
+            this.player = new Player(gameInstance);
+        });
+
+        socket.on('add:enemy', () => {
             this.player = new Player(gameInstance);
         });
     }

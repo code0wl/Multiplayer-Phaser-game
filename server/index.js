@@ -16,6 +16,10 @@ io.on('connection', socket => {
         socket.emit('add:player');
     });
 
+    socket.on('player:coordinates', msg => {
+        console.log('mssage', msg)
+    });
+
     socket.on('disconnect', () => {
         console.log('user disconnected');
     });

@@ -2,6 +2,8 @@ import {KeyBoardControl} from "../../controls/keyboard.class";
 import {Projectile} from "../../props/powers/projectile/projectile.class";
 import {Hud} from "../../hud/hud.class";
 
+declare const socket;
+
 export class Player {
     public player: any;
     private controls: KeyBoardControl;
@@ -55,8 +57,13 @@ export class Player {
                     this.projectile.fireWeapon();
                 }
             }
-        }
+            const  playerCoors = {
+                x: this.player.body.x,
+                y: this.player.body.y
+            };
 
+            socket.emit('player:coordinates', playerCoors);
+        }
     }
 
     private assignPickup(game, player) {
