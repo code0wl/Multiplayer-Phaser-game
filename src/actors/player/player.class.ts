@@ -1,5 +1,4 @@
 import {KeyBoardControl} from "../../controls/keyboard.class";
-import {PlayerModel} from "./player.model";
 import {Projectile} from "../../props/powers/projectile/projectile.class";
 import {Hud} from "../../hud/hud.class";
 
@@ -9,16 +8,15 @@ export class Player {
     private powerUp = [];
     private projectile: Projectile;
 
-    constructor(private options: PlayerModel, private gameInstance: any) {
+    constructor(private gameInstance: any) {
         this.controls = new KeyBoardControl(this.gameInstance);
-        this.createPlayer(this.gameInstance, options);
+        this.createPlayer(this.gameInstance);
     }
 
-    public createPlayer(gameInstance, shipOptions) {
+    public createPlayer(gameInstance) {
         this.player = gameInstance.add.sprite(50, 50, 'shooter-sprite');
         gameInstance.physics.arcade.enable(this.player);
 
-        this.player.name = shipOptions.name;
         this.player.body.bounce.y = 0;
         this.player.body.gravity.y = 0;
         this.player.anchor.setTo(0.5, 0.5);
@@ -27,6 +25,8 @@ export class Player {
         this.player.body.drag.set(80);
         this.player.body.maxVelocity.set(100);
         this.player.body.collideWorldBounds = true;
+        this.player.name = window.localStorage.getItem('name');
+        this.player.health = 100;
         Hud.view(gameInstance, this.player);
     }
 

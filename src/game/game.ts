@@ -9,11 +9,7 @@ export class Game {
 
     protected loadActors(gameInstance): void {
         socket.on('add:player', () => {
-            const playerOptions: PlayerModel = {
-                name: window.localStorage.getItem('name'),
-                health: 100
-            };
-            this.player = new Player(playerOptions, gameInstance);
+            this.player = new Player(gameInstance);
         });
     }
 
