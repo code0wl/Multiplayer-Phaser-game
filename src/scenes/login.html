@@ -8,26 +8,35 @@
     <title>Document</title>
 </head>
 <body>
-<form action="">
+<canvas id="space-shooter"></canvas>
+<form action="/game">
     <label>
         Your name
-        <input type="text">
+        <input id="your-name" value="test" type="text">
     </label>
-    <label>
-        Choose your ship
-        <select>
-            <option> Some ship 1</option>
-            <option> Some ship 2</option>
-        </select>
-    </label>
-    <button> Join game </button>
+    <button> Join game</button>
 </form>
+
 <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
 <script src="dist/Rx.min.js"></script>
 <script src="dist/phaser.min.js"></script>
 <script src="dist/bundle.js"></script>
+
+<!--Extract to lazy load-->
 <script>
-    var socket = io();
+    const socket = io();
+    const form = document.querySelector('form');
+    const name = document.querySelector('#your-name');
+    const button = document.querySelector('button');
+
+    button.addEventListener('click', handleSubmit);
+
+    function handleSubmit() {
+        socket.emit('authentication:successful', name.value);
+        window.localStorage.setItem('name', name.value);
+    }
+
 </script>
+
 </body>
 </html>

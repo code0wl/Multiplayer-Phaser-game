@@ -1,19 +1,18 @@
 import {Player} from "../actors/player/player.class";
-import {optionOne} from "../actors/player/temp-ship-options";
+import {playerOptions} from "../actors/player/player.config";
 
 declare const Phaser: any;
 
 export class Game {
 
-    private playerOne: Player;
+    private player: Player;
 
     protected loadActors(gameInstance): void {
-
-        this.playerOne = new Player(optionOne, gameInstance);
+        this.player = new Player(playerOptions, gameInstance);
     }
 
     protected playerUpdate() {
-        this.playerOne.view();
+        this.player.view();
     }
 
     protected gameProperties(game): void {

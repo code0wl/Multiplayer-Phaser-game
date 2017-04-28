@@ -9,14 +9,21 @@ app.get('/', (req, res) => {
     res.sendfile(`./src/scenes/login.html`);
 });
 
+app.get('/game', (req, res) => {
+    res.sendfile(`./index.html`);
+});
+
 io.on('connection', socket => {
     console.log('user connection');
-    socket.on('authentication', (msg) => {
-        io.emit('player:connected', msg);
+
+    socket.on('authentication:successful', (msg) => {
+        console.log(msg);
     });
+
     socket.on('disconnect', () => {
         console.log('user disconnected');
     });
+
 });
 
 http.listen(3000, () => {

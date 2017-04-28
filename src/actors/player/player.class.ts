@@ -14,7 +14,6 @@ export class Player {
         this.createPlayer(this.gameInstance, options);
     }
 
-    // player stream rxjs
     public createPlayer(gameInstance, shipOptions) {
         this.player = gameInstance.add.sprite(50, 50, 'shooter-sprite');
         gameInstance.physics.arcade.enable(this.player);
@@ -29,33 +28,35 @@ export class Player {
         this.player.body.maxVelocity.set(100);
         this.player.body.collideWorldBounds = true;
         Hud.view(gameInstance, this.player);
-        this.assignPickup(gameInstance, this.player);
     }
 
     public view() {
-        // @TODO detect if player hits pickup and then create the weapon
-        if (this.controls.gameControls.cursors.up.isDown) {
-            this.gameInstance.physics.arcade.accelerationFromRotation(this.player.rotation, 100, this.player.body.acceleration);
-            this.player.animations.play('accelerating');
-        } else {
-            this.player.body.acceleration.set(0);
-        }
+        if (this.player) {
+            // @TODO detect if player hits pickup and then create the weapon
+            if (this.controls.gameControls.cursors.up.isDown) {
+                this.gameInstance.physics.arcade.accelerationFromRotation(this.player.rotation, 100, this.player.body.acceleration);
+                this.player.animations.play('accelerating');
+            } else {
+                this.player.body.acceleration.set(0);
+            }
 
-        if (this.controls.gameControls.cursors.left.isDown) {
-            this.player.body.angularVelocity = -300;
-        }
+            if (this.controls.gameControls.cursors.left.isDown) {
+                this.player.body.angularVelocity = -300;
+            }
 
-        else if (this.controls.gameControls.cursors.right.isDown) {
-            this.player.body.angularVelocity = 300;
-        } else {
-            this.player.body.angularVelocity = 0;
-        }
+            else if (this.controls.gameControls.cursors.right.isDown) {
+                this.player.body.angularVelocity = 300;
+            } else {
+                this.player.body.angularVelocity = 0;
+            }
 
-        if (this.controls.gameControls.fireWeapon.isDown) {
-            if (this.projectile) {
-                this.projectile.fireWeapon();
+            if (this.controls.gameControls.fireWeapon.isDown) {
+                if (this.projectile) {
+                    this.projectile.fireWeapon();
+                }
             }
         }
+
     }
 
     private assignPickup(game, player) {
