@@ -3,20 +3,22 @@ import {Player} from "../player/player.class";
 declare const socket;
 
 export class Enemy extends Player {
-    public player: any;
-
     constructor(gameInstance) {
         super(gameInstance);
         this.createPlayer(gameInstance);
+        this.setEvents();
     }
 
     public view(): void {
-        const playerCoors = {
-            x: this.player.body.x,
-            y: this.player.body.y,
-            r: this.player.rotation
-        };
-        socket.emit('enemy:coordinates', playerCoors);
+        // nothing
+    }
+
+    private setEvents(): void {
+        socket.on('enemy:location', (coors) => {
+            this.player.position.x = coors.x;
+            this.player.position.y = coors.y;
+            this.player.rotation.r = coors.r;
+        });
     }
 
 }
