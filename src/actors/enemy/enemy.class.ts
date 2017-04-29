@@ -4,13 +4,14 @@ declare const socket;
 
 export class Enemy {
     public player: any;
+    public offset: number;
 
     constructor(private gameInstance: any) {
         this.createPlayer(this.gameInstance);
         socket.on('enemy:location', (coors) => {
-            console.log('poop', coors);
-            this.player.body.x = coors.x;
-            this.player.body.y = coors.y;
+            this.player.position.x = coors.x;
+            this.player.position.y = coors.y;
+            this.player.rotation = coors.r;
         });
     }
 

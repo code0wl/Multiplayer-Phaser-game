@@ -37,7 +37,7 @@ export class Player {
 
     public view() {
         if (this.player) {
-            // @TODO detect if player hits pickup and then create the weapon
+
             if (this.controls.gameControls.cursors.up.isDown) {
                 this.gameInstance.physics.arcade.accelerationFromRotation(this.player.rotation, 100, this.player.body.acceleration);
                 this.player.animations.play('accelerating');
@@ -60,9 +60,10 @@ export class Player {
                     this.projectile.fireWeapon();
                 }
             }
-            const  playerCoors = {
+            const playerCoors = {
                 x: this.player.body.x,
-                y: this.player.body.y
+                y: this.player.body.y,
+                r: this.player.rotation
             };
             socket.emit('player:coordinates', playerCoors);
         }

@@ -113,7 +113,7 @@ body {
 }
 
 .form-container {
-    background: linear-gradient(to left, #76b852, #8DC26F);
+    background: linear-gradient(to top, #C6426E, #642B73); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     position: absolute;
