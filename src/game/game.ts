@@ -6,7 +6,7 @@ declare const socket: any;
 
 export class Game {
     private player: Player;
-    private enemy: any;
+    private enemy: Enemy;
 
     protected loadActors(gameInstance): void {
         socket.on('player:add', () => {
@@ -18,10 +18,16 @@ export class Game {
         });
     }
 
-    protected playerUpdate() {
+    protected gameUpdate() {
         if (this.player) {
             this.player.view();
         }
+
+        if (this.enemy) {
+            this.enemy.view();
+        }
+
+        console.log(this.enemy);
     }
 
     protected gameProperties(game): void {

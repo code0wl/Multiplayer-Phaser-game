@@ -14,9 +14,8 @@ io.on('connection', socket => {
         io.emit('player:add');
     });
 
-    socket.on('player:coordinates', location => {
-        console.log('updating enmey location');
-        io.emit('enemy:location', location);
+    socket.on('enemy:coordinates', location => {
+        io.emit('enemy:location',location);
     });
 });
 

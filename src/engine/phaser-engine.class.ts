@@ -30,7 +30,7 @@ export class PhaserSpaceGame extends Game implements LifeCycle {
     }
 
     update(): void {
-        super.playerUpdate();
+        super.gameUpdate();
     }
 
 }

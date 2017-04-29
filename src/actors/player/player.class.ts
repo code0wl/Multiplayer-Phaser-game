@@ -60,12 +60,6 @@ export class Player {
                     this.projectile.fireWeapon();
                 }
             }
-            const playerCoors = {
-                x: this.player.body.x,
-                y: this.player.body.y,
-                r: this.player.rotation
-            };
-            socket.emit('player:coordinates', playerCoors);
         }
     }
 
