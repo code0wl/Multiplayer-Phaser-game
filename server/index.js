@@ -18,12 +18,11 @@ io.on('connection', socket => {
     });
 
     socket.on('player:coordinates', location => {
-        io.emit('enemy:location', location);
+        io.emit('player:location', location);
     });
 
     socket.on('player:created', () => {
         players++;
-        console.log('wtf');
         console.log('Total players on server: ' + players);
     })
 

@@ -51,9 +51,7 @@ export class Player {
 
             if (this.controls.gameControls.cursors.left.isDown) {
                 this.player.body.angularVelocity = -300;
-            }
-
-            else if (this.controls.gameControls.cursors.right.isDown) {
+            } else if (this.controls.gameControls.cursors.right.isDown) {
                 this.player.body.angularVelocity = 300;
             } else {
                 this.player.body.angularVelocity = 0;
@@ -65,6 +63,11 @@ export class Player {
                 }
             }
         }
+        socket.emit('player:coordinates', {
+            x: this.player.body.x,
+            y: this.player.body.y,
+            r: this.player.rotation
+        });
     }
 
     private assignPickup(game, player): void {
