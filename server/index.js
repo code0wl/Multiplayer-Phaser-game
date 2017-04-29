@@ -3,6 +3,8 @@ const express = require('express');
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
+let players = 0;
+
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
@@ -18,6 +20,12 @@ io.on('connection', socket => {
     socket.on('player:coordinates', location => {
         io.emit('enemy:location', location);
     });
+
+    socket.on('player:created', () => {
+        players++;
+        console.log('wtf');
+        console.log('Total players on server: ' + players);
+    })
 
 });
 

@@ -1,29 +1,22 @@
 import {Player} from "../actors/player/player.class";
-import {Enemy} from "../actors/enemy/enemy.class";
 
 declare const Phaser: any;
 declare const socket: any;
+declare const io: any;
 
 export class Game {
-    private player: Player;
-    private enemy: Enemy;
+    private player: any; // make player model
 
     protected loadActors(gameInstance): void {
         socket.on('player:add', () => {
-            if (this.player) {
-                this.enemy = new Enemy(gameInstance);
-            } else {
-                this.player = new Player(gameInstance);
-            }
+            this.player = new Player(gameInstance);
+            socket.emit('player:created');
         });
     }
 
     protected gameUpdate() {
         if (this.player) {
             this.player.view();
-        }
-        if (this.enemy) {
-            this.enemy.view();
         }
     }
 
