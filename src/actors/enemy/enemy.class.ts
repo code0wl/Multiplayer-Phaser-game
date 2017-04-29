@@ -17,7 +17,7 @@ export class Enemy extends Player {
         socket.on('enemy:location', (coors) => {
             this.player.position.x = coors.x;
             this.player.position.y = coors.y;
-            this.player.rotation.r = coors.r;
+            this.player.rotation = coors.r;
         });
     }
 
