@@ -15,6 +15,7 @@ io.on('connection', socket => {
     });
 
     socket.on('player:coordinates', location => {
+        console.log('updating enmey location');
         io.emit('enemy:location', location);
     });
 });

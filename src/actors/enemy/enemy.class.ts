@@ -4,15 +4,11 @@ declare const socket;
 
 export class Enemy {
     public player: any;
-    public offset: number;
+    public position: any;
 
     constructor(private gameInstance: any) {
         this.createPlayer(this.gameInstance);
-        socket.on('enemy:location', (coors) => {
-            this.player.position.x = coors.x;
-            this.player.position.y = coors.y;
-            this.player.rotation = coors.r;
-        });
+        this.setPosition();
     }
 
     public createPlayer(gameInstance) {
@@ -29,6 +25,15 @@ export class Enemy {
         this.player.body.collideWorldBounds = true;
         this.player.health = 100;
         Hud.view(gameInstance, this.player);
+    }
+
+    private setPosition() {
+        const offset = 30;
+        socket.on('enemy:location', (coors) => {
+            this.player.position.x = coors.x + offset;
+            this.player.position.y = coors.y + offset;
+            this.player.rotation = coors.r;
+        });
     }
 
 }

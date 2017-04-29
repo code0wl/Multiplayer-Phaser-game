@@ -33,11 +33,11 @@ export class Player {
         this.player.name = this.storage.getItem('name');
         this.player.health = 100;
         Hud.view(gameInstance, this.player);
+        this.assignPickup(gameInstance, this.player);
     }
 
-    public view() {
+    public view(): void {
         if (this.player) {
-
             if (this.controls.gameControls.cursors.up.isDown) {
                 this.gameInstance.physics.arcade.accelerationFromRotation(this.player.rotation, 100, this.player.body.acceleration);
                 this.player.animations.play('accelerating');
@@ -69,7 +69,7 @@ export class Player {
         }
     }
 
-    private assignPickup(game, player) {
+    private assignPickup(game, player): void {
         this.projectile = new Projectile(game, player);
         this.powerUp.push(this.projectile);
     }
