@@ -8,7 +8,7 @@ export class Player {
     public player: any;
     public storage: any;
 
-    private controls: KeyBoardControl;
+    protected controls: KeyBoardControl;
     private powerUp = [];
     private projectile: Projectile;
 
