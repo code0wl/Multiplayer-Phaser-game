@@ -1,8 +1,8 @@
-import {Player} from "../player/player.class";
+import {Participant} from "../player.base";
 
 declare const socket;
 
-export class Enemy extends Player {
+export class Enemy extends Participant {
     constructor(gameInstance) {
         super(gameInstance);
         this.createPlayer(gameInstance);

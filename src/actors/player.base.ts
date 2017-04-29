@@ -8,14 +8,18 @@ export class Participant {
     public player: any;
     public storage: any;
 
-    protected controls: KeyBoardControl;
+    private controls: KeyBoardControl;
     private powerUp = [];
     private projectile: Projectile;
 
     constructor(private gameInstance: any) {
         this.storage = window.localStorage;
-        this.controls = new KeyBoardControl(this.gameInstance);
+        this.addControls();
         this.createPlayer(this.gameInstance);
+    }
+
+    public addControls(): void {
+        this.controls = new KeyBoardControl(this.gameInstance);
     }
 
     public createPlayer(gameInstance) {
