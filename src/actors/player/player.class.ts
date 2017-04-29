@@ -64,7 +64,6 @@ export class Player {
                 x: this.player.body.x,
                 y: this.player.body.y
             };
-
             socket.emit('player:coordinates', playerCoors);
         }
     }

@@ -6,7 +6,7 @@ export class Login {
     formContainer: any;
 
     constructor() {
-        this.formContainer = document.querySelector('.login-form');
+        this.formContainer = document.querySelector('.form-container');
         const form = document.querySelector('form');
         this.name = document.querySelector('#your-name');
         const button = document.querySelector('button');

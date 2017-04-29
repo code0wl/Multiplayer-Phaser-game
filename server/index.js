@@ -10,18 +10,12 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', socket => {
-    console.log('user connection');
-
     socket.on('authentication:successful', msg => {
-        io.emit('add:player');
+        io.emit('player:add');
     });
 
-    socket.on('player:coordinates', msg => {
-        // console.log('mssage', msg)
-    });
-
-    socket.on('disconnect', () => {
-        console.log('user disconnected');
+    socket.on('player:coordinates', location => {
+        io.emit('enemy:location', location);
     });
 });
 

@@ -1,14 +1,17 @@
-import {Projectile} from "../../props/powers/projectile/projectile.class";
 import {Hud} from "../../hud/hud.class";
 
 declare const socket;
 
 export class Enemy {
     public player: any;
-    private projectile: Projectile;
 
     constructor(private gameInstance: any) {
         this.createPlayer(this.gameInstance);
+        socket.on('enemy:location', (coors) => {
+            console.log('poop', coors);
+            this.player.body.x = coors.x;
+            this.player.body.y = coors.y;
+        });
     }
 
     public createPlayer(gameInstance) {

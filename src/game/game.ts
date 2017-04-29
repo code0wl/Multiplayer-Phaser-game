@@ -6,10 +6,10 @@ declare const socket: any;
 
 export class Game {
     private player: Player;
-    private enemy: Enemy;
+    private enemy: any;
 
     protected loadActors(gameInstance): void {
-        socket.on('add:player', () => {
+        socket.on('player:add', () => {
             if (this.player) {
                 this.enemy = new Enemy(gameInstance);
             } else {
