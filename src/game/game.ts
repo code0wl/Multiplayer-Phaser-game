@@ -22,15 +22,13 @@ export class Game {
         if (this.player) {
             this.player.view();
         }
-
         if (this.enemy) {
             this.enemy.view();
         }
-
-        console.log(this.enemy);
     }
 
     protected gameProperties(game): void {
+        game.stage.disableVisibilityChange = true;
         game.add.sprite(0, 0, 'space');
         game.time.desiredFps = 60;
         game.renderer.clearBeforeRender = false;

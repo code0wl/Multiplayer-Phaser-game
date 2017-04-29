@@ -10,13 +10,15 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', socket => {
+
     socket.on('authentication:successful', msg => {
         io.emit('player:add');
     });
 
     socket.on('enemy:coordinates', location => {
-        io.emit('enemy:location',location);
+        io.emit('enemy:location', location);
     });
+
 });
 
 http.listen(3000, () => {
