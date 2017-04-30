@@ -1,16 +1,19 @@
 import {Player} from "../actors/player/player.class";
 
 declare const Phaser: any;
-declare const socket: any;
 declare const io: any;
+declare const window: any;
 
 export class Game {
-    private player: any; // make player model
+    private player: Player;
+
+    constructor() {
+        window.socket = io.connect('http://localhost:3000');
+    }
 
     protected loadActors(gameInstance): void {
-        socket.on('player:add', () => {
+        window.socket.on('player:add', () => {
             this.player = new Player(gameInstance);
-            socket.emit('player:created');
         });
     }
 

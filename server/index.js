@@ -3,8 +3,6 @@ const express = require('express');
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
-let players = 0;
-
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
@@ -12,6 +10,8 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', socket => {
+
+    let playersCollection = [];
 
     socket.on('authentication:successful', msg => {
         io.emit('player:add');
@@ -21,9 +21,10 @@ io.on('connection', socket => {
         io.emit('player:location', location);
     });
 
-    socket.on('player:created', () => {
-        players++;
-        console.log('Total players on server: ' + players);
+    socket.on('player:created', (id) => {
+        playersCollection.push(id);
+        console.log('Total players on server: ' + playersCollection.length);
+        console.log(playersCollection);
     })
 
 });

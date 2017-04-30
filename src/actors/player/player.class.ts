@@ -1,12 +1,17 @@
 import {KeyBoardControl} from "../../controls/keyboard.class";
 import {Projectile} from "../../props/powers/projectile/projectile.class";
 import {Hud} from "../../hud/hud.class";
+import * as uuidV1 from "uuid";
 
-declare const socket;
+declare const Phaser: any;
+declare const io: any;
+declare const window: any;
+
 
 export class Player {
     public player: any;
     public storage: any;
+    public id: number;
 
     private controls: KeyBoardControl;
     private powerUp = [];
@@ -24,12 +29,11 @@ export class Player {
 
     public createPlayer(gameInstance) {
         this.player = gameInstance.add.sprite(50, 50, 'shooter-sprite');
+        this.player.id = uuidV1();
         gameInstance.physics.arcade.enable(this.player);
-
         this.player.body.bounce.y = 0;
         this.player.body.gravity.y = 0;
         this.player.anchor.setTo(0.5, 0.5);
-
         this.player.animations.add('accelerating', [1, 0], 50, false);
         this.player.body.drag.set(80);
         this.player.body.maxVelocity.set(100);
@@ -38,6 +42,7 @@ export class Player {
         this.player.health = 100;
         Hud.view(gameInstance, this.player);
         this.assignPickup(gameInstance, this.player);
+        window.socket.emit('player:created', this.player.id);
     }
 
     public view(): void {
@@ -63,7 +68,7 @@ export class Player {
                 }
             }
         }
-        socket.emit('player:coordinates', {
+        window.socket.emit('player:coordinates', {
             x: this.player.body.x,
             y: this.player.body.y,
             r: this.player.rotation
