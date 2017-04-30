@@ -1,12 +1,10 @@
 import {KeyBoardControl} from "../../controls/keyboard.class";
 import {Projectile} from "../../props/powers/projectile/projectile.class";
 import {Hud} from "../../hud/hud.class";
-import * as uuidV1 from "uuid";
+import * as uuidV1 from 'uuid';
 
 declare const Phaser: any;
-declare const io: any;
 declare const window: any;
-
 
 export class Player {
     public player: any;

@@ -100,6 +100,12 @@
   dependencies:
     "@types/node" "*"
 
+"@types/uuid@^2.0.29":
+  version "2.0.29"
+  resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-2.0.29.tgz#939a198ab73567f811ab84f670d2be9c25addd41"
+  dependencies:
+    "@types/node" "*"
+
 abbrev@1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.0.tgz#d0554c2256636e2f56e7c2e5ad183f859428d81f"
@@ -3133,11 +3139,7 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-typescript@^2.1.4:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.3.0.tgz#2e63e09284392bc8158a2444c33e2093795c0418"
-
-typescript@^2.3.1:
+typescript@^2.1.4, typescript@^2.3.1:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.3.2.tgz#f0f045e196f69a72f06b25fd3bd39d01c3ce9984"
 
