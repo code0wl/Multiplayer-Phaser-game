@@ -1,7 +1,7 @@
 import {KeyBoardControl} from "../../controls/keyboard.class";
 import {Projectile} from "../../props/powers/projectile/projectile.class";
 import {Hud} from "../../hud/hud.class";
-import * as uuidV1 from 'uuid';
+import * as uuidV1 from "uuid";
 
 declare const Phaser: any;
 declare const window: any;
@@ -25,7 +25,7 @@ export class Player {
         this.controls = new KeyBoardControl(this.gameInstance);
     }
 
-    public createPlayer(gameInstance) {
+    public createPlayer(gameInstance): void {
         this.player = gameInstance.add.sprite(50, 50, 'shooter-sprite');
         this.player.id = uuidV1();
         gameInstance.physics.arcade.enable(this.player);
@@ -40,7 +40,7 @@ export class Player {
         this.player.health = 100;
         Hud.view(gameInstance, this.player);
         this.assignPickup(gameInstance, this.player);
-        window.socket.emit('player:created', this.player.id);
+        this.syncPlayer(this.player);
     }
 
     public view(): void {
@@ -70,6 +70,15 @@ export class Player {
             x: this.player.body.x,
             y: this.player.body.y,
             r: this.player.rotation
+        });
+    }
+
+    syncPlayer(player): void {
+        window.socket.emit('player:created', {
+            id: player.id,
+            x: player.position.x,
+            y: player.position.y,
+            r: player.rotation
         });
     }
 

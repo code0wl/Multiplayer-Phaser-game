@@ -11,8 +11,6 @@ app.get('/', (req, res) => {
 
 io.on('connection', socket => {
 
-    let playersCollection = [];
-
     socket.on('authentication:successful', msg => {
         io.emit('player:add');
     });
@@ -21,13 +19,31 @@ io.on('connection', socket => {
         io.emit('player:location', location);
     });
 
-    socket.on('player:created', (id) => {
-        playersCollection.push(id);
-        console.log('Total players on server: ' + playersCollection.length);
-        console.log(playersCollection);
-    })
+    socket.on('player:created', (player) => {
+        socket.player = {
+            id: player.id,
+            x: player.x,
+            y: player.y
+        };
+        socket.emit('allplayers', getAllPlayers());
+        socket.broadcast.emit('newplayer', socket.player);
+    });
 
+    socket.on('disconnect', () => {
+        io.emit('remove', socket.player.id);
+    });
 });
+
+function getAllPlayers() {
+    const playerCollection = [];
+    Object.keys(io.sockets.connected).forEach((socketID) => {
+        let player = io.sockets.connected[socketID].player;
+        if (player) {
+            playerCollection.push(player);
+        }
+    });
+    return playerCollection;
+}
 
 http.listen(3000, () => {
     console.log('listening on localhost:3000');

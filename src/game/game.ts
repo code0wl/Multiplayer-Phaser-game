@@ -6,6 +6,7 @@ declare const window: any;
 
 export class Game {
     private player: Player;
+    private game: any;
 
     constructor() {
         window.socket = io.connect('http://localhost:3000');
@@ -24,6 +25,7 @@ export class Game {
     }
 
     protected gameProperties(game): void {
+        this.game = game;
         game.stage.disableVisibilityChange = true;
         game.add.sprite(0, 0, 'space');
         game.time.desiredFps = 60;
