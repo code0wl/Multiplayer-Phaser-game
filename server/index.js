@@ -15,10 +15,6 @@ io.on('connection', socket => {
         io.emit('player:add');
     });
 
-    socket.on('player:coordinates', location => {
-        io.emit('player:location', location);
-    });
-
     socket.on('player:created', (player) => {
         socket.player = {
             id: player.id,
@@ -29,10 +25,16 @@ io.on('connection', socket => {
         socket.broadcast.emit('newplayer', socket.player);
     });
 
+    socket.on('player:coordinates', handleMovement);
+
     socket.on('disconnect', () => {
         io.emit('remove', socket.player.id);
     });
 });
+
+function handleMovement(location) {
+    io.emit('player:location', location);
+}
 
 function getAllPlayers() {
     const playerCollection = [];
