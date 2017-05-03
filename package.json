@@ -1,12 +1,12 @@
 {
   "name": "starter-kit",
   "version": "1.0.0",
-  "description": "A simple starterkit for a local playground or project",
+  "description": "Simple multiplayer game with rxjs, phaser and typescript",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:dev": "webpack-dev-server --watch --inline",
-    "start": "node server/index.js"
+    "start:dev": "tsc src/server/server.ts && node src/server/server.js && webpack -w",
+    "start": "tsc src/server/server.ts && node src/server/server.js"
   },
   "repository": {
     "type": "git",
@@ -40,7 +40,6 @@
     "typescript": "^2.3.1",
     "typings": "^2.1.0",
     "webpack": "^2.4.1",
-    "webpack-dev-server": "^2.4.5",
     "yarn": "^0.22.0"
   }
 }

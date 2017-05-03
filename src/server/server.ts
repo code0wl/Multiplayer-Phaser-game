@@ -1,7 +1,6 @@
 const app = require('express')(); // new express instance
 const express = require('express');
 const http = require('http').Server(app);
-const
 const io = require('socket.io')(http);
 
 app.use(express.static('public'));

@@ -1,2 +1,2 @@
 import './src/index';
-import './src/scenes/login';
+import './src/client/scenes/login';
