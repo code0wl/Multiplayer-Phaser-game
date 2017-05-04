@@ -5,7 +5,7 @@ declare const io: any;
 declare const window: any;
 
 export class Game {
-    public players: Array<string>;
+    public players: Array<Player>;
     public gameState: string;
     public winner: Object;
     private player: Player;
