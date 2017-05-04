@@ -2,6 +2,11 @@ const app = require('express')(); // new express instance
 const express = require('express');
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
+import {Galaxy} from "./game/galaxy";
+
+const game = new Galaxy();
+
+console.log(game);
 
 app.use(express.static('public'));
 
