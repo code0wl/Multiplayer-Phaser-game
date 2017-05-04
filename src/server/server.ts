@@ -28,7 +28,9 @@ io.on('connection', socket => {
     socket.on('player:coordinates', handleMovement);
 
     socket.on('disconnect', () => {
-        io.emit('remove', socket.player.id);
+        if (socket.player) {
+            io.emit('remove', socket.player.id);
+        }
     });
 });
 
