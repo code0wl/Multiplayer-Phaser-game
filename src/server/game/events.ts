@@ -1,9 +1,11 @@
+
+
 export class Events {
 
-    private
+    public winner: string;
 
     constructor() {
-
+        this.winner = 'player:winner';
     }
 
 }
