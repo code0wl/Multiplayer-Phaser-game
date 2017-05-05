@@ -1,3 +1,4 @@
+import {Player} from "../client/actors/player/player.class";
 const app = require('express')(); // new express instance
 const express = require('express');
 const http = require('http').Server(app);
@@ -9,46 +10,62 @@ app.get('/', (req, res) => {
     res.sendfile(`./index.html`);
 });
 
-io.on('connection', socket => {
+class GameServer {
 
-    socket.on('authentication:successful', msg => {
-        io.emit('player:add');
-    });
+    playerCollection: Array<Player>
 
-    socket.on('player:created', (player) => {
-        socket.player = {
-            id: player.id,
-            x: player.x,
-            y: player.y
-        };
-        socket.emit('allplayers', getAllPlayers());
-        socket.broadcast.emit('newplayer', socket.player);
-    });
+    constructor() {
+        this.attachEvents();
+        this.playerCollection = [];
+    }
 
-    socket.on('player:coordinates', handleMovement);
+    public connect(port) {
+        http.listen(port, () => {
+           
+        });
+    }
 
-    socket.on('disconnect', () => {
-        if (socket.player) {
-            io.emit('remove', socket.player.id);
-        }
-    });
-});
+    private handleMovement(location) {
+        io.emit('player:location', location);
+    }
 
-function handleMovement(location) {
-    io.emit('player:location', location);
+    private getAllPlayers() {
+        Object.keys(io.sockets.connected).forEach((socketID) => {
+            let player = io.sockets.connected[socketID].player;
+            if (player) {
+                this.playerCollection.push(player);
+            }
+        });
+        return this.playerCollection;
+    }
+
+    private attachEvents() {
+        io.on('connection', socket => {
+            socket.on('authentication:successful', msg => {
+                io.emit('player:add');
+            });
+
+            socket.on('player:created', (player) => {
+                socket.player = {
+                    id: player.id,
+                    x: player.x,
+                    y: player.y
+                };
+                socket.emit('allplayers', getAllPlayers());
+                socket.broadcast.emit('newplayer', socket.player);
+            });
+
+            socket.on('player:coordinates', handleMovement);
+
+            socket.on('disconnect', () => {
+                if (socket.player) {
+                    io.emit('remove', socket.player.id);
+                }
+            });
+        });
+    }
 }
 
-function getAllPlayers() {
-    const playerCollection = [];
-    Object.keys(io.sockets.connected).forEach((socketID) => {
-        let player = io.sockets.connected[socketID].player;
-        if (player) {
-            playerCollection.push(player);
-        }
-    });
-    return playerCollection;
-}
+const gameSession = new GameServer();
 
-http.listen(3000, () => {
-    console.log('listening on localhost:3000');
-});
+gameSession.connect();
