@@ -1,4 +1,4 @@
-import {Receive} from "./../shared/events.model";
+import {Broadcast, Receive} from "./../shared/events.model";
 import {Player} from "../client/actors/player/player.class";
 const express = require('express');
 const app = express();
@@ -40,20 +40,19 @@ class GameServer {
         return this.playerCollection;
     }
 
-    private  randomInt(low, high) {
+    private randomInt(low, high) {
         return Math.floor(Math.random() * (high - low) + low);
     }
 
     private attachEvents() {
         io.on('connection', socket => {
-            socket.on(Receive.authentication, player => {
-                socket.player = {
-                    id: player.id,
-                    x: this.randomInt(100, 400),
-                    y: this.randomInt(100, 400)
-                };
+
+            socket.on(Receive.authentication, (msg) => {
+                socket.emit(Broadcast.joined);
+            });
+
+            socket.on(Receive.created, (player) => {
                 socket.emit('allplayers', this.getAllPlayers());
-                socket.broadcast.emit(Receive.joined, socket.player);
             });
 
             socket.on('player:coordinates', this.handleMovement);

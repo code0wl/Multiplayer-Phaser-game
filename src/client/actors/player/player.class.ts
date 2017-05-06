@@ -2,6 +2,7 @@ import {KeyBoardControl} from "../../controls/keyboard.class";
 import {Projectile} from "../../props/powers/projectile/projectile.class";
 import {Hud} from "../../hud/hud.class";
 import * as uuidV1 from "uuid";
+import {Broadcast} from "../../../shared/events.model";
 
 declare const Phaser: any;
 declare const window: any;
@@ -37,6 +38,7 @@ export class Player {
         Hud.view(gameInstance, this.player);
         this.assignPickup(gameInstance, this.player);
         this.addControls();
+        this.syncPlayer(this.player);
     }
 
     public view(): void {
@@ -61,12 +63,21 @@ export class Player {
             }
         }
 
-        // window.socket.emit('player:coordinates', {
-        //     x: this.player.body.x,
-        //     y: this.player.body.y,
-        //     r: this.player.rotation
-        // });
+        window.socket.emit('player:coordinates', {
+            x: this.player.body.x,
+            y: this.player.body.y,
+            r: this.player.rotation
+        });
 
+    }
+
+    private syncPlayer(player): void {
+        window.socket.emit(Broadcast.created, {
+            id: player.id,
+            x: this.player.body.x,
+            y: this.player.body.y,
+            r: this.player.rotation
+        });
     }
 
     private addControls(): void {
