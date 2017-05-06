@@ -1,3 +1,3 @@
-import {PhaserSpaceGame} from "./client/engine/phaser-engine.class";
+import { PhaserSpaceGame } from "./client/engine/phaser-engine.class";
 
-new PhaserSpaceGame(this);
+new PhaserSpaceGame();

@@ -1,5 +1,6 @@
-import { Player } from "../actors/player/player.class";
-import { Receive } from "../../shared/events.model";
+import {Receive} from "../../shared/events.model";
+import {Player} from "../actors/player/player.class";
+import {Enemy} from "../actors/player/enemy.class";
 
 declare const Phaser: any;
 declare const io: any;
@@ -10,17 +11,23 @@ export class Game {
     public gameState: string;
     public winner: Object;
     private player: Player;
+    private enemy: Enemy;
     private receive: Receive;
     protected game: any;
 
-    constructor() { 
+    constructor() {
         window.socket = io.connect('http://localhost:3000');
+        window.localStorage.debug = '*';
     }
 
     protected loadActors(): void {
         this.receive = new Receive();
         return window.socket.on(this.receive.joined, () => {
-            this.player = new Player(this);
+            if (this.player) {
+                this.enemy = new Enemy(this);
+            } else {
+                this.player = new Player(this);
+            }
         });
     }
 
