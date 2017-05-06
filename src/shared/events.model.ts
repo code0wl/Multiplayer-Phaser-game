@@ -7,6 +7,7 @@ export class Broadcast {
     public static gameError: 'game:error';
     public static created: string = 'player:created';
     public static players: string = 'players:collection';
+    public static coordinates: string = 'player:coordinates';
 }
 
 export class Receive {
@@ -14,4 +15,5 @@ export class Receive {
     public static created: string = 'player:created';
     public static authentication: string = 'authentication:successful';
     public static quit: string = 'player:left';
+    public static coordinates: string = 'player:coordinates';
 }

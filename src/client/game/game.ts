@@ -14,12 +14,13 @@ export class Game {
     protected game: any;
 
     constructor() {
-        window.socket = io.connect('http://localhost:3000');
+        window.socket = io.connect();
     }
 
     protected loadActors(): void {
-        window.socket.on(Receive.joined, () => {
-            this.player = new Player(this);
+        window.socket.on(Receive.joined, (player) => {
+            console.log('creating new player')
+            this.player = new Player(this, player);
         });
     }
 

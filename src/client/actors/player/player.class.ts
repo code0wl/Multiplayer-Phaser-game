@@ -17,13 +17,13 @@ export class Player {
     private powerUp = [];
     private projectile: Projectile;
 
-    constructor(private gameInstance: any) {
+    constructor(private gameInstance: any, private data?: any) {
         this.storage = window.localStorage;
         this.createPlayer(this.gameInstance);
     }
 
     public createPlayer(gameInstance): void {
-        this.player = gameInstance.add.sprite(this.randomInt(200, 600), this.randomInt(200, 600), 'shooter-sprite');
+        this.player = gameInstance.add.sprite(50, 50, 'shooter-sprite');
         this.player.id = uuidV1();
         gameInstance.physics.arcade.enable(this.player);
         this.player.body.bounce.y = 0;
@@ -33,12 +33,11 @@ export class Player {
         this.player.body.drag.set(80);
         this.player.body.maxVelocity.set(100);
         this.player.body.collideWorldBounds = true;
-        this.player.name = this.storage.getItem('name');
+        this.player.name = this.storage.getItem('name') ? this.storage.getItem('name') : this.data.name;
         this.player.health = 100;
         Hud.view(gameInstance, this.player);
         this.assignPickup(gameInstance, this.player);
         this.addControls();
-        this.syncPlayer(this.player);
     }
 
     public view(): void {
@@ -63,25 +62,12 @@ export class Player {
             }
         }
 
-        window.socket.emit('player:coordinates', {
+        window.socket.emit(Broadcast.coordinates, {
             x: this.player.body.x,
             y: this.player.body.y,
             r: this.player.rotation
         });
 
-    }
-
-    private randomInt(low, high): number {
-        return Math.floor(Math.random() * (high - low) + low);
-    }
-
-    private syncPlayer(player): void {
-        window.socket.emit(Broadcast.created, {
-            id: player.id,
-            x: this.player.body.x,
-            y: this.player.body.y,
-            r: this.player.rotation
-        });
     }
 
     private addControls(): void {

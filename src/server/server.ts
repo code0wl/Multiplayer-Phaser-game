@@ -1,5 +1,4 @@
 import {Broadcast, Receive} from "./../shared/events.model";
-import {Player} from "../client/actors/player/player.class";
 const express = require('express');
 const app = express();
 const http = require('http').Server(app);
@@ -13,11 +12,9 @@ app.get('/', (req, res) => {
 
 class GameServer {
 
-    private playerCollection: Array<Player>;
-
     constructor() {
-        this.attachEvents();
-        this.playerCollection = [];
+        this.socketEvents();
+        this.renderAllPlayers = this.renderAllPlayers.bind(this);
     }
 
     public connect(port) {
@@ -30,34 +27,34 @@ class GameServer {
         io.emit('player:location', location);
     }
 
-    private getAllPlayers() {
+    private renderAllPlayers(socket): void {
+        const playerCollection = [];
         Object.keys(io.sockets.connected).forEach((socketID) => {
             let player = io.sockets.connected[socketID].player;
             if (player) {
-                this.playerCollection.push(player);
+                playerCollection.push(player);
+                socket.emit(Broadcast.joined, player);
             }
         });
-        return this.playerCollection;
     }
 
-    private attachEvents() {
+    private socketEvents() {
         io.on('connection', socket => {
 
-            socket.on(Receive.authentication, (msg) => {
+            socket.on(Receive.authentication, () => {
                 socket.emit(Broadcast.joined);
             });
 
-            socket.on(Receive.created, (player) => {
+            socket.on(Receive.joined, (player) => {
                 socket.player = player;
-                socket.emit('allplayers', this.getAllPlayers());
-                socket.broadcast.emit(Broadcast.created, socket.player);
+                socket.emit(Broadcast.players, this.renderAllPlayers(socket));
             });
 
             socket.on('player:coordinates', this.handleMovement);
 
             socket.on('disconnect', () => {
                 if (socket.player) {
-                    io.emit('remove', socket.player.id);
+                    socket.emit('remove', socket.player.id);
                 }
             });
         });
