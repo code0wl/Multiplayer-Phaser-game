@@ -10,15 +10,17 @@ export class Game {
     public gameState: string;
     public winner: Object;
     private player: Player;
-    private game: any;
+    private receive: Receive;
+    protected game: any;
 
-    constructor(private receive: Receive) {
+    constructor() { 
         window.socket = io.connect('http://localhost:3000');
     }
 
-    protected loadActors(gameInstance): void {
-        window.socket.on(this.receive.joined, () => {
-            this.player = new Player(gameInstance);
+    protected loadActors(): void {
+        this.receive = new Receive();
+        return window.socket.on(this.receive.joined, () => {
+            this.player = new Player(this);
         });
     }
 
@@ -28,15 +30,13 @@ export class Game {
         }
     }
 
-    protected gameProperties(game): void {
-        this.game = game;
-        game.stage.disableVisibilityChange = true;
-        game.add.sprite(0, 0, 'space');
-        game.time.desiredFps = 60;
-        game.renderer.clearBeforeRender = false;
-        game.renderer.roundPixels = true;
-        game.physics.startSystem(Phaser.Physics.ARCADE);
-        game.add.group().enableBody = true;
+    protected gameProperties(): void {
+        this.game.stage.disableVisibilityChange = true;
+        this.game.add.sprite(0, 0, 'space');
+        this.game.time.desiredFps = 60;
+        this.game.renderer.clearBeforeRender = false;
+        this.game.renderer.roundPixels = true;
+        this.game.physics.startSystem(Phaser.Physics.ARCADE);
+        this.game.add.group().enableBody = true;
     }
-
 }

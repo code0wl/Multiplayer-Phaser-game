@@ -1,10 +1,9 @@
+import { Broadcast } from './../shared/events.model';
 import { Player } from "../client/actors/player/player.class";
 const express = require('express');
 const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
-import { Broadcast } from '../shared/events.model';
-const broadcast = require('..Broadcast');
 
 app.use(express.static('public'));
 
@@ -15,10 +14,12 @@ app.get('/', (req, res) => {
 class GameServer {
 
     private playerCollection: Array<Player>;
+    private broadcast: Broadcast;
 
-    constructor(private broadcast: Broadcast) {
+    constructor() {
         this.attachEvents();
         this.playerCollection = [];
+        this.broadcast = new Broadcast();
     }
 
     public connect(port) {
@@ -44,7 +45,7 @@ class GameServer {
     private attachEvents() {
         io.on('connection', socket => {
             socket.on('authentication:successful', msg => {
-                io.emit(broadcast.joined);
+                io.emit(this.broadcast.joined);
             });
 
             socket.on('player:created', (player) => {

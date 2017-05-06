@@ -4,8 +4,6 @@ declare const Phaser: any;
 
 export class PhaserSpaceGame extends Game implements LifeCycle {
 
-    private game: any;
-
     constructor() {
         super();
         this.game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.AUTO, 'space-shooter', {
@@ -15,7 +13,6 @@ export class PhaserSpaceGame extends Game implements LifeCycle {
         });
     }
 
-    // make reusable
     preload(): void {
         this.game.load.crossOrigin = 'anonymous';
         this.game.load.image('space', 'assets/background.jpg');
@@ -25,8 +22,8 @@ export class PhaserSpaceGame extends Game implements LifeCycle {
     }
 
     create(): void {
-        super.gameProperties(this.game);
-        super.loadActors(this.game);
+        super.gameProperties();
+        super.loadActors();
     }
 
     update(): void {
