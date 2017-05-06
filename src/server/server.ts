@@ -1,5 +1,5 @@
-import { Broadcast } from './../shared/events.model';
-import { Player } from "../client/actors/player/player.class";
+import {Receive} from "./../shared/events.model";
+import {Player} from "../client/actors/player/player.class";
 const express = require('express');
 const app = express();
 const http = require('http').Server(app);
@@ -14,12 +14,10 @@ app.get('/', (req, res) => {
 class GameServer {
 
     private playerCollection: Array<Player>;
-    private broadcast: Broadcast;
 
     constructor() {
         this.attachEvents();
         this.playerCollection = [];
-        this.broadcast = new Broadcast();
     }
 
     public connect(port) {
@@ -42,20 +40,20 @@ class GameServer {
         return this.playerCollection;
     }
 
+    private  randomInt(low, high) {
+        return Math.floor(Math.random() * (high - low) + low);
+    }
+
     private attachEvents() {
         io.on('connection', socket => {
-            socket.on('authentication:successful', msg => {
-                io.emit(this.broadcast.joined);
-            });
-
-            socket.on('player:created', (player) => {
+            socket.on(Receive.authentication, player => {
                 socket.player = {
                     id: player.id,
-                    x: player.x,
-                    y: player.y
+                    x: this.randomInt(100, 400),
+                    y: this.randomInt(100, 400)
                 };
                 socket.emit('allplayers', this.getAllPlayers());
-                socket.broadcast.emit('newplayer', socket.player);
+                socket.broadcast.emit(Receive.joined, socket.player);
             });
 
             socket.on('player:coordinates', this.handleMovement);

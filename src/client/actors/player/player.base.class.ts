@@ -3,7 +3,6 @@ import {Projectile} from "../../props/powers/projectile/projectile.class";
 import {Hud} from "../../hud/hud.class";
 import * as uuidV1 from "uuid";
 
-declare const Phaser: any;
 declare const window: any;
 
 export class Enemy {
@@ -31,7 +30,7 @@ export class Enemy {
         this.player.body.drag.set(80);
         this.player.body.maxVelocity.set(100);
         this.player.body.collideWorldBounds = true;
-        this.player.name = this.storage.getItem('name');
+        this.player.name = this.storage.getItem('name') + ' (enemy)';
         this.player.health = 100;
         Hud.view(gameInstance, this.player);
         this.assignPickup(gameInstance, this.player);

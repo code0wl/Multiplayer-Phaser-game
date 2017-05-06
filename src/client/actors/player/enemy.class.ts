@@ -14,13 +14,13 @@ export class Enemy {
     private powerUp = [];
     private projectile: Projectile;
 
-    constructor(private gameInstance: any) {
+    constructor(private gameInstance: any, private position: any) {
         this.storage = window.localStorage;
         this.createPlayer(this.gameInstance);
     }
 
     public createPlayer(gameInstance): void {
-        this.player = gameInstance.add.sprite(50, 50, 'shooter-sprite');
+        this.player = gameInstance.add.sprite(this.position.x, this.position.y, 'shooter-sprite');
         this.player.id = uuidV1();
         gameInstance.physics.arcade.enable(this.player);
         this.player.body.bounce.y = 0;
@@ -34,6 +34,7 @@ export class Enemy {
         this.player.health = 100;
         Hud.view(gameInstance, this.player);
         this.assignPickup(gameInstance, this.player);
+        console.log('created enemy at ', this.position.x + ' ' + this.position.y);
     }
 
     private assignPickup(game, player): void {

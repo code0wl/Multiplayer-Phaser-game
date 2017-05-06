@@ -17,14 +17,13 @@ export class Game {
 
     constructor() {
         window.socket = io.connect('http://localhost:3000');
-        window.localStorage.debug = '*';
     }
 
     protected loadActors(): void {
-        this.receive = new Receive();
-        return window.socket.on(this.receive.joined, () => {
+        return window.socket.on(Receive.joined, (position) => {
+            console.log('position', position);
             if (this.player) {
-                this.enemy = new Enemy(this);
+                this.enemy = new Enemy(this, position);
             } else {
                 this.player = new Player(this);
             }

@@ -1,9 +1,9 @@
-declare const socket: any;
-
+import {Broadcast} from "../../shared/events.model";
+declare const window: any;
 export class Login {
 
-    name: any;
-    formContainer: any;
+    private name: any;
+    private formContainer: any;
 
     constructor() {
         this.formContainer = document.querySelector('.form-container');
@@ -14,14 +14,14 @@ export class Login {
         button.addEventListener('click', this.createPlayer);
     }
 
-    createPlayer(e): void {
+    private createPlayer(e): void {
         e.preventDefault();
         window.localStorage.setItem('name', this.name.value);
-        socket.emit('authentication:successful', this.name.value);
+        window.socket.emit(Broadcast.authentication, this.name.value);
         this.toggleLogin();
     }
 
-    toggleLogin(): void {
+    private toggleLogin(): void {
         this.formContainer.classList.toggle('visible');
     }
 
