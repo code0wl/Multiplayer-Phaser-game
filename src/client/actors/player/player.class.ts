@@ -23,7 +23,7 @@ export class Player {
     }
 
     public createPlayer(gameInstance): void {
-        this.player = gameInstance.add.sprite(this.randomInt(100, 400), this.randomInt(100, 400), 'shooter-sprite');
+        this.player = gameInstance.add.sprite(this.randomInt(200, 600), this.randomInt(200, 600), 'shooter-sprite');
         this.player.id = uuidV1();
         gameInstance.physics.arcade.enable(this.player);
         this.player.body.bounce.y = 0;
