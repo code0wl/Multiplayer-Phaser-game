@@ -21,7 +21,7 @@ class GameServer {
 
     public connect(port) {
         http.listen(port, () => {
-           
+            console.info(`Listening on port ${port}`);
         });
     }
 
@@ -51,11 +51,11 @@ class GameServer {
                     x: player.x,
                     y: player.y
                 };
-                socket.emit('allplayers', getAllPlayers());
+                socket.emit('allplayers', this.getAllPlayers());
                 socket.broadcast.emit('newplayer', socket.player);
             });
 
-            socket.on('player:coordinates', handleMovement);
+            socket.on('player:coordinates', this.handleMovement);
 
             socket.on('disconnect', () => {
                 if (socket.player) {
@@ -68,4 +68,4 @@ class GameServer {
 
 const gameSession = new GameServer();
 
-gameSession.connect();
+gameSession.connect(3000);
