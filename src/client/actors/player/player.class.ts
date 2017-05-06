@@ -17,7 +17,7 @@ export class Player {
     private powerUp = [];
     private projectile: Projectile;
 
-    constructor(private gameInstance: any, private data?: any) {
+    constructor(private gameInstance: any) {
         this.storage = window.localStorage;
         this.createPlayer(this.gameInstance);
     }
@@ -33,11 +33,12 @@ export class Player {
         this.player.body.drag.set(80);
         this.player.body.maxVelocity.set(100);
         this.player.body.collideWorldBounds = true;
-        this.player.name = this.storage.getItem('name') ? this.storage.getItem('name') : this.data.name;
+        this.player.name = this.storage.getItem('name');
         this.player.health = 100;
         Hud.view(gameInstance, this.player);
         this.assignPickup(gameInstance, this.player);
         this.addControls();
+        this.syncPlayer(this.player);
     }
 
     public view(): void {
@@ -68,6 +69,16 @@ export class Player {
             r: this.player.rotation
         });
 
+    }
+
+    private syncPlayer(player): void {
+        window.socket.emit(Broadcast.created, {
+            id: player.id,
+            name: player.name,
+            x: this.player.body.x,
+            y: this.player.body.y,
+            r: this.player.rotation
+        });
     }
 
     private addControls(): void {

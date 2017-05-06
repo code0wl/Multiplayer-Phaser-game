@@ -14,7 +14,6 @@ class GameServer {
 
     constructor() {
         this.socketEvents();
-        this.renderAllPlayers = this.renderAllPlayers.bind(this);
     }
 
     public connect(port) {
@@ -27,17 +26,6 @@ class GameServer {
         io.emit('player:location', location);
     }
 
-    private renderAllPlayers(socket): void {
-        const playerCollection = [];
-        Object.keys(io.sockets.connected).forEach((socketID) => {
-            let player = io.sockets.connected[socketID].player;
-            if (player) {
-                playerCollection.push(player);
-                socket.emit(Broadcast.joined, player);
-            }
-        });
-    }
-
     private socketEvents() {
         io.on('connection', socket => {
 
@@ -45,9 +33,14 @@ class GameServer {
                 socket.emit(Broadcast.joined);
             });
 
-            socket.on(Receive.joined, (player) => {
+            socket.on(Receive.created, (player) => {
+                const playerCollection = [];
                 socket.player = player;
-                socket.emit(Broadcast.players, this.renderAllPlayers(socket));
+                playerCollection.push(player);
+                playerCollection.map((player) => {
+                    console.log(player);
+                    socket.broadcast.emit(Broadcast.joined, socket.player);
+                });
             });
 
             socket.on('player:coordinates', this.handleMovement);
