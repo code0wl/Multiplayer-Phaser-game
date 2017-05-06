@@ -40,10 +40,6 @@ class GameServer {
         return this.playerCollection;
     }
 
-    private randomInt(low, high) {
-        return Math.floor(Math.random() * (high - low) + low);
-    }
-
     private attachEvents() {
         io.on('connection', socket => {
 
@@ -52,7 +48,9 @@ class GameServer {
             });
 
             socket.on(Receive.created, (player) => {
+                socket.player = player;
                 socket.emit('allplayers', this.getAllPlayers());
+                socket.broadcast.emit(Broadcast.created, socket.player);
             });
 
             socket.on('player:coordinates', this.handleMovement);

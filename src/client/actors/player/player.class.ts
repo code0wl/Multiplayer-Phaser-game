@@ -23,7 +23,7 @@ export class Player {
     }
 
     public createPlayer(gameInstance): void {
-        this.player = gameInstance.add.sprite(50, 50, 'shooter-sprite');
+        this.player = gameInstance.add.sprite(this.randomInt(100, 400), this.randomInt(100, 400), 'shooter-sprite');
         this.player.id = uuidV1();
         gameInstance.physics.arcade.enable(this.player);
         this.player.body.bounce.y = 0;
@@ -69,6 +69,10 @@ export class Player {
             r: this.player.rotation
         });
 
+    }
+
+    private randomInt(low, high): number {
+        return Math.floor(Math.random() * (high - low) + low);
     }
 
     private syncPlayer(player): void {
