@@ -1,4 +1,5 @@
-import {Player} from "../actors/player/player.class";
+import { Player } from "../actors/player/player.class";
+import { Receive } from "../../shared/events.model";
 
 declare const Phaser: any;
 declare const io: any;
@@ -11,12 +12,12 @@ export class Game {
     private player: Player;
     private game: any;
 
-    constructor() {
+    constructor(private receive: Receive) {
         window.socket = io.connect('http://localhost:3000');
     }
 
     protected loadActors(gameInstance): void {
-        window.socket.on('player:add', () => {
+        window.socket.on(this.receive.joined, () => {
             this.player = new Player(gameInstance);
         });
     }

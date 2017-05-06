@@ -1,8 +1,10 @@
-import {Player} from "../client/actors/player/player.class";
+import { Player } from "../client/actors/player/player.class";
 const express = require('express');
 const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
+import { Broadcast } from '../shared/events.model';
+const broadcast = require('..Broadcast');
 
 app.use(express.static('public'));
 
@@ -14,7 +16,7 @@ class GameServer {
 
     private playerCollection: Array<Player>;
 
-    constructor() {
+    constructor(private broadcast: Broadcast) {
         this.attachEvents();
         this.playerCollection = [];
     }
@@ -42,7 +44,7 @@ class GameServer {
     private attachEvents() {
         io.on('connection', socket => {
             socket.on('authentication:successful', msg => {
-                io.emit('player:add');
+                io.emit(broadcast.joined);
             });
 
             socket.on('player:created', (player) => {
