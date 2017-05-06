@@ -1,6 +1,6 @@
 import {Player} from "../client/actors/player/player.class";
-const app = require('express')(); // new express instance
 const express = require('express');
+const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
 
 class GameServer {
 
-    playerCollection: Array<Player>
+    private playerCollection: Array<Player>;
 
     constructor() {
         this.attachEvents();
