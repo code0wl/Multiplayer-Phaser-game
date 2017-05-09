@@ -44,9 +44,7 @@ class GameServer {
             socket.on('player:coordinates', this.handleMovement);
 
             socket.on('disconnect', () => {
-                if (socket.player) {
-                    socket.emit('remove', socket.player.id);
-                }
+                socket.emit(Broadcast.quit, socket.player.id);
             });
         });
     }

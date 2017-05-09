@@ -13,6 +13,7 @@ export class Broadcast {
 export class Receive {
     public static joined: string = 'player:joined';
     public static created: string = 'player:created';
+    public static players: string = 'players:collection';
     public static authentication: string = 'authentication:successful';
     public static quit: string = 'player:left';
     public static coordinates: string = 'player:coordinates';

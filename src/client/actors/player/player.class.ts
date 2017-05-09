@@ -17,13 +17,14 @@ export class Player {
     private powerUp = [];
     private projectile: Projectile;
 
-    constructor(private gameInstance: any) {
+    constructor(private gameInstance: any, private coordinates: any) {
         this.storage = window.localStorage;
         this.createPlayer(this.gameInstance);
+        this.coordinates = coordinates;
     }
 
     public createPlayer(gameInstance): void {
-        this.player = gameInstance.add.sprite(50, 50, 'shooter-sprite');
+        this.player = gameInstance.add.sprite(this.coordinates.x, this.coordinates.y, 'shooter-sprite');
         this.player.id = uuidV1();
         gameInstance.physics.arcade.enable(this.player);
         this.player.body.bounce.y = 0;

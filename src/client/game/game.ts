@@ -18,10 +18,14 @@ export class Game {
     }
 
     protected loadActors(): void {
-        this.player = new Player(this);
+        this.player = new Player(this, {x: 50, y: 50});
         window.socket.on(Receive.joined, (player) => {
-            console.log(player);
-            new Player(this);
+            new Player(this, player);
+        });
+        window.socket.on(Receive.players, (players) => {
+            players.map((player) => {
+                new Player(this, player);
+            });
         });
     }
 
@@ -29,6 +33,14 @@ export class Game {
         if (this.player) {
             this.player.view();
         }
+
+        window.socket.on(Receive.quit, (id) => {
+            this.removePlayer(id);
+        });
+    }
+
+    private removePlayer(id): void {
+        this.players.filter
     }
 
     protected gameProperties(): void {
