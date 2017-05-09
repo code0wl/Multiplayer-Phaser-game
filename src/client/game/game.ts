@@ -18,9 +18,10 @@ export class Game {
     }
 
     protected loadActors(): void {
+        this.player = new Player(this);
         window.socket.on(Receive.joined, (player) => {
-            console.log('creating new player');
-            this.player = new Player(this);
+            console.log(player);
+            new Player(this);
         });
     }
 

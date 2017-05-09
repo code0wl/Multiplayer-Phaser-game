@@ -38,7 +38,6 @@ export class Player {
         Hud.view(gameInstance, this.player);
         this.assignPickup(gameInstance, this.player);
         this.addControls();
-        this.syncPlayer(this.player);
     }
 
     public view(): void {
@@ -69,16 +68,6 @@ export class Player {
             r: this.player.rotation
         });
 
-    }
-
-    private syncPlayer(player): void {
-        window.socket.emit(Broadcast.created, {
-            id: player.id,
-            name: player.name,
-            x: this.player.body.x,
-            y: this.player.body.y,
-            r: this.player.rotation
-        });
     }
 
     private addControls(): void {
