@@ -1,4 +1,4 @@
-import {Receive} from "../../shared/events.model";
+import {PlayerEvent} from "../../shared/events.model";
 import {Player} from "../actors/player/player.class";
 
 declare const Phaser: any;
@@ -7,10 +7,7 @@ declare const window: any;
 
 export class Game {
     public players: Array<Player>;
-    public gameState: string;
-    public winner: Object;
     private player: Player;
-    private receive: Receive;
     protected game: any;
 
     constructor() {
@@ -19,10 +16,12 @@ export class Game {
 
     protected loadActors(): void {
         this.player = new Player(this, {x: 50, y: 50});
-        window.socket.on(Receive.joined, (player) => {
-            new Player(this, player);
+
+        window.socket.on(PlayerEvent.joined, (location) => {
+            new Player(this, location);
         });
-        window.socket.on(Receive.players, (players) => {
+
+        window.socket.on(PlayerEvent.players, (players) => {
             players.map((player) => {
                 new Player(this, player);
             });
@@ -34,13 +33,13 @@ export class Game {
             this.player.view();
         }
 
-        window.socket.on(Receive.quit, (id) => {
+        window.socket.on(PlayerEvent.quit, (id) => {
             this.removePlayer(id);
         });
     }
 
     private removePlayer(id): void {
-        this.players.filter
+        this.players.filter;
     }
 
     protected gameProperties(): void {

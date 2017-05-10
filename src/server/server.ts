@@ -1,4 +1,4 @@
-import {Broadcast, Receive} from "./../shared/events.model";
+import {GameEvent, PlayerEvent, ServerEvent} from "./../shared/events.model";
 const express = require('express');
 const app = express();
 const http = require('http').Server(app);
@@ -26,26 +26,29 @@ class GameServer {
     }
 
     private handleMovement(location) {
-        io.emit('player:location', location);
+        io.emit(PlayerEvent.coordinates, location);
     }
 
     private socketEvents() {
-        io.on('connection', socket => {
-            socket.on(Receive.authentication, (player) => {
+        io.on(ServerEvent.connected, socket => {
+            socket.on(GameEvent.authentication, (player) => {
                 socket.player = {
                     id: uuid(),
                     x: this.randomInt(100, 400),
                     y: this.randomInt(100, 400)
                 };
-                socket.emit(Broadcast.players, this.getAllPlayers());
-                socket.broadcast.emit(Broadcast.joined, socket.player);
+                socket.emit(PlayerEvent.players, this.getAllPlayers());
+                socket.broadcast.emit(PlayerEvent.joined, socket.player);
             });
 
-            socket.on('player:coordinates', this.handleMovement);
+            socket.on(PlayerEvent.coordinates, this.handleMovement);
 
-            socket.on('disconnect', () => {
-                socket.emit(Broadcast.quit, socket.player.id);
+            socket.on(ServerEvent.disconnected, () => {
+                if (socket.player) {
+                    socket.emit(PlayerEvent.quit, socket.player.id);
+                }
             });
+
         });
     }
 

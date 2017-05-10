@@ -1,4 +1,4 @@
-import {Broadcast} from "../../shared/events.model";
+import {GameEvent} from "../../shared/events.model";
 declare const window: any;
 export class Login {
 
@@ -17,7 +17,7 @@ export class Login {
     private createPlayer(e): void {
         e.preventDefault();
         window.localStorage.setItem('name', this.name.value);
-        window.socket.emit(Broadcast.authentication, this.name.value);
+        window.socket.emit(GameEvent.authentication, this.name.value);
         this.toggleLogin();
     }
 

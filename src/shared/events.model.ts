@@ -1,20 +1,18 @@
-export class Broadcast {
-    public static joined: string = 'player:joined';
-    public static quit: string = 'player:left';
+export class GameEvent {
+    public static authentication: string = 'authentication:successful';
     public static gameEnd: 'game:over';
     public static gameStart: 'game:start';
-    public static authentication: string = 'authentication:successful';
     public static gameError: 'game:error';
-    public static created: string = 'player:created';
-    public static players: string = 'players:collection';
-    public static coordinates: string = 'player:coordinates';
 }
 
-export class Receive {
+export class ServerEvent {
+    public static connected: string = 'connection';
+    public static disconnected: string = 'disconnect';
+}
+
+export class PlayerEvent {
     public static joined: string = 'player:joined';
-    public static created: string = 'player:created';
     public static players: string = 'players:collection';
-    public static authentication: string = 'authentication:successful';
     public static quit: string = 'player:left';
     public static coordinates: string = 'player:coordinates';
 }
