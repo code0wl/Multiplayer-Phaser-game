@@ -8,7 +8,7 @@ declare const window: any;
 
 export class Game {
     public players: Array<Player>;
-    private player: Player;
+    private player: any;
     protected game: any;
 
     constructor() {
@@ -17,11 +17,14 @@ export class Game {
     }
 
     protected loadActors(): void {
-        this.player = new Player(this, {x: 50, y: 50});
         this.players = [];
 
         window.socket.on(PlayerEvent.joined, (location) => {
             new Player(this, location);
+        });
+
+        window.socket.on(PlayerEvent.mainActorJoined, (location) => {
+            this.player = new Player(this, location);
         });
 
         window.socket.on(PlayerEvent.players, (players) => {
@@ -30,12 +33,15 @@ export class Game {
             });
         });
 
-        window.socket.on(PlayerEvent.quit, (id) => {
-            console.log('this player should be removed => ', id);
+        window.socket.on(PlayerEvent.quit, (playerId) => {
+            console.log(playerId, this.players);
+            if (playerId) {
+                this.players = this.players.splice(this.players.indexOf(playerId), 1);
+            }
         });
     }
 
-    protected gameUpdate() {
+    protected gameUpdate(): void {
         if (this.player) {
             this.player.view();
         }
@@ -50,10 +56,5 @@ export class Game {
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
         this.game.add.group().enableBody = true;
     }
-
-    private removePlayer() {
-
-    }
-
 
 }

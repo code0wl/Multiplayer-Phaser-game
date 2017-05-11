@@ -12,6 +12,7 @@ export class ServerEvent {
 
 export class PlayerEvent {
     public static joined: string = 'player:joined';
+    public static mainActorJoined: string = 'main:joined';
     public static players: string = 'players:collection';
     public static quit: string = 'player:left';
     public static coordinates: string = 'player:coordinates';

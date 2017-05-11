@@ -44,7 +44,8 @@ class GameServer {
     private addDisconnectListener(socket): void {
         socket.on(ServerEvent.disconnected, () => {
             if (socket.player) {
-                socket.emit(PlayerEvent.quit, socket.player);
+                socket.broadcast.emit(PlayerEvent.quit, socket.player.id);
+                this.getAllPlayers();
             }
         })
     }
@@ -60,6 +61,7 @@ class GameServer {
     private addSignOnListener(socket): void {
         socket.on(GameEvent.authentication, (player) => {
             socket.emit(PlayerEvent.players, this.getAllPlayers());
+            socket.emit(PlayerEvent.mainActorJoined, player);
             socket.broadcast.emit(PlayerEvent.joined, this.createPlayer(socket));
         });
     }
@@ -67,12 +69,11 @@ class GameServer {
     private getAllPlayers(): any {
         const players = [];
         Object.keys(io.sockets.connected).map((socketID) => {
-            let player = io.sockets.connected[socketID].player;
+            const player = io.sockets.connected[socketID].player;
             if (player) {
                 players.push(player);
             }
         });
-        console.log(players.length);
         return players;
     }
 
