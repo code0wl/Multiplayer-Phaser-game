@@ -31,29 +31,40 @@ class GameServer {
 
     private socketEvents() {
         io.on(ServerEvent.connected, socket => {
-            socket.on(GameEvent.authentication, (player) => {
-                socket.player = {
-                    id: uuid(),
-                    x: this.randomInt(100, 400),
-                    y: this.randomInt(100, 400)
-                };
-                socket.emit(PlayerEvent.players, this.getAllPlayers());
-                socket.broadcast.emit(PlayerEvent.joined, socket.player);
-            });
-
-            socket.on(PlayerEvent.coordinates, this.handleMovement);
-
-            socket.on(ServerEvent.disconnected, () => {
-                if (socket.player) {
-                    socket.emit(PlayerEvent.quit, socket.player.id);
-                }
-            });
-
+            this.addSignOnListener(socket);
+            this.addMovementListener(socket);
+            this.addDisconnectListener(socket);
         });
     }
 
-    private getAllPlayers() {
-        console.log('called');
+    private addMovementListener(socket) {
+        socket.on(PlayerEvent.coordinates, this.handleMovement);
+    }
+
+    private addDisconnectListener(socket): void {
+        socket.on(ServerEvent.disconnected, () => {
+            if (socket.player) {
+                socket.emit(PlayerEvent.quit, socket.player);
+            }
+        })
+    }
+
+    private createPlayer(socket): any {
+        return socket.player = {
+            id: uuid(),
+            x: this.randomInt(100, 400),
+            y: this.randomInt(100, 400)
+        };
+    }
+
+    private addSignOnListener(socket): void {
+        socket.on(GameEvent.authentication, (player) => {
+            socket.emit(PlayerEvent.players, this.getAllPlayers());
+            socket.broadcast.emit(PlayerEvent.joined, this.createPlayer(socket));
+        });
+    }
+
+    private getAllPlayers(): any {
         const players = [];
         Object.keys(io.sockets.connected).map((socketID) => {
             let player = io.sockets.connected[socketID].player;
@@ -61,6 +72,7 @@ class GameServer {
                 players.push(player);
             }
         });
+        console.log(players.length);
         return players;
     }
 

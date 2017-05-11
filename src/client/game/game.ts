@@ -1,5 +1,6 @@
 import {PlayerEvent} from "../../shared/events.model";
 import {Player} from "../actors/player/player.class";
+import {Login} from "../scenes/login";
 
 declare const Phaser: any;
 declare const io: any;
@@ -12,6 +13,7 @@ export class Game {
 
     constructor() {
         window.socket = io.connect();
+        new Login();
     }
 
     protected loadActors(): void {
@@ -22,9 +24,14 @@ export class Game {
         });
 
         window.socket.on(PlayerEvent.players, (players) => {
-            players.map((player) => {
+            this.players = players.map((player: Player) => {
                 new Player(this, player);
             });
+            console.log('all players', this.players);
+        });
+
+        window.socket.on(PlayerEvent.quit, (id) => {
+            console.log('this player should be removed => ', id);
         });
     }
 
@@ -32,14 +39,6 @@ export class Game {
         if (this.player) {
             this.player.view();
         }
-
-        window.socket.on(PlayerEvent.quit, (id) => {
-            this.removePlayer(id);
-        });
-    }
-
-    private removePlayer(id): void {
-        this.players.filter;
     }
 
     protected gameProperties(): void {
@@ -51,4 +50,10 @@ export class Game {
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
         this.game.add.group().enableBody = true;
     }
+
+    private removePlayer() {
+
+    }
+
+
 }

@@ -1,5 +1,6 @@
 import {GameEvent} from "../../shared/events.model";
 declare const window: any;
+
 export class Login {
 
     private name: any;
@@ -26,5 +27,3 @@ export class Login {
     }
 
 }
-
-new Login();
