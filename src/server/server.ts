@@ -1,4 +1,5 @@
 import {GameEvent, PlayerEvent, ServerEvent} from "./../shared/events.model";
+import {Player} from "../client/actors/player/player.class";
 const express = require('express');
 const app = express();
 const http = require('http').Server(app);
@@ -31,17 +32,21 @@ class GameServer {
 
     private socketEvents() {
         io.on(ServerEvent.connected, socket => {
-            this.addSignOnListener(socket);
-            this.addMovementListener(socket);
-            this.addDisconnectListener(socket);
+            this.attachListeners(socket)
         });
+    }
+
+    private attachListeners(socket) {
+        this.addSignOnListener(socket);
+        this.addMovementListener(socket);
+        this.addSignOutListener(socket);
     }
 
     private addMovementListener(socket) {
         socket.on(PlayerEvent.coordinates, this.handleMovement);
     }
 
-    private addDisconnectListener(socket): void {
+    private addSignOutListener(socket): void {
         socket.on(ServerEvent.disconnected, () => {
             if (socket.player) {
                 socket.broadcast.emit(PlayerEvent.quit, socket.player.id);
@@ -67,7 +72,7 @@ class GameServer {
         };
     }
 
-    private getAllPlayers(): any {
+    private getAllPlayers(): Array<Player> {
         const players = [];
         Object.keys(io.sockets.connected).map((socketID) => {
             const player = io.sockets.connected[socketID].player;
@@ -75,6 +80,7 @@ class GameServer {
                 players.push(player);
             }
         });
+        console.log(players);
         return players;
     }
 

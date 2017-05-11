@@ -17,8 +17,6 @@ export class Game {
     }
 
     protected loadActors(): void {
-        this.players = [];
-
         window.socket.on(PlayerEvent.joined, (player) => {
             new Player(this, player);
         });
@@ -28,13 +26,13 @@ export class Game {
         });
 
         window.socket.on(PlayerEvent.players, (players) => {
+            this.players = [];
             players.map((player: Player) => {
                 this.players.push(new Player(this, player));
             });
         });
 
         window.socket.on(PlayerEvent.quit, (playerId) => {
-            console.log(playerId, this.players);
             if (playerId) {
                 this.players = this.players.splice(this.players.indexOf(playerId), 1);
             }
