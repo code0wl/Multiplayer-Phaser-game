@@ -50,20 +50,21 @@ class GameServer {
         })
     }
 
-    private createPlayer(socket): any {
+    private addSignOnListener(socket): void {
+        socket.on(GameEvent.authentication, (player) => {
+            socket.emit(PlayerEvent.players, this.getAllPlayers());
+            socket.emit(PlayerEvent.mainActorJoined, this.createPlayer(socket, player.name));
+            socket.broadcast.emit(PlayerEvent.joined, this.createPlayer(socket, player.name));
+        });
+    }
+
+    private createPlayer(socket, name): any {
         return socket.player = {
+            name,
             id: uuid(),
             x: this.randomInt(100, 400),
             y: this.randomInt(100, 400)
         };
-    }
-
-    private addSignOnListener(socket): void {
-        socket.on(GameEvent.authentication, (player) => {
-            socket.emit(PlayerEvent.players, this.getAllPlayers());
-            socket.emit(PlayerEvent.mainActorJoined, player);
-            socket.broadcast.emit(PlayerEvent.joined, this.createPlayer(socket));
-        });
     }
 
     private getAllPlayers(): any {

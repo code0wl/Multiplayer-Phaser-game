@@ -19,12 +19,12 @@ export class Game {
     protected loadActors(): void {
         this.players = [];
 
-        window.socket.on(PlayerEvent.joined, (location) => {
-            new Player(this, location);
+        window.socket.on(PlayerEvent.joined, (player) => {
+            new Player(this, player);
         });
 
-        window.socket.on(PlayerEvent.mainActorJoined, (location) => {
-            this.player = new Player(this, location);
+        window.socket.on(PlayerEvent.mainActorJoined, (player) => {
+            this.player = new Player(this, player);
         });
 
         window.socket.on(PlayerEvent.players, (players) => {

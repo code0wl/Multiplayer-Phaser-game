@@ -1,8 +1,6 @@
 export class GameEvent {
     public static authentication: string = 'authentication:successful';
     public static gameEnd: 'game:over';
-    public static gameStart: 'game:start';
-    public static gameError: 'game:error';
 }
 
 export class ServerEvent {

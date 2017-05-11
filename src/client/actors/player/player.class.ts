@@ -1,7 +1,6 @@
 import {KeyBoardControl} from "../../controls/keyboard.class";
 import {Projectile} from "../../props/powers/projectile/projectile.class";
 import {Hud} from "../../hud/hud.class";
-import * as uuidV1 from "uuid";
 import {PlayerEvent} from "../../../shared/events.model";
 
 declare const Phaser: any;
@@ -10,22 +9,21 @@ declare const window: any;
 export class Player {
     public player: any;
     public storage: any;
-    public id: number;
 
     private angularVelocity: number = 300;
     private controls: KeyBoardControl;
     private powerUp = [];
     private projectile: Projectile;
 
-    constructor(private gameInstance: any, private coordinates: any) {
+    constructor(private gameInstance: any, private playerInstance: any) {
         this.storage = window.localStorage;
         this.createPlayer(this.gameInstance);
-        this.coordinates = coordinates;
+        this.playerInstance = playerInstance;
     }
 
     public createPlayer(gameInstance): void {
-        this.player = gameInstance.add.sprite(this.coordinates.x, this.coordinates.y, 'shooter-sprite');
-        this.player.id = uuidV1();
+        this.player = gameInstance.add.sprite(this.playerInstance.x, this.playerInstance.y, 'shooter-sprite');
+        this.player.id = this.playerInstance.id;
         gameInstance.physics.arcade.enable(this.player);
         this.player.body.bounce.y = 0;
         this.player.body.gravity.y = 0;
@@ -34,7 +32,7 @@ export class Player {
         this.player.body.drag.set(80);
         this.player.body.maxVelocity.set(100);
         this.player.body.collideWorldBounds = true;
-        this.player.name = this.storage.getItem('name');
+        this.player.name = this.playerInstance.name;
         this.player.health = 100;
         Hud.view(gameInstance, this.player);
         this.assignPickup(gameInstance, this.player);

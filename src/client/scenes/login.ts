@@ -17,8 +17,8 @@ export class Login {
 
     private createPlayer(e): void {
         e.preventDefault();
-        window.localStorage.setItem('name', this.name.value);
-        window.socket.emit(GameEvent.authentication, this.name.value);
+        const name = this.name.value;
+        window.socket.emit(GameEvent.authentication, {name});
         this.toggleLogin();
     }
 
