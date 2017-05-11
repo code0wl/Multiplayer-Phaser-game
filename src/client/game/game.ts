@@ -18,16 +18,16 @@ export class Game {
 
     protected loadActors(): void {
         this.player = new Player(this, {x: 50, y: 50});
+        this.players = [];
 
         window.socket.on(PlayerEvent.joined, (location) => {
             new Player(this, location);
         });
 
         window.socket.on(PlayerEvent.players, (players) => {
-            this.players = players.map((player: Player) => {
-                new Player(this, player);
+            players.map((player: Player) => {
+                this.players.push(new Player(this, player));
             });
-            console.log('all players', this.players);
         });
 
         window.socket.on(PlayerEvent.quit, (id) => {
