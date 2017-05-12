@@ -3,7 +3,6 @@ import {Projectile} from "../../props/powers/projectile/projectile.class";
 import {Hud} from "../../hud/hud.class";
 import {PlayerEvent} from "../../../shared/events.model";
 
-declare const Phaser: any;
 declare const window: any;
 
 export class Player {
@@ -23,8 +22,8 @@ export class Player {
 
     public createPlayer(gameInstance): void {
         this.player = gameInstance.add.sprite(this.playerInstance.x, this.playerInstance.y, 'shooter-sprite');
-        this.player.id = this.playerInstance.id;
         gameInstance.physics.arcade.enable(this.player);
+        this.player.id = this.playerInstance.id;
         this.player.body.bounce.y = 0;
         this.player.body.gravity.y = 0;
         this.player.anchor.setTo(0.5, 0.5);
@@ -37,6 +36,7 @@ export class Player {
         Hud.view(gameInstance, this.player);
         this.assignPickup(gameInstance, this.player);
         this.addControls();
+        console.log('player in class', this.player);
     }
 
     // @TODO: refactor into data stream

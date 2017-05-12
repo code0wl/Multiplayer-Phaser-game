@@ -50,7 +50,6 @@ class GameServer {
         socket.on(ServerEvent.disconnected, () => {
             if (socket.player) {
                 socket.broadcast.emit(PlayerEvent.quit, socket.player.id);
-                this.getAllPlayers();
             }
         })
     }
@@ -80,7 +79,6 @@ class GameServer {
                 players.push(player);
             }
         });
-        console.log(players.length + 1);
         return players;
     }
 

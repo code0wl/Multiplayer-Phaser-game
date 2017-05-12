@@ -19,26 +19,24 @@ export class Game {
     protected loadActors(): void {
         this.actors = [];
         window.socket.on(PlayerEvent.joined, (player) => {
-            new Player(this, player);
+            new Player(this.game, player);
         });
 
         window.socket.on(PlayerEvent.protagonist, (player) => {
-            this.actor = new Player(this, player);
+            this.actor = new Player(this.game, player);
         });
 
         window.socket.on(PlayerEvent.players, (players) => {
             players.map((player: Player) => {
                 this.actors.push(new Player(this, player));
             });
-            console.log('current enemies', this.actors);
         });
 
         window.socket.on(PlayerEvent.quit, (playerId) => {
-            const actors = this.actors;
-            actors.map((actor) => {
+            this.actors.map((actor) => {
                 if (actor.player.id === playerId) {
-                    actor.player.sprite.destroy();
-                    this.actors = actors.splice(actors.indexOf(actor), -1);
+                    actor.player.body.sprite.destroy();
+                    this.actors = this.actors.splice(this.actors.indexOf(actor), -1);
                 }
             });
         });
