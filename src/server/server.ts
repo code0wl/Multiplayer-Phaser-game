@@ -58,7 +58,7 @@ class GameServer {
     private addSignOnListener(socket): void {
         socket.on(GameEvent.authentication, (player) => {
             socket.emit(PlayerEvent.players, this.getAllPlayers());
-            socket.emit(PlayerEvent.mainActorJoined, this.createPlayer(socket, player.name));
+            socket.emit(PlayerEvent.protagonist, this.createPlayer(socket, player.name));
             socket.broadcast.emit(PlayerEvent.joined, this.createPlayer(socket, player.name));
         });
     }
@@ -80,7 +80,7 @@ class GameServer {
                 players.push(player);
             }
         });
-        console.log(players);
+        console.log(players.length + 1);
         return players;
     }
 

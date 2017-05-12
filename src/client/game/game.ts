@@ -7,8 +7,8 @@ declare const io: any;
 declare const window: any;
 
 export class Game {
-    public players: Array<Player>;
-    private player: any;
+    public actors: Array<Player>;
+    private actor: any;
     protected game: any;
 
     constructor() {
@@ -17,31 +17,36 @@ export class Game {
     }
 
     protected loadActors(): void {
+        this.actors = [];
         window.socket.on(PlayerEvent.joined, (player) => {
             new Player(this, player);
         });
 
-        window.socket.on(PlayerEvent.mainActorJoined, (player) => {
-            this.player = new Player(this, player);
+        window.socket.on(PlayerEvent.protagonist, (player) => {
+            this.actor = new Player(this, player);
         });
 
         window.socket.on(PlayerEvent.players, (players) => {
-            this.players = [];
             players.map((player: Player) => {
-                this.players.push(new Player(this, player));
+                this.actors.push(new Player(this, player));
             });
+            console.log('current enemies', this.actors);
         });
 
         window.socket.on(PlayerEvent.quit, (playerId) => {
-            if (playerId) {
-                this.players = this.players.splice(this.players.indexOf(playerId), 1);
-            }
+            const actors = this.actors;
+            actors.map((actor) => {
+                if (actor.player.id === playerId) {
+                    actor.player.sprite.destroy();
+                    this.actors = actors.splice(actors.indexOf(actor), -1);
+                }
+            });
         });
     }
 
     protected gameUpdate(): void {
-        if (this.player) {
-            this.player.view();
+        if (this.actor) {
+            this.actor.view();
         }
     }
 
