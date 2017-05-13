@@ -8,11 +8,11 @@ declare const window: any;
 export class Player {
     public player: any;
     public storage: any;
+    public projectile: Projectile;
 
     private angularVelocity: number = 300;
     private controls: KeyBoardControl;
     private powerUp = [];
-    private projectile: Projectile;
 
     constructor(private gameInstance: any, private playerInstance: any) {
         this.storage = window.localStorage;

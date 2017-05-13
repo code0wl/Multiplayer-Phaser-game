@@ -49,6 +49,11 @@ export class Game {
                     actor.player.x = player.coors.x;
                     actor.player.y = player.coors.y;
                     actor.player.rotation = player.coors.r;
+
+                    if (player.coors.f) {
+                        actor.projectile.fireWeapon();
+                    }
+
                 }
             });
         });
