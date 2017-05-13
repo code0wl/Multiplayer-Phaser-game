@@ -42,7 +42,18 @@ export class Game {
                 }
             });
         });
+
+        window.socket.on(PlayerEvent.coordinates, (player) => {
+            this.actors.filter((actor) => {
+                if (actor.player.id === player.player.id) {
+                    actor.player.x = player.coors.x;
+                    actor.player.y = player.coors.y;
+                    actor.player.rotation = player.coors.r;
+                }
+            });
+        });
     }
+
 
     protected gameUpdate(): void {
         if (this.actor) {

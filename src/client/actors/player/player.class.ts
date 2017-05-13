@@ -40,6 +40,8 @@ export class Player {
 
     // @TODO: refactor into data stream
     public view(): void {
+        let isFiring: boolean = false;
+
         if (this.controls.gameControls.cursors.up.isDown) {
             this.gameInstance.physics.arcade.accelerationFromRotation(this.player.rotation, 100, this.player.body.acceleration);
             this.player.animations.play('accelerating');
@@ -58,16 +60,21 @@ export class Player {
         if (this.controls.gameControls.fireWeapon.isDown) {
             if (this.projectile) {
                 this.projectile.fireWeapon();
+                isFiring = true;
+            } else {
+                isFiring = false;
             }
         }
+        this.dispatchLocation(this.player, isFiring);
+    }
 
+    private dispatchLocation(player, firing): void {
         window.socket.emit(PlayerEvent.coordinates, {
-            id: this.player.id,
-            x: this.player.body.x,
-            y: this.player.body.y,
+            x: player.position.x,
+            y: player.position.y,
+            f: firing,
             r: this.player.rotation
         });
-
     }
 
     private addControls(): void {

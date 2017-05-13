@@ -26,10 +26,6 @@ class GameServer {
         });
     }
 
-    private handleMovement(socket, coors) {
-        socket.broadcast.emit(PlayerEvent.coordinates, coors);
-    }
-
     private socketEvents() {
         io.on(ServerEvent.connected, socket => {
             this.attachListeners(socket)
@@ -44,7 +40,7 @@ class GameServer {
 
     private addMovementListener(socket) {
         socket.on(PlayerEvent.coordinates, (coors) => {
-            this.handleMovement(socket, coors);
+            socket.broadcast.emit(PlayerEvent.coordinates, {coors: coors, player: socket.player});
         });
     }
 
@@ -52,7 +48,7 @@ class GameServer {
         socket.on(ServerEvent.disconnected, () => {
             if (socket.player) {
                 socket.broadcast.emit(PlayerEvent.quit, socket.player.id);
-                console.log("Total number of players:",  this.players);
+                console.info("Total number of players:", this.players);
             }
         });
     }
@@ -62,7 +58,7 @@ class GameServer {
             socket.emit(PlayerEvent.players, this.getAllPlayers());
             socket.emit(PlayerEvent.protagonist, this.createPlayer(socket, player.name));
             socket.broadcast.emit(PlayerEvent.joined, this.createPlayer(socket, player.name));
-            console.log("Total number of players:",  this.players);
+            console.info("Total number of players:", this.players);
         });
     }
 
