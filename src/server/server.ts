@@ -50,8 +50,9 @@ class GameServer {
         socket.on(ServerEvent.disconnected, () => {
             if (socket.player) {
                 socket.broadcast.emit(PlayerEvent.quit, socket.player.id);
+                console.log("Total number of players:",  this.players);
             }
-        })
+        });
     }
 
     private addSignOnListener(socket): void {
@@ -59,7 +60,16 @@ class GameServer {
             socket.emit(PlayerEvent.players, this.getAllPlayers());
             socket.emit(PlayerEvent.protagonist, this.createPlayer(socket, player.name));
             socket.broadcast.emit(PlayerEvent.joined, this.createPlayer(socket, player.name));
+            console.log("Total number of players:",  this.players);
         });
+    }
+
+    private get players(): any {
+        return Object
+            .keys(io.sockets.connected)
+            .map((player, index) => {
+                return index + 1;
+            }).pop();
     }
 
     private createPlayer(socket, name): any {
