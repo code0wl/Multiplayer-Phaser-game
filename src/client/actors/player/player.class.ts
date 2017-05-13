@@ -36,7 +36,6 @@ export class Player {
         Hud.view(gameInstance, this.player);
         this.assignPickup(gameInstance, this.player);
         this.addControls();
-        console.log('player in class', this.player);
     }
 
     // @TODO: refactor into data stream

@@ -18,12 +18,14 @@ export class Game {
 
     protected loadActors(): void {
         this.actors = [];
+
         window.socket.on(PlayerEvent.joined, (player) => {
-            new Player(this.game, player);
+            this.actors.push(new Player(this.game, player));
         });
 
         window.socket.on(PlayerEvent.protagonist, (player) => {
             this.actor = new Player(this.game, player);
+            this.actors.push(this.actor);
         });
 
         window.socket.on(PlayerEvent.players, (players) => {
