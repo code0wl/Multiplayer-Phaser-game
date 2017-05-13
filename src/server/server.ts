@@ -26,8 +26,8 @@ class GameServer {
         });
     }
 
-    private handleMovement(location) {
-        io.emit(PlayerEvent.coordinates, location);
+    private handleMovement(socket, coors) {
+        socket.broadcast.emit(PlayerEvent.coordinates, coors);
     }
 
     private socketEvents() {
@@ -43,7 +43,9 @@ class GameServer {
     }
 
     private addMovementListener(socket) {
-        socket.on(PlayerEvent.coordinates, this.handleMovement);
+        socket.on(PlayerEvent.coordinates, (coors) => {
+            this.handleMovement(socket, coors);
+        });
     }
 
     private addSignOutListener(socket): void {
@@ -64,12 +66,8 @@ class GameServer {
         });
     }
 
-    private get players(): any {
-        return Object
-            .keys(io.sockets.connected)
-            .map((player, index) => {
-                return index + 1;
-            }).pop();
+    private get players(): number {
+        return Object.keys(io.sockets.connected).length;
     }
 
     private createPlayer(socket, name): any {

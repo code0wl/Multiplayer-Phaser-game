@@ -62,6 +62,7 @@ export class Player {
         }
 
         window.socket.emit(PlayerEvent.coordinates, {
+            id: this.player.id,
             x: this.player.body.x,
             y: this.player.body.y,
             r: this.player.rotation
