@@ -27,6 +27,7 @@ export class Player {
         gameInstance.physics.arcade.enable(this.player);
         this.player.id = this.playerInstance.id;
         this.player.body.bounce.y = 0;
+        this.player.enableBody = true;
         this.player.body.gravity.y = 0;
         this.player.anchor.setTo(0.5, 0.5);
         this.player.animations.add('accelerating', [1, 0], 50, false);
@@ -68,7 +69,20 @@ export class Player {
                 this.playerState.set('fire', false);
             }
         }
+
+        this.checkCollision();
+
         this.dispatchLocation(this.player);
+    }
+
+    private checkCollision(): void {
+        this.gameInstance.physics.arcade.overlap(this.projectile, this.player, this.collisionHandler, null, this);
+    }
+
+    private collisionHandler() {
+        alert('collided')
+        this.projectile.weapon.kill();
+        this.player.kill();
     }
 
     private dispatchLocation(player): void {

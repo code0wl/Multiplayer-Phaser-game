@@ -9,6 +9,8 @@ export class Projectile {
         this.weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
         this.weapon.bulletSpeed = 200;
         this.weapon.fireRate = 1000;
+        this.weapon.physicsBodyType = Phaser.Physics.ARCADE;
+        this.weapon.enableBody = true;
         this.weapon.trackSprite(this.player, 20, 0, true);
     }
 
