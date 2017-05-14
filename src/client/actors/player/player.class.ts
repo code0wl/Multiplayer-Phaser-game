@@ -69,20 +69,17 @@ export class Player {
                 this.playerState.set('fire', false);
             }
         }
-
         this.checkCollision();
-
         this.dispatchLocation(this.player);
     }
 
     private checkCollision(): void {
-        this.gameInstance.physics.arcade.overlap(this.projectile, this.player, this.collisionHandler, null, this);
+        console.log('checking collision')
+        this.gameInstance.physics.arcade.overlap(this.projectile.weapon, this.player, this.collisionHandler, null, this);
     }
 
-    private collisionHandler() {
-        alert('collided')
-        this.projectile.weapon.kill();
-        this.player.kill();
+    private collisionHandler(weapon) {
+        console.log(weapon);
     }
 
     private dispatchLocation(player): void {
