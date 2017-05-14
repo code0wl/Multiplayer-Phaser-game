@@ -43,6 +43,7 @@ export class Game {
             });
         });
 
+        // @TODO needs refactor
         window.socket.on(PlayerEvent.coordinates, (player) => {
             this.actors.filter((actor) => {
                 if (actor.player.id === player.player.id) {
@@ -52,6 +53,10 @@ export class Game {
 
                     if (player.coors.f) {
                         actor.projectile.fireWeapon();
+                    }
+
+                    if (player.coors.a) {
+                        actor.player.animations.play('accelerating');
                     }
 
                 }

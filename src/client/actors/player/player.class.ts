@@ -13,11 +13,13 @@ export class Player {
     private angularVelocity: number = 300;
     private controls: KeyBoardControl;
     private powerUp = [];
+    private playerState: Map<string, boolean>;
 
     constructor(private gameInstance: any, private playerInstance: any) {
         this.storage = window.localStorage;
         this.createPlayer(this.gameInstance);
         this.playerInstance = playerInstance;
+        this.playerState = new Map();
     }
 
     public createPlayer(gameInstance): void {
@@ -40,13 +42,14 @@ export class Player {
 
     // @TODO: refactor into data stream
     public view(): void {
-        let isFiring: boolean = false;
-
+        this.playerState.set('fire', false);
         if (this.controls.gameControls.cursors.up.isDown) {
             this.gameInstance.physics.arcade.accelerationFromRotation(this.player.rotation, 100, this.player.body.acceleration);
             this.player.animations.play('accelerating');
+            this.playerState.set('moving', true);
         } else {
             this.player.body.acceleration.set(0);
+            this.playerState.set('moving', false);
         }
 
         if (this.controls.gameControls.cursors.left.isDown) {
@@ -60,20 +63,21 @@ export class Player {
         if (this.controls.gameControls.fireWeapon.isDown) {
             if (this.projectile) {
                 this.projectile.fireWeapon();
-                isFiring = true;
+                this.playerState.set('fire', true);
             } else {
-                isFiring = false;
+                this.playerState.set('fire', false);
             }
         }
-        this.dispatchLocation(this.player, isFiring);
+        this.dispatchLocation(this.player);
     }
 
-    private dispatchLocation(player, firing): void {
+    private dispatchLocation(player): void {
         window.socket.emit(PlayerEvent.coordinates, {
             x: player.position.x,
             y: player.position.y,
-            f: firing,
-            r: this.player.rotation
+            f: this.playerState.get('fire'),
+            r: this.player.rotation,
+            a: this.playerState.get('moving')
         });
     }
 
