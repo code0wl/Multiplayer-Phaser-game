@@ -7,6 +7,7 @@ declare const io: any;
 declare const window: any;
 
 export class Game {
+    // fix types
     public actors: Array<Player>;
     private actor: any;
     protected game: any;
@@ -16,21 +17,23 @@ export class Game {
         new Login();
     }
 
-    protected loadActors(): void {
+    protected createActors(): void {
         this.actors = [];
 
         window.socket.on(PlayerEvent.joined, (player) => {
-            this.actors.push(new Player(this.game, player));
+            const enemy = new Player(this, player);
+            this.actors.push(enemy);
         });
 
         window.socket.on(PlayerEvent.protagonist, (player) => {
-            this.actor = new Player(this.game, player);
+            this.actor = new Player(this, player);
             this.actors.push(this.actor);
         });
 
         window.socket.on(PlayerEvent.players, (players) => {
             players.map((player: Player) => {
-                this.actors.push(new Player(this, player));
+                const enemy = new Player(this, player);
+                this.actors.push(enemy);
             });
         });
 
@@ -43,7 +46,7 @@ export class Game {
             });
         });
 
-        // @TODO needs refactor
+        // @TODO needs refactor move to movement controller
         window.socket.on(PlayerEvent.coordinates, (player) => {
             this.actors.filter((actor) => {
                 if (actor.player.id === player.player.id) {
@@ -63,7 +66,6 @@ export class Game {
             });
         });
     }
-
 
     protected gameUpdate(): void {
         if (this.actor) {

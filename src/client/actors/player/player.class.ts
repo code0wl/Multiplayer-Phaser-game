@@ -4,6 +4,7 @@ import {Hud} from "../../hud/hud.class";
 import {PlayerEvent} from "../../../shared/events.model";
 
 declare const window: any;
+declare const Phaser: any;
 
 export class Player {
     public player: any;
@@ -24,7 +25,7 @@ export class Player {
 
     public createPlayer(gameInstance): void {
         this.player = gameInstance.add.sprite(this.playerInstance.x, this.playerInstance.y, 'shooter-sprite');
-        gameInstance.physics.arcade.enable(this.player);
+        gameInstance.physics.enable(this.player, Phaser.Physics.ARCADE);
         this.player.id = this.playerInstance.id;
         this.player.body.bounce.y = 0;
         this.player.enableBody = true;
@@ -69,17 +70,13 @@ export class Player {
                 this.playerState.set('fire', false);
             }
         }
-        this.checkCollision();
         this.dispatchLocation(this.player);
+        this.gameInstance.physics.arcade.overlap(this.player, this.gameInstance.actors, this.checkCollision, null, this);
+        console.log(this.gameInstance.actors.length);
     }
 
-    private checkCollision(): void {
-        console.log('checking collision')
-        this.gameInstance.physics.arcade.overlap(this.projectile.weapon, this.player, this.collisionHandler, null, this);
-    }
-
-    private collisionHandler(weapon) {
-        console.log(weapon);
+    private checkCollision(player, item): void {
+        console.log(player, item);
     }
 
     private dispatchLocation(player): void {
