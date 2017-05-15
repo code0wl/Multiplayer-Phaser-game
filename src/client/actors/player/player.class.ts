@@ -39,11 +39,12 @@ export class Player {
     private attachPhysics(gameInstance): void {
         gameInstance.physics.enable(this.player, Phaser.Physics.ARCADE);
         this.player.body.collideWorldBounds = true;
-        this.player.body.bounce.setTo(100, 100);
+        this.player.body.bounce.setTo(10, 10);
         this.player.enableBody = true;
         this.player.body.gravity.y = 0;
         this.player.body.drag.set(80);
         this.player.body.maxVelocity.set(100);
+        this.player.body.immovable = false;
     }
 
     // @TODO: refactor into data stream
@@ -74,7 +75,6 @@ export class Player {
                 this.playerState.set('fire', false);
             }
         }
-
         this.dispatchLocation(this.player);
     }
 
@@ -82,8 +82,8 @@ export class Player {
         window.socket.emit(PlayerEvent.coordinates, {
             x: player.position.x,
             y: player.position.y,
-            f: this.playerState.get('fire'),
             r: this.player.rotation,
+            f: this.playerState.get('fire'),
             a: this.playerState.get('moving')
         });
     }
@@ -96,5 +96,4 @@ export class Player {
         this.projectile = new Projectile(game, player);
         this.powerUp.push(this.projectile);
     }
-
 }

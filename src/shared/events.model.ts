@@ -14,5 +14,6 @@ export class PlayerEvent {
     public static protagonist: string = 'player:protagonist';
     public static players: string = 'actors:collection';
     public static quit: string = 'player:left';
+    public static hit: string = 'player:hit';
     public static coordinates: string = 'player:coordinates';
 }

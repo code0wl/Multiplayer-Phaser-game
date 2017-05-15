@@ -36,6 +36,14 @@ class GameServer {
         this.addSignOnListener(socket);
         this.addMovementListener(socket);
         this.addSignOutListener(socket);
+        this.addHitListener(socket);
+    }
+
+    private addHitListener(socket) {
+        socket.on(PlayerEvent.hit, (playerId) => {
+            console.log(playerId, 'got hit');
+            socket.broadcast.emit(PlayerEvent.quit, playerId);
+        });
     }
 
     private addMovementListener(socket) {

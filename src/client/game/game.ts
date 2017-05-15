@@ -68,14 +68,14 @@ export class Game {
         if (this.actor) {
             this.actor.view();
             this.game.physics.arcade.collide(this.actor.player, this.actors.map((actor) => actor.player));
-            console.log(this.actor.player);
-            console.log(this.actor.projectile.weapon);
-            this.game.physics.arcade.collide(this.actor.projectile.weapon, this.actors.map((actor) => actor.player), this.collision);
+            this.game.physics.arcade.collide(this.actor.projectile.weapon.bullets, this.actors.map((actor) => actor.player), (enemy, projectile) => {
+                if (enemy.id !== this.actor.player.id) {
+                    window.socket.emit(PlayerEvent.hit, enemy.id);
+                    enemy.kill();
+                    projectile.kill();
+                }
+            });
         }
-    }
-
-    private collision(ship, bullet) {
-        console.log(ship, bullet);
     }
 
     protected gameProperties(): void {

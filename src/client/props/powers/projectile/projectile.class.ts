@@ -4,14 +4,13 @@ export class Projectile {
     public weapon: any;
     public bulletCount: number = 10;
 
-    public constructor(private gameInstance, private player) {
-        this.weapon = this.gameInstance.add.weapon(this.bulletCount, 'laser');
+    public constructor(gameInstance, player) {
+        this.weapon = gameInstance.add.weapon(this.bulletCount, 'laser');
         this.weapon.enableBody = true;
-        this.weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
+        this.weapon.physicsBodyType = Phaser.Physics.ARCADE;
         this.weapon.bulletSpeed = 200;
         this.weapon.fireRate = 1000;
-        this.weapon.trackSprite(this.player, 20, 0, true);
-        gameInstance.physics.enable(this.weapon, Phaser.Physics.ARCADE);
+        this.weapon.trackSprite(player, 20, 0, true);
     }
 
     public fireWeapon() {
