@@ -68,6 +68,8 @@ export class Game {
         if (this.actor) {
             this.actor.view();
             this.game.physics.arcade.collide(this.actor.player, this.actors.map((actor) => actor.player));
+            console.log(this.actor.player);
+            console.log(this.actor.projectile.weapon);
             this.game.physics.arcade.collide(this.actor.projectile.weapon, this.actors.map((actor) => actor.player), this.collision);
         }
     }

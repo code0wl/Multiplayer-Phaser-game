@@ -6,24 +6,19 @@ export class Projectile {
 
     public constructor(private gameInstance, private player) {
         this.weapon = this.gameInstance.add.weapon(this.bulletCount, 'laser');
-        this.attachPhysics(this.gameInstance);
+        this.weapon.enableBody = true;
+        this.weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
         this.weapon.bulletSpeed = 200;
         this.weapon.fireRate = 1000;
+        this.weapon.trackSprite(this.player, 20, 0, true);
+        gameInstance.physics.enable(this.weapon, Phaser.Physics.ARCADE);
     }
 
     public fireWeapon() {
         this.weapon.fire();
     }
 
-    private attachPhysics(gameInstance) {
-        gameInstance.physics.enable(this.player, Phaser.Physics.ARCADE);
-        this.player.body.collideWorldBounds = true;
-        this.weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
-        this.player.body.bounce.setTo(1, 1);
-        this.player.enableBody = true;
-        this.weapon.trackSprite(this.player, 20, 0, true);
-    }
-
+    // TODO: turn into stream with filter
     private detectPowerUp(type): void {
         switch (type) {
             case 'laser':
