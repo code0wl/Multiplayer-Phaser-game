@@ -21,18 +21,18 @@ export class Game {
         this.actors = [];
 
         window.socket.on(PlayerEvent.joined, (player) => {
-            const enemy = new Player(this, player);
+            const enemy = new Player(this.game, player);
             this.actors.push(enemy);
         });
 
         window.socket.on(PlayerEvent.protagonist, (player) => {
-            this.actor = new Player(this, player);
+            this.actor = new Player(this.game, player);
             this.actors.push(this.actor);
         });
 
         window.socket.on(PlayerEvent.players, (players) => {
             players.map((player: Player) => {
-                const enemy = new Player(this, player);
+                const enemy = new Player(this.game, player);
                 this.actors.push(enemy);
             });
         });
@@ -53,15 +53,12 @@ export class Game {
                     actor.player.x = player.coors.x;
                     actor.player.y = player.coors.y;
                     actor.player.rotation = player.coors.r;
-
                     if (player.coors.f) {
                         actor.projectile.fireWeapon();
                     }
-
                     if (player.coors.a) {
                         actor.player.animations.play('accelerating');
                     }
-
                 }
             });
         });
@@ -70,7 +67,13 @@ export class Game {
     protected gameUpdate(): void {
         if (this.actor) {
             this.actor.view();
+            this.game.physics.arcade.collide(this.actor.player, this.actors.map((actor) => actor.player));
+            this.game.physics.arcade.collide(this.actor.projectile.weapon, this.actors.map((actor) => actor.player), this.collision);
         }
+    }
+
+    private collision(ship, bullet) {
+        console.log(ship, bullet);
     }
 
     protected gameProperties(): void {
@@ -80,7 +83,6 @@ export class Game {
         this.game.renderer.clearBeforeRender = false;
         this.game.renderer.roundPixels = true;
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
-        this.game.add.group().enableBody = true;
     }
 
 }

@@ -25,21 +25,25 @@ export class Player {
 
     public createPlayer(gameInstance): void {
         this.player = gameInstance.add.sprite(this.playerInstance.x, this.playerInstance.y, 'shooter-sprite');
-        gameInstance.physics.enable(this.player, Phaser.Physics.ARCADE);
+        this.assignPickup(gameInstance, this.player);
         this.player.id = this.playerInstance.id;
-        this.player.body.bounce.y = 0;
-        this.player.enableBody = true;
-        this.player.body.gravity.y = 0;
         this.player.anchor.setTo(0.5, 0.5);
         this.player.animations.add('accelerating', [1, 0], 50, false);
-        this.player.body.drag.set(80);
-        this.player.body.maxVelocity.set(100);
-        this.player.body.collideWorldBounds = true;
         this.player.name = this.playerInstance.name;
         this.player.health = 100;
         Hud.view(gameInstance, this.player);
-        this.assignPickup(gameInstance, this.player);
+        this.attachPhysics(gameInstance);
         this.addControls();
+    }
+
+    private attachPhysics(gameInstance): void {
+        gameInstance.physics.enable(this.player, Phaser.Physics.ARCADE);
+        this.player.body.collideWorldBounds = true;
+        this.player.body.bounce.setTo(100, 100);
+        this.player.enableBody = true;
+        this.player.body.gravity.y = 0;
+        this.player.body.drag.set(80);
+        this.player.body.maxVelocity.set(100);
     }
 
     // @TODO: refactor into data stream
@@ -70,13 +74,8 @@ export class Player {
                 this.playerState.set('fire', false);
             }
         }
-        this.dispatchLocation(this.player);
-        this.gameInstance.physics.arcade.overlap(this.player, this.gameInstance.actors, this.checkCollision, null, this);
-        console.log(this.gameInstance.actors.length);
-    }
 
-    private checkCollision(player, item): void {
-        console.log(player, item);
+        this.dispatchLocation(this.player);
     }
 
     private dispatchLocation(player): void {
