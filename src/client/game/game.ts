@@ -45,11 +45,8 @@ export class Game {
         });
 
         window.socket.on(PlayerEvent.hit, (enemy) => {
-            const poop = this.actors.map((actor) => actor.player.id);
-            console.log(poop);
             this.actors.forEach((actor) => {
-                if (actor.player.id === enemy) {
-                    alert('you have been killed');
+                if (this.actor.player.id === enemy) {
                     window.location.reload();
                 }
             })
