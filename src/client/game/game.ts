@@ -51,6 +51,7 @@ export class Game {
             this.actors.map((actor) => {
                 if (actor.player.id === playerId.enemy) {
                     actor.player.kill();
+                    alert(`You have been killed by`);
                     this.actors = this.actors.splice(this.actors.indexOf(actor), -1);
                     window.location.reload();
                 }
@@ -81,6 +82,7 @@ export class Game {
             this.game.physics.arcade.collide(this.actor.player, this.actors.map((actor) => actor.player));
             this.game.physics.arcade.collide(this.actor.projectile.weapon.bullets, this.actors.map((actor) => actor.player), (enemy, projectile) => {
                 if (enemy.id !== this.actor.player.id) {
+                    console.log('projectile', projectile);
                     window.socket.emit(PlayerEvent.hit, {enemy: enemy.id});
                     enemy.kill();
                     projectile.kill();
