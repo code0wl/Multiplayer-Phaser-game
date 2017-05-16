@@ -24,24 +24,19 @@ export class Game {
         this.projectiles = [];
 
         window.socket.on(PlayerEvent.joined, (player) => {
-            console.log('getting enemy');
             this.actors.push(new Player(this.game, player));
+            console.log(this.actors);
         });
 
         window.socket.on(PlayerEvent.protagonist, (player) => {
-            console.log('getting protagonist');
             this.actor = new Player(this.game, player);
             this.actors.push(this.actor);
+            console.log(this.actors);
         });
 
         window.socket.on(PlayerEvent.players, (players) => {
             players.map((player: any) => {
-                this.actors.map((actor) => {
-                    if (actor.player.id !== player.id) {
-                        const enemy = new Player(this.game, player);
-                        this.actors.push(enemy);
-                    }
-                })
+                this.actors.push(new Player(this.game, player));
             });
         });
 
