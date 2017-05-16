@@ -21,24 +21,25 @@ export class Game {
         this.actors = [];
 
         window.socket.on(PlayerEvent.joined, (player) => {
+            console.log('getting enemy');
             this.actors.push(new Player(this.game, player));
         });
 
         window.socket.on(PlayerEvent.protagonist, (player) => {
+            console.log('getting protagonist');
             this.actor = new Player(this.game, player);
             this.actors.push(this.actor);
         });
 
         window.socket.on(PlayerEvent.players, (players) => {
             players.map((player: any) => {
-                const enemy = new Player(this.game, player);
-                this.actors.push(enemy);
+                this.actors.map((actor) => {
+                    if (player.id !== actor.player.id) {
+                        const enemy = new Player(this.game, player);
+                        this.actors.push(enemy);
+                    }
+                })
             });
-
-            this.actors = this.actors.filter((elem, index, self) => {
-                return index == self.indexOf(elem);
-            });
-            console.log(this.actors, 'total actors');
         });
 
         window.socket.on(PlayerEvent.quit, (playerId) => {
@@ -82,7 +83,7 @@ export class Game {
             this.game.physics.arcade.collide(this.actor.player, this.actors.map((actor) => actor.player));
             this.game.physics.arcade.collide(this.actor.projectile.weapon.bullets, this.actors.map((actor) => actor.player), (enemy, projectile) => {
                 if (enemy.id !== this.actor.player.id) {
-                    window.socket.emit(PlayerEvent.hit, enemy.id);
+                    window.socket.emit(PlayerEvent.hit, {enemy: enemy.id, projectile: projectile.id});
                     enemy.kill();
                     projectile.kill();
                 }
