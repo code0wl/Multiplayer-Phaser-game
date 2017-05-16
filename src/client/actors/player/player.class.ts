@@ -10,10 +10,10 @@ export class Player {
     public player: any;
     public storage: any;
     public projectile: Projectile;
+    public controls: KeyBoardControl;
     public playerState: Map<string, boolean>;
 
     private angularVelocity: number = 300;
-    private controls: KeyBoardControl;
     private powerUp = [];
 
     constructor(private gameInstance: any, public playerInstance: any) {
@@ -51,7 +51,7 @@ export class Player {
 
     // @TODO: refactor into data stream
     public view(): void {
-        if (this.player.alive && this.controls) {
+        if (this.player.alive) {
             this.playerState.set('fire', false);
             if (this.controls.gameControls.cursors.up.isDown) {
                 this.gameInstance.physics.arcade.accelerationFromRotation(this.player.rotation, 100, this.player.body.acceleration);

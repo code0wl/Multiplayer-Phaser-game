@@ -9,6 +9,8 @@ declare const window: any;
 export class Game {
     // fix types
     public actors: Array<Player>;
+    public projectiles: any;
+
     private actor: any;
     protected game: any;
 
@@ -19,6 +21,7 @@ export class Game {
 
     protected createActors(): void {
         this.actors = [];
+        this.projectiles = [];
 
         window.socket.on(PlayerEvent.joined, (player) => {
             console.log('getting enemy');
@@ -33,8 +36,12 @@ export class Game {
 
         window.socket.on(PlayerEvent.players, (players) => {
             players.map((player: any) => {
-                const enemy = new Player(this.game, player);
-                this.actors.push(enemy);
+                this.actors.map((actor) => {
+                    if (actor.player.id !== player.id) {
+                        const enemy = new Player(this.game, player);
+                        this.actors.push(enemy);
+                    }
+                })
             });
         });
 
@@ -49,6 +56,7 @@ export class Game {
 
         window.socket.on(PlayerEvent.hit, (playerId) => {
             console.log('hit', playerId);
+            console.log(this.projectiles);
             this.actors.map((actor) => {
                 if (actor.player.id === playerId.enemy) {
                     actor.player.kill();
@@ -75,12 +83,12 @@ export class Game {
     }
 
     protected gameUpdate(): void {
-        if (this.actor) {
+        if (this.actor && this.actor.controls) {
             this.actor.view();
             this.game.physics.arcade.collide(this.actor.player, this.actors.map((actor) => actor.player));
             this.game.physics.arcade.collide(this.actor.projectile.weapon.bullets, this.actors.map((actor) => actor.player), (enemy, projectile) => {
                 if (enemy.id !== this.actor.player.id) {
-                    window.socket.emit(PlayerEvent.hit, {enemy: enemy.id, projectile: projectile.id});
+                    window.socket.emit(PlayerEvent.hit, {enemy: enemy.id});
                     enemy.kill();
                     projectile.kill();
                 }
