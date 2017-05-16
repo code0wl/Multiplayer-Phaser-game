@@ -43,18 +43,17 @@ export class Game {
         window.socket.on(PlayerEvent.quit, (playerId) => {
             this.actors.map((actor) => {
                 if (actor.player.id === playerId) {
-                    actor.player.body.sprite.destroy();
+                    actor.player.kill();
                     this.actors = this.actors.splice(this.actors.indexOf(actor), -1);
                 }
             });
         });
 
         window.socket.on(PlayerEvent.hit, (playerId) => {
-            console.log('hit', playerId);
-            console.log(this.projectiles);
             this.actors.map((actor) => {
                 if (actor.player.id === playerId.enemy) {
                     actor.player.kill();
+                    this.actors = this.actors.splice(this.actors.indexOf(actor), -1);
                 }
             });
         });
