@@ -22,10 +22,10 @@ export class Player {
         this.playerInstance = playerInstance;
         this.playerState = new Map();
         this.playerState.set('isAlive', true);
-        console.log('player created', this.playerInstance);
     }
 
     public createPlayer(gameInstance): void {
+        this.addControls();
         this.player = gameInstance.add.sprite(this.playerInstance.x, this.playerInstance.y, 'shooter-sprite');
         this.assignPickup(gameInstance, this.player);
         this.player.id = this.playerInstance.id;
@@ -35,7 +35,7 @@ export class Player {
         this.player.health = 100;
         Hud.view(gameInstance, this.player);
         this.attachPhysics(gameInstance);
-        this.addControls();
+
     }
 
     private attachPhysics(gameInstance): void {

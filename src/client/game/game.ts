@@ -23,13 +23,11 @@ export class Game {
 
         window.socket.on(PlayerEvent.joined, (player) => {
             this.actors.push(new Player(this.game, player));
-            console.log(this.actors);
         });
 
         window.socket.on(PlayerEvent.protagonist, (player) => {
             this.actor = new Player(this.game, player);
             this.actors.push(this.actor);
-            console.log(this.actors);
         });
 
         window.socket.on(PlayerEvent.players, (players) => {
@@ -41,21 +39,20 @@ export class Game {
         window.socket.on(PlayerEvent.quit, (playerId) => {
             this.actors.map((actor) => {
                 if (actor.player.id === playerId) {
-                    actor.player.kill();
-                    this.actors = this.actors.splice(this.actors.indexOf(actor), -1);
+                    actor.player.body.sprite.destroy();
                 }
             });
         });
 
-        window.socket.on(PlayerEvent.hit, (playerId) => {
-            this.actors.map((actor) => {
-                if (actor.player.id === playerId.enemy) {
-                    actor.player.kill();
-                    alert(`You have been killed by`);
-                    this.actors = this.actors.splice(this.actors.indexOf(actor), -1);
+        window.socket.on(PlayerEvent.hit, (enemy) => {
+            const poop = this.actors.map((actor) => actor.player.id);
+            console.log(poop);
+            this.actors.forEach((actor) => {
+                if (actor.player.id === enemy) {
+                    alert('you have been killed');
                     window.location.reload();
                 }
-            });
+            })
         });
 
         // @TODO needs refactor move to movement controller
@@ -82,8 +79,8 @@ export class Game {
             this.game.physics.arcade.collide(this.actor.player, this.actors.map((actor) => actor.player));
             this.game.physics.arcade.collide(this.actor.projectile.weapon.bullets, this.actors.map((actor) => actor.player), (enemy, projectile) => {
                 if (enemy.id !== this.actor.player.id) {
-                    console.log('projectile', projectile);
-                    window.socket.emit(PlayerEvent.hit, {enemy: enemy.id});
+                    window.socket.emit(PlayerEvent.hit, enemy.id);
+                    console.log('hase been shot', enemy.id);
                     enemy.kill();
                     projectile.kill();
                 }
