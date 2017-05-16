@@ -9,7 +9,6 @@ declare const window: any;
 export class Game {
     // fix types
     public actors: Array<Player>;
-    public projectiles: any;
 
     private actor: any;
     protected game: any;
@@ -21,7 +20,6 @@ export class Game {
 
     protected createActors(): void {
         this.actors = [];
-        this.projectiles = [];
 
         window.socket.on(PlayerEvent.joined, (player) => {
             this.actors.push(new Player(this.game, player));
@@ -54,6 +52,7 @@ export class Game {
                 if (actor.player.id === playerId.enemy) {
                     actor.player.kill();
                     this.actors = this.actors.splice(this.actors.indexOf(actor), -1);
+                    window.location.reload();
                 }
             });
         });
