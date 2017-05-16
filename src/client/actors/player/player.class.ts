@@ -10,17 +10,19 @@ export class Player {
     public player: any;
     public storage: any;
     public projectile: Projectile;
+    public playerState: Map<string, boolean>;
 
     private angularVelocity: number = 300;
     private controls: KeyBoardControl;
     private powerUp = [];
-    private playerState: Map<string, boolean>;
 
-    constructor(private gameInstance: any, private playerInstance: any) {
+    constructor(private gameInstance: any, public playerInstance: any) {
         this.storage = window.localStorage;
         this.createPlayer(this.gameInstance);
         this.playerInstance = playerInstance;
         this.playerState = new Map();
+        this.playerState.set('isAlive', true);
+        console.log('player created', this.playerInstance);
     }
 
     public createPlayer(gameInstance): void {
@@ -49,33 +51,35 @@ export class Player {
 
     // @TODO: refactor into data stream
     public view(): void {
-        this.playerState.set('fire', false);
-        if (this.controls.gameControls.cursors.up.isDown) {
-            this.gameInstance.physics.arcade.accelerationFromRotation(this.player.rotation, 100, this.player.body.acceleration);
-            this.player.animations.play('accelerating');
-            this.playerState.set('moving', true);
-        } else {
-            this.player.body.acceleration.set(0);
-            this.playerState.set('moving', false);
-        }
-
-        if (this.controls.gameControls.cursors.left.isDown) {
-            this.player.body.angularVelocity = -this.angularVelocity;
-        } else if (this.controls.gameControls.cursors.right.isDown) {
-            this.player.body.angularVelocity = this.angularVelocity;
-        } else {
-            this.player.body.angularVelocity = 0;
-        }
-
-        if (this.controls.gameControls.fireWeapon.isDown) {
-            if (this.projectile) {
-                this.projectile.fireWeapon();
-                this.playerState.set('fire', true);
+        if (this.player.alive) {
+            this.playerState.set('fire', false);
+            if (this.controls.gameControls.cursors.up.isDown) {
+                this.gameInstance.physics.arcade.accelerationFromRotation(this.player.rotation, 100, this.player.body.acceleration);
+                this.player.animations.play('accelerating');
+                this.playerState.set('moving', true);
             } else {
-                this.playerState.set('fire', false);
+                this.player.body.acceleration.set(0);
+                this.playerState.set('moving', false);
             }
+
+            if (this.controls.gameControls.cursors.left.isDown) {
+                this.player.body.angularVelocity = -this.angularVelocity;
+            } else if (this.controls.gameControls.cursors.right.isDown) {
+                this.player.body.angularVelocity = this.angularVelocity;
+            } else {
+                this.player.body.angularVelocity = 0;
+            }
+
+            if (this.controls.gameControls.fireWeapon.isDown) {
+                if (this.projectile) {
+                    this.projectile.fireWeapon();
+                    this.playerState.set('fire', true);
+                } else {
+                    this.playerState.set('fire', false);
+                }
+            }
+            this.dispatchLocation(this.player);
         }
-        this.dispatchLocation(this.player);
     }
 
     private dispatchLocation(player): void {

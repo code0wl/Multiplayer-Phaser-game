@@ -41,8 +41,7 @@ class GameServer {
 
     private addHitListener(socket) {
         socket.on(PlayerEvent.hit, (playerId) => {
-            console.log(playerId, 'got hit');
-            socket.broadcast.emit(PlayerEvent.quit, playerId);
+            socket.broadcast.emit(PlayerEvent.hit, playerId);
         });
     }
 
@@ -64,23 +63,24 @@ class GameServer {
     private addSignOnListener(socket): void {
         socket.on(GameEvent.authentication, (player) => {
             socket.emit(PlayerEvent.players, this.getAllPlayers());
-            socket.emit(PlayerEvent.protagonist, this.createPlayer(socket, player.name));
-            socket.broadcast.emit(PlayerEvent.joined, this.createPlayer(socket, player.name));
+            this.createPlayer(socket, player);
+            socket.emit(PlayerEvent.protagonist, socket.player);
+            socket.broadcast.emit(PlayerEvent.joined, socket.player);
             console.info("Total number of players:", this.players);
         });
     }
 
-    private get players(): number {
-        return Object.keys(io.sockets.connected).length;
-    }
-
-    private createPlayer(socket, name): any {
-        return socket.player = {
-            name,
+    private createPlayer(socket, player): void {
+        socket.player = {
+            name: player.name,
             id: uuid(),
             x: this.randomInt(100, 400),
             y: this.randomInt(100, 400)
         };
+    }
+
+    private get players(): number {
+        return Object.keys(io.sockets.connected).length;
     }
 
     private getAllPlayers(): Array<Player> {
