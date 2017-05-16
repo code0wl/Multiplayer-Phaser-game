@@ -33,12 +33,8 @@ export class Game {
 
         window.socket.on(PlayerEvent.players, (players) => {
             players.map((player: any) => {
-                this.actors.map((actor) => {
-                    if (player.id !== actor.player.id) {
-                        const enemy = new Player(this.game, player);
-                        this.actors.push(enemy);
-                    }
-                })
+                const enemy = new Player(this.game, player);
+                this.actors.push(enemy);
             });
         });
 
@@ -52,8 +48,9 @@ export class Game {
         });
 
         window.socket.on(PlayerEvent.hit, (playerId) => {
+            console.log('hit', playerId);
             this.actors.map((actor) => {
-                if (actor.player.id === playerId) {
+                if (actor.player.id === playerId.enemy) {
                     actor.player.kill();
                 }
             });

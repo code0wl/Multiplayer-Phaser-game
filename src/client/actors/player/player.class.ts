@@ -51,7 +51,7 @@ export class Player {
 
     // @TODO: refactor into data stream
     public view(): void {
-        if (this.player.alive) {
+        if (this.player.alive && this.controls) {
             this.playerState.set('fire', false);
             if (this.controls.gameControls.cursors.up.isDown) {
                 this.gameInstance.physics.arcade.accelerationFromRotation(this.player.rotation, 100, this.player.body.acceleration);
