@@ -21,7 +21,6 @@ export class Player {
         this.createPlayer(this.gameInstance);
         this.playerInstance = playerInstance;
         this.playerState = new Map();
-        this.playerState.set('isAlive', true);
     }
 
     public createPlayer(gameInstance): void {
