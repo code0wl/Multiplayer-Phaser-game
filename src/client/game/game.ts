@@ -21,22 +21,24 @@ export class Game {
         this.actors = [];
 
         window.socket.on(PlayerEvent.joined, (player) => {
-            console.log('created player with joined');
             this.actors.push(new Player(this.game, player));
         });
 
         window.socket.on(PlayerEvent.protagonist, (player) => {
-            console.log('created player with protagonist');
             this.actor = new Player(this.game, player);
             this.actors.push(this.actor);
         });
 
         window.socket.on(PlayerEvent.players, (players) => {
             players.map((player: any) => {
-                console.log('created player with get all player');
                 const enemy = new Player(this.game, player);
                 this.actors.push(enemy);
             });
+
+            this.actors = this.actors.filter((elem, index, self) => {
+                return index == self.indexOf(elem);
+            });
+            console.log(this.actors, 'total actors');
         });
 
         window.socket.on(PlayerEvent.quit, (playerId) => {
@@ -51,8 +53,7 @@ export class Game {
         window.socket.on(PlayerEvent.hit, (playerId) => {
             this.actors.map((actor) => {
                 if (actor.player.id === playerId) {
-                    actor.player.body.sprite.destroy();
-                    this.actors = this.actors.splice(this.actors.indexOf(actor), -1);
+                    actor.player.kill();
                 }
             });
         });
@@ -81,7 +82,6 @@ export class Game {
             this.game.physics.arcade.collide(this.actor.player, this.actors.map((actor) => actor.player));
             this.game.physics.arcade.collide(this.actor.projectile.weapon.bullets, this.actors.map((actor) => actor.player), (enemy, projectile) => {
                 if (enemy.id !== this.actor.player.id) {
-                    console.log('removing', enemy.id);
                     window.socket.emit(PlayerEvent.hit, enemy.id);
                     enemy.kill();
                     projectile.kill();
