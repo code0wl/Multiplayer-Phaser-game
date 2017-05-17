@@ -45,23 +45,25 @@ export class Game {
         });
 
         window.socket.on(PlayerEvent.hit, (enemy) => {
-            this.actors.forEach((actor) => {
+            this.actors.forEach(() => {
                 if (this.actor.player.id === enemy) {
+                    this.actor.player.destroy();
                     window.location.reload();
                 }
             })
         });
 
-        // @TODO needs refactor move to movement controller
         window.socket.on(PlayerEvent.coordinates, (player) => {
             this.actors.filter((actor) => {
                 if (actor.player.id === player.player.id) {
                     actor.player.x = player.coors.x;
                     actor.player.y = player.coors.y;
                     actor.player.rotation = player.coors.r;
+
                     if (player.coors.f) {
                         actor.projectile.fireWeapon();
                     }
+
                     if (player.coors.a) {
                         actor.player.animations.play('accelerating');
                     }
@@ -77,7 +79,6 @@ export class Game {
             this.game.physics.arcade.collide(this.actor.projectile.weapon.bullets, this.actors.map((actor) => actor.player), (enemy, projectile) => {
                 if (enemy.id !== this.actor.player.id) {
                     window.socket.emit(PlayerEvent.hit, enemy.id);
-                    console.log('hase been shot', enemy.id);
                     enemy.kill();
                     projectile.kill();
                 }

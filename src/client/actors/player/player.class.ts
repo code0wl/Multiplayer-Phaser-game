@@ -2,6 +2,7 @@ import {KeyBoardControl} from "../../controls/keyboard.class";
 import {Projectile} from "../../props/powers/projectile/projectile.class";
 import {Hud} from "../../hud/hud.class";
 import {PlayerEvent} from "../../../shared/events.model";
+import {Explode} from "../../props/powers/explosion/explosion.class";
 
 declare const window: any;
 declare const Phaser: any;
@@ -11,6 +12,7 @@ export class Player {
     public storage: any;
     public projectile: Projectile;
     public controls: KeyBoardControl;
+    private explode: Explode;
     public playerState: Map<string, boolean>;
 
     private angularVelocity: number = 300;
@@ -47,7 +49,6 @@ export class Player {
         this.player.body.immovable = false;
     }
 
-    // @TODO: refactor into data stream
     public view(): void {
         if (this.player.alive) {
             this.playerState.set('fire', false);
@@ -78,6 +79,10 @@ export class Player {
             }
             this.dispatchLocation(this.player);
         }
+    }
+
+    public destroy() {
+        this.explode = new Explode(this.gameInstance, this.player);
     }
 
     private dispatchLocation(player): void {
