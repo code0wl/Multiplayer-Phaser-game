@@ -14,7 +14,7 @@ export class Player {
     public playerState: Map<string, boolean>;
 
     private angularVelocity: number = 300;
-    private powerUp = [];
+    private powerUps = [];
 
     constructor(private gameInstance: any, public playerInstance: any) {
         this.storage = window.localStorage;
@@ -34,7 +34,6 @@ export class Player {
         this.player.health = 100;
         Hud.view(gameInstance, this.player);
         this.attachPhysics(gameInstance);
-
     }
 
     private attachPhysics(gameInstance): void {
@@ -97,6 +96,6 @@ export class Player {
 
     private assignPickup(game, player): void {
         this.projectile = new Projectile(game, player);
-        this.powerUp.push(this.projectile);
+        this.powerUps.push(this.projectile);
     }
 }

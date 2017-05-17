@@ -10,7 +10,7 @@ export class Projectile {
         this.weapon.physicsBodyType = Phaser.Physics.ARCADE;
         this.weapon.bulletSpeed = 200;
         this.weapon.fireRate = 1000;
-        this.weapon.trackSprite(player, 20, 0, true);
+        this.weapon.trackSprite(player, 10, 0, true);
     }
 
     public fireWeapon() {
