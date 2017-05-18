@@ -7,9 +7,7 @@ declare const io: any;
 declare const window: any;
 
 export class Game {
-    // fix types
     public actors: Array<Player>;
-
     private actor: any;
     protected game: any;
 
@@ -47,6 +45,7 @@ export class Game {
         window.socket.on(PlayerEvent.hit, (enemy) => {
             this.actors.forEach(() => {
                 if (this.actor.player.id === enemy) {
+                    this.actor.kaboom(this.actor.player);
                     this.actor.player.destroy();
                     window.location.reload();
                 }
@@ -89,6 +88,7 @@ export class Game {
 
     protected gameProperties(): void {
         this.game.stage.disableVisibilityChange = true;
+        const bg = this.game.add.tileSprite(0,0, this.game.width, this.game.height, 'space');
         this.game.add.sprite(0, 0, 'space');
         this.game.time.desiredFps = 60;
         this.game.renderer.clearBeforeRender = false;

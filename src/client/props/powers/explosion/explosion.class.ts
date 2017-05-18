@@ -1,7 +1,5 @@
 export class Explode  {
-
     private explosions: any;
-
     constructor(gameInstance, projectile) {
         this.explosions = gameInstance.add.group();
         this.explosions.getFirstExists(false);
