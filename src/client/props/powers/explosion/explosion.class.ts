@@ -9,6 +9,10 @@ export class Explode  {
 
         const explosion = this.explosions.getFirstExists(false);
         explosion.reset(projectile.body.x + -20, projectile.body.y - 30);
-        explosion.play('kaboom', 10, false, true);
+        explosion.play('kaboom', 50, false, true);
+
+        setTimeout(() => {
+            explosion.kill();
+        }, 200);
     }
 }

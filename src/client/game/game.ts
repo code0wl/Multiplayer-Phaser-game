@@ -82,7 +82,6 @@ export class Game {
                     this.actor.kaboom(projectile);
                     enemy.kill();
                     projectile.kill();
-
                 }
             });
         }
