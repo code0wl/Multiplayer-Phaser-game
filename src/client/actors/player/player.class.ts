@@ -4,8 +4,8 @@ import {Hud} from "../../hud/hud.class";
 import {PlayerEvent} from "../../../shared/events.model";
 import {Explode} from "../../props/powers/explosion/explosion.class";
 
-declare const window: any;
 declare const Phaser: any;
+declare const window: any;
 
 export class Player {
     public player: any;
