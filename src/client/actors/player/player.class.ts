@@ -81,8 +81,8 @@ export class Player {
         }
     }
 
-    public destroy() {
-        this.explode = new Explode(this.gameInstance, this.player);
+    public kaboom(projectile) {
+        const explode = new Explode(this.gameInstance, projectile);
     }
 
     private dispatchLocation(player): void {

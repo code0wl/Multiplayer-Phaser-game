@@ -79,8 +79,10 @@ export class Game {
             this.game.physics.arcade.collide(this.actor.projectile.weapon.bullets, this.actors.map((actor) => actor.player), (enemy, projectile) => {
                 if (enemy.id !== this.actor.player.id) {
                     window.socket.emit(PlayerEvent.hit, enemy.id);
+                    this.actor.kaboom(projectile);
                     enemy.kill();
                     projectile.kill();
+
                 }
             });
         }
