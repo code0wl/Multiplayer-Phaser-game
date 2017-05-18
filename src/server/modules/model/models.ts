@@ -1,6 +1,6 @@
 export interface Player {
-    name: string,
+    name: string;
     id: string;
-    x: number,
-    y: number
+    x: number;
+    y: number;
 }

@@ -8,31 +8,20 @@ export class Projectile {
 
     public constructor(gameInstance, player) {
         this.gameInstance = gameInstance;
-        this.weapon = gameInstance.add.weapon(this.bulletCount, 'laser');
+        this.weapon = gameInstance.add.weapon(10, 'laser');
         this.weapon.enableBody = true;
-        this.weapon.physicsBodyType = Phaser.Physics.ARCADE;
-        this.weapon.bulletSpeed = 200;
+        this.weapon.fireLimit = this.bulletCount;
         this.weapon.fireRate = 1000;
+        this.weapon.physicsBodyType = Phaser.Physics.ARCADE;
         this.weapon.trackSprite(player, 10, 0, true);
     }
 
     public fireWeapon() {
         this.weapon.fire();
+        this.bulletCount = this.weapon.fireLimit - this.weapon.shots;
     }
 
     public kaboom(projectile) {
-        const explode = new Explode(this.gameInstance, projectile);
-    }
-
-    // TODO: turn into stream with filter
-    private detectPowerUp(type): void {
-        switch (type) {
-            case 'laser':
-                return;
-            case 'rocket':
-                return;
-            default:
-                return;
-        }
+        new Explode(this.gameInstance, projectile);
     }
 }
