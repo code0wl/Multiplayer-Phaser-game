@@ -9,7 +9,6 @@ declare const Phaser: any;
 
 export class Player {
     public player: any;
-    public storage: any;
     public projectile: Projectile;
     public controls: KeyBoardControl;
     private explode: Explode;
@@ -19,7 +18,6 @@ export class Player {
     private powerUps = [];
 
     constructor(private gameInstance: any, public playerInstance: any) {
-        this.storage = window.localStorage;
         this.createPlayer(this.gameInstance);
         this.playerInstance = playerInstance;
         this.playerState = new Map();
@@ -79,10 +77,6 @@ export class Player {
             }
             this.dispatchLocation(this.player);
         }
-    }
-
-    public kaboom(projectile) {
-        const explode = new Explode(this.gameInstance, projectile);
     }
 
     private dispatchLocation(player): void {
