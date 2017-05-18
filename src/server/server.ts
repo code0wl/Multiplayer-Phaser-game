@@ -1,5 +1,5 @@
-import {GameEvent, PlayerEvent, ServerEvent} from './../shared/events.model';
-import {Player} from '../shared/player.model';
+import {GameEvent, PlayerEvent, ServerEvent} from "./../shared/events.model";
+import {Player} from "./modules/model/models";
 import Socket = SocketIO.Socket;
 const express = require('express');
 const app = express();
@@ -60,21 +60,22 @@ class GameServer {
     }
 
     private addSignOnListener(socket): void {
-        socket.on(GameEvent.authentication, (player) => {
+        socket.on(GameEvent.authentication, (player, gameSize) => {
+            console.log(gameSize)
             socket.emit(PlayerEvent.players, this.getAllPlayers());
-            this.createPlayer(socket, player);
+            this.createPlayer(socket, player, gameSize);
             socket.emit(PlayerEvent.protagonist, socket.player);
             socket.broadcast.emit(PlayerEvent.joined, socket.player);
             console.info("Total number of players:", this.players);
         });
     }
 
-    private createPlayer(socket, player: Player, windowSize: {x, y}): void {
+    private createPlayer(socket, player: Player, windowSize: { x, y }): void {
         socket.player = {
             name: player.name,
             id: uuid(),
-            x: this.randomInt(windowSize.x, windowSize.y),
-            y: this.randomInt(windowSize.x, windowSize.y)
+            x: this.randomInt(0, windowSize.x),
+            y: this.randomInt(0, windowSize.y)
         };
     }
 

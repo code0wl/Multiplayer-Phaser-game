@@ -1,4 +1,5 @@
 import {GameEvent} from "../../shared/events.model";
+
 declare const window: any;
 
 export class Login {
@@ -18,7 +19,7 @@ export class Login {
     private createPlayer(e): void {
         e.preventDefault();
         const name = this.name.value;
-        window.socket.emit(GameEvent.authentication, {name});
+        window.socket.emit(GameEvent.authentication, {name}, {x: window.innerWidth, y: window.innerHeight});
         this.toggleLogin();
     }
 
