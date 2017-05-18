@@ -1,5 +1,6 @@
-import {GameEvent, PlayerEvent, ServerEvent} from "./../shared/events.model";
-import {Player} from "../client/actors/player/player.class";
+import {GameEvent, PlayerEvent, ServerEvent} from './../shared/events.model';
+import {Player} from '../shared/player.model';
+import Socket = SocketIO.Socket;
 const express = require('express');
 const app = express();
 const http = require('http').Server(app);
@@ -13,8 +14,6 @@ app.get('/', (req, res) => {
 });
 
 class GameServer {
-
-    private server: any = {};
 
     constructor() {
         this.socketEvents();
@@ -70,12 +69,12 @@ class GameServer {
         });
     }
 
-    private createPlayer(socket, player): void {
+    private createPlayer(socket, player: Player, windowSize: {x, y}): void {
         socket.player = {
             name: player.name,
             id: uuid(),
-            x: this.randomInt(100, 400),
-            y: this.randomInt(100, 400)
+            x: this.randomInt(windowSize.x, windowSize.y),
+            y: this.randomInt(windowSize.x, windowSize.y)
         };
     }
 

@@ -1,4 +1,14 @@
-# typescript-rxjs-webpack
-A simple starterkit for a local playground or project.
+# RxJS multiplayer Shooter
 
-Feel free to fork or add additions to. The target though is to keep it simple and lean.
+A full Readme available soon. 
+This is a complimentary code repo to accompany my book on the same subject.
+
+(lean)[]
+
+Once you have forked or downloaded this repo you can start it with the following command
+
+### How to run
+```bash
+npm start
+```
+
