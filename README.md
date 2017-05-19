@@ -1,4 +1,4 @@
-# RxJS multiplayer Shooter
+# Multiplayer Phaser Game
 
 A full Readme available soon. 
 This is a complimentary code repo to accompany my book on the same subject.
