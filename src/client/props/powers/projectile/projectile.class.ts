@@ -21,6 +21,10 @@ export class Projectile {
         this.bulletCount = this.weapon.fireLimit - this.weapon.shots;
     }
 
+    public view() {
+
+    }
+
     public kaboom(projectile) {
         new Explode(this.gameInstance, projectile);
     }

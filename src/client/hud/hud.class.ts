@@ -1,7 +1,6 @@
-import PhaserTextStyle = Phaser.PhaserTextStyle;
 export class Hud {
 
-    private ammo: PhaserTextStyle;
+    private ammo: any;
     private name: string;
     private style: { font, fill };
 
