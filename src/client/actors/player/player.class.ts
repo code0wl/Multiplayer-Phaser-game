@@ -35,6 +35,7 @@ export class Player {
         this.attachPhysics(gameInstance);
         this.addControls();
         this.hud.setName(gameInstance, this.player);
+        this.assignPickup(gameInstance, this.player);
     }
 
     private attachPhysics(gameInstance): void {
@@ -59,8 +60,9 @@ export class Player {
         this.controls = new KeyBoardControl(this.gameInstance, this);
     }
 
-    private assignPickup(game, player, projectile): void {
-        this.powerUps.push(projectile);
-        this.hud.setAmmo(game, player, this.projectile);
+    private assignPickup(game, player): void {
+        this.projectile = new Projectile(game, player);
+        this.powerUps.push(this.projectile);
+        this.hud.setAmmo(game, player, this.projectile)
     }
 }
