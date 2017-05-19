@@ -1,8 +1,7 @@
-import {KeyBoardControl} from "../../controls/keyboard.class";
-import {Projectile} from "../../props/powers/projectile/projectile.class";
-import {Hud} from "../../hud/hud.class";
-import {PlayerEvent} from "../../../shared/events.model";
-import {Explode} from "../../props/powers/explosion/explosion.class";
+import {KeyBoardControl} from '../../controls/keyboard.class';
+import {Projectile} from '../../props/powers/projectile/projectile.class';
+import {Hud} from '../../hud/hud.class';
+import {Explode} from '../../props/powers/explosion/explosion.class';
 
 declare const Phaser: any;
 declare const window: any;
@@ -12,9 +11,9 @@ export class Player {
     public projectile: Projectile;
     public controls: KeyBoardControl;
     public playerState: Map<string, boolean>;
+    public hud: Hud;
 
     private explode: Explode;
-    private hud: Hud;
     private angularVelocity: number = 300;
     private powerUps = [];
 
@@ -25,17 +24,18 @@ export class Player {
     }
 
     public createPlayer(gameInstance): void {
+        this.hud = new Hud();
         this.addControls();
         this.player = gameInstance.add.sprite(this.playerInstance.x, this.playerInstance.y, 'shooter-sprite');
-        this.assignPickup(gameInstance, this.player);
         this.player.id = this.playerInstance.id;
         this.player.anchor.setTo(0.5, 0.5);
         this.player.animations.add('accelerating', [1, 0], 50, false);
         this.player.name = this.playerInstance.name;
         this.player.health = 100;
         this.attachPhysics(gameInstance);
-        this.hud = new Hud(gameInstance, this.player);
         this.addControls();
+        this.hud.setName(gameInstance, this.player);
+        this.assignPickup(gameInstance, this.player);
     }
 
     private attachPhysics(gameInstance): void {
@@ -51,6 +51,9 @@ export class Player {
 
     public view(): void {
         this.controls.update();
+        if (this.projectile) {
+            this.hud.update(this.projectile);
+        }
     }
 
     private addControls(): void {
@@ -60,5 +63,6 @@ export class Player {
     private assignPickup(game, player): void {
         this.projectile = new Projectile(game, player);
         this.powerUps.push(this.projectile);
+        this.hud.setAmmo(game, player, this.projectile)
     }
 }

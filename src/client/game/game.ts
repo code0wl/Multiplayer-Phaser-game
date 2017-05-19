@@ -9,7 +9,6 @@ declare const window: any;
 export class Game {
     public actors: Array<Player>;
     private actor: any;
-    private socket: any;
     private authentication: Login;
     protected game: any;
 
@@ -63,6 +62,7 @@ export class Game {
 
                     if (player.coors.f) {
                         actor.projectile.fireWeapon();
+                        actor.hud.update(actor.projectile);
                     }
 
                     if (player.coors.a) {

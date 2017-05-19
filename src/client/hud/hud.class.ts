@@ -1,26 +1,28 @@
+import PhaserTextStyle = Phaser.PhaserTextStyle;
 export class Hud {
 
-    private gameInstance: any;
-    private player: any;
+    private ammo: PhaserTextStyle;
+    private name: string;
+    private style: { font, fill };
 
-    constructor(gameInstance, player) {
-        this.gameInstance = gameInstance;
-        this.player = player;
+    constructor() {
+        this.style = {
+            font: "10px Arial",
+            fill: "#ffffff"
+        }
     }
 
     public setName(game, player): void {
-        const text = game.add.text(0, 10, player.name.substring(0, 6), {
-            font: "10px Arial",
-            fill: "#ffffff"
-        });
-        player.addChild(text);
+        this.name = game.add.text(0, 10, player.name.substring(0, 6), this.style);
+        player.addChild(this.name);
     }
 
-    public setAmmo(game, weapon): void {
-        const text = game.add.text(0, 10, weapon.bulletCount, {
-            font: "10px Arial",
-            fill: "#ffffff"
-        });
-        this.player.addChild(text);
+    public update(weapon): void {
+        this.ammo.setText(`${weapon.bulletCount ? weapon.bulletCount : ''}`);
+    }
+
+    public setAmmo(game, player, weapon): void {
+        this.ammo = game.add.text(0, 25, weapon.bulletCount, this.style);
+        player.addChild(this.ammo);
     }
 }
