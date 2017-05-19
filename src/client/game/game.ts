@@ -3,8 +3,8 @@ import {Player} from "../actors/player/player.class";
 import {Login} from "../scenes/login";
 
 declare const Phaser: any;
-declare const io: any;
 declare const window: any;
+declare const io: any;
 
 export class Game {
     public actors: Array<Player>;
@@ -72,8 +72,18 @@ export class Game {
     }
 
     protected gameUpdate(): void {
+
         if (this.actor && this.actor.controls) {
             this.actor.view();
+
+            window.socket.emit(PlayerEvent.coordinates, {
+                x: this.actor.player.position.x,
+                y: this.actor.player.position.y,
+                r: this.actor.player.rotation,
+                f: this.actor.playerState.get('fire'),
+                a: this.actor.playerState.get('moving')
+            });
+
             this.game.physics.arcade.collide(this.actor.player, this.actors.map((actor) => actor.player));
             this.game.physics.arcade.collide(this.actor.projectile.weapon.bullets, this.actors.map((actor) => actor.player), (enemy, projectile) => {
                 if (enemy.id !== this.actor.player.id) {
@@ -88,7 +98,7 @@ export class Game {
 
     protected gameProperties(): void {
         this.game.stage.disableVisibilityChange = true;
-        const bg = this.game.add.tileSprite(0,0, this.game.width, this.game.height, 'space');
+        this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'space');
         this.game.add.sprite(0, 0, 'space');
         this.game.time.desiredFps = 60;
         this.game.renderer.clearBeforeRender = false;

@@ -1,8 +1,4 @@
-import {Player} from "../actors/player/player.class";
-import {PlayerEvent} from "../../shared/events.model";
-
 declare const Phaser: any;
-declare const window: any;
 
 export class KeyBoardControl {
     public gameControls: any = {};
@@ -44,19 +40,5 @@ export class KeyBoardControl {
                 }
             }
         }
-
-        this.dispatchLocation(this.playerInstance.player);
-
     }
-
-    private dispatchLocation(player): void {
-        window.socket.emit(PlayerEvent.coordinates, {
-            x: player.position.x,
-            y: player.position.y,
-            r: this.playerInstance.player.rotation,
-            f: this.playerInstance.playerState.get('fire'),
-            a: this.playerInstance.playerState.get('moving')
-        });
-    }
-
 }
