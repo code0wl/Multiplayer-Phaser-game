@@ -1,19 +1,21 @@
-import {PlayerEvent} from "../../shared/events.model";
-import {Player} from "../actors/player/player.class";
-import {Login} from "../scenes/login";
+import {PlayerEvent} from '../../shared/events.model';
+import {Player} from '../actors/player/player.class';
+import {Login} from '../scenes/login';
 
 declare const Phaser: any;
-declare const window: any;
 declare const io: any;
+declare const window: any;
 
 export class Game {
     public actors: Array<Player>;
     private actor: any;
+    private socket: any;
+    private authentication: Login;
     protected game: any;
 
     constructor() {
-        window.socket = io.connect();
-        new Login();
+        window.socket = io.connect() as any;
+        this.authentication = new Login();
     }
 
     protected createActors(): void {
@@ -72,7 +74,6 @@ export class Game {
     }
 
     protected gameUpdate(): void {
-
         if (this.actor && this.actor.controls) {
             this.actor.view();
 
