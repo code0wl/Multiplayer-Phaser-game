@@ -29,7 +29,7 @@ export class Player {
         this.player = gameInstance.add.sprite(this.playerInstance.x, this.playerInstance.y, 'shooter-sprite');
         this.player.id = this.playerInstance.id;
         this.player.anchor.setTo(0.5, 0.5);
-        this.player.animations.add('accelerating', [1, 0], 50, false);
+        this.player.animations.add('accelerating', [1, 0], 60, false);
         this.player.name = this.playerInstance.name;
         this.player.health = 100;
         this.attachPhysics(gameInstance);

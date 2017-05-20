@@ -1,13 +1,14 @@
-export class Explode  {
+export class Explode {
     private explosions: any;
+
     constructor(gameInstance, projectile) {
         this.explosions = gameInstance.add.group();
         this.explosions.getFirstExists(false);
-        this.explosions.createMultiple(1, 'kaboom');
+        this.explosions.createMultiple(1, '');
 
         const explosion = this.explosions.getFirstExists(false);
         explosion.reset(projectile.body.x + -20, projectile.body.y - 30);
-        explosion.play('kaboom', 50, false, true);
+        explosion.play('kaboom', [1, 2], 50);
 
         setTimeout(() => {
             explosion.kill();

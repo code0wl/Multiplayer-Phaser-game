@@ -117,7 +117,11 @@ export class Game {
                 this.game.physics.arcade.overlap(this.projectile.pickup, this.actors.map((actor) => actor.player), (projectile, actor) => {
                     window.socket.emit(PlayerEvent.pickup, actor.id);
                     this.actor.assignPickup(this.game, actor);
-                    this.projectile = null;
+                    projectile.kill();
+                    setTimeout(() => {
+                        this.projectile = new Projectile(this.game);
+                        this.projectile.renderPickup(window.innerWidth / 2, window.innerHeight / 2);
+                    }, 5000)
                 });
             }
         }
