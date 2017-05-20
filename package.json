@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "tsc src/server/server.ts && node src/server/server.js && webpack -w",
-    "start": "yarn && node src/server/server.js"
+    "start": "npm i && webpack && node ./src/server/server.js"
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
   "dependencies": {
     "connect": "^3.6.1",
     "express": "4.15.2",
-    "phaser": "^2.6.2",
+    "phaser-ce": "^2.7.9",
     "rxjs": "^5.3.0",
     "socket.io": "^1.7.3",
     "socket.io-client": "^1.7.4",

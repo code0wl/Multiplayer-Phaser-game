@@ -1,10 +1,12 @@
-import {Explode} from "../explosion/explosion.class";
-declare const Phaser;
+import {Explode} from '../explosion/explosion.class';
+
+declare const Phaser: any;
 
 export class Projectile {
     public weapon: any;
     public bulletCount: number = 10;
     private gameInstance: any;
+    private laser: any;
 
     public constructor(gameInstance, player) {
         this.gameInstance = gameInstance;
@@ -19,6 +21,10 @@ export class Projectile {
     public fireWeapon() {
         this.weapon.fire();
         this.bulletCount = this.weapon.fireLimit - this.weapon.shots;
+    }
+
+    public renderPickup(coordinates): void {
+        this.laser = this.gameInstance.add.sprite(coordinates.x, coordinates.y, 'pickup');
     }
 
     public kaboom(projectile) {

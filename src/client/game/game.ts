@@ -1,10 +1,10 @@
 import {PlayerEvent} from '../../shared/events.model';
 import {Player} from '../actors/player/player.class';
 import {Login} from '../scenes/login';
-import {Projectile} from "../props/powers/projectile/projectile.class";
+import {Projectile} from '../props/powers/projectile/projectile.class';
 
-declare const Phaser: any;
 declare const io: any;
+declare const Phaser: any;
 declare const window: any;
 
 export class Game {
