@@ -61,7 +61,6 @@ class GameServer {
 
     private addSignOnListener(socket): void {
         socket.on(GameEvent.authentication, (player, gameSize) => {
-            console.log(gameSize)
             socket.emit(PlayerEvent.players, this.getAllPlayers());
             this.createPlayer(socket, player, gameSize);
             socket.emit(PlayerEvent.protagonist, socket.player);
