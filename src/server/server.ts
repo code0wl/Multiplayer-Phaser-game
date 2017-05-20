@@ -36,11 +36,18 @@ class GameServer {
         this.addMovementListener(socket);
         this.addSignOutListener(socket);
         this.addHitListener(socket);
+        this.addPickupListener(socket);
     }
 
     private addHitListener(socket) {
         socket.on(PlayerEvent.hit, (playerId) => {
             socket.broadcast.emit(PlayerEvent.hit, playerId);
+        });
+    }
+
+    private addPickupListener(socket) {
+        socket.on(PlayerEvent.pickup, (playerId) => {
+            socket.broadcast.emit(PlayerEvent.pickup, playerId);
         });
     }
 

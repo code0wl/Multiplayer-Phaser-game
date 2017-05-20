@@ -5,17 +5,19 @@ declare const Phaser: any;
 export class Projectile {
     public weapon: any;
     public bulletCount: number = 10;
+    public pickup: any;
     private gameInstance: any;
-    private laser: any;
 
-    public constructor(gameInstance, player) {
+    public constructor(gameInstance, player?) {
         this.gameInstance = gameInstance;
         this.weapon = gameInstance.add.weapon(10, 'laser');
         this.weapon.enableBody = true;
         this.weapon.fireLimit = this.bulletCount;
         this.weapon.fireRate = 1000;
         this.weapon.physicsBodyType = Phaser.Physics.ARCADE;
-        this.weapon.trackSprite(player, 10, 0, true);
+        if (player) {
+            this.weapon.trackSprite(player, 10, 0, true);
+        }
     }
 
     public fireWeapon() {
@@ -23,8 +25,10 @@ export class Projectile {
         this.bulletCount = this.weapon.fireLimit - this.weapon.shots;
     }
 
-    public renderPickup(coordinates): void {
-        this.laser = this.gameInstance.add.sprite(coordinates.x, coordinates.y, 'pickup');
+    public renderPickup(x, y): void {
+        this.pickup = this.gameInstance.add.sprite(x, y, 'pickup');
+        this.pickup.enableBody = true;
+        this.gameInstance.physics.enable(this.pickup, Phaser.Physics.ARCADE);
     }
 
     public kaboom(projectile) {

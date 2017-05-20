@@ -35,18 +35,12 @@ export class Player {
         this.attachPhysics(gameInstance);
         this.addControls();
         this.hud.setName(gameInstance, this.player);
-        this.assignPickup(gameInstance, this.player);
     }
 
-    private attachPhysics(gameInstance): void {
-        gameInstance.physics.enable(this.player, Phaser.Physics.ARCADE);
-        this.player.body.collideWorldBounds = true;
-        this.player.body.bounce.setTo(10, 10);
-        this.player.enableBody = true;
-        this.player.body.gravity.y = 0;
-        this.player.body.drag.set(80);
-        this.player.body.maxVelocity.set(100);
-        this.player.body.immovable = false;
+    public assignPickup(game, player): void {
+        this.projectile = new Projectile(game, player);
+        this.powerUps.push(this.projectile);
+        this.hud.setAmmo(game, player, this.projectile)
     }
 
     public view(): void {
@@ -60,9 +54,14 @@ export class Player {
         this.controls = new KeyBoardControl(this.gameInstance, this);
     }
 
-    private assignPickup(game, player): void {
-        this.projectile = new Projectile(game, player);
-        this.powerUps.push(this.projectile);
-        this.hud.setAmmo(game, player, this.projectile)
+    private attachPhysics(gameInstance): void {
+        gameInstance.physics.enable(this.player, Phaser.Physics.ARCADE);
+        this.player.body.collideWorldBounds = true;
+        this.player.body.bounce.setTo(10, 10);
+        this.player.enableBody = true;
+        this.player.body.gravity.y = 0;
+        this.player.body.drag.set(80);
+        this.player.body.maxVelocity.set(100);
+        this.player.body.immovable = false;
     }
 }

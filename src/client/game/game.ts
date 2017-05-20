@@ -55,6 +55,14 @@ export class Game {
             })
         });
 
+        window.socket.on(PlayerEvent.pickup, (player) => {
+            this.actors.map((actor) => {
+                if (actor.player.id === player) {
+                    actor.assignPickup(this.game, actor.player);
+                }
+            })
+        });
+
         window.socket.on(PlayerEvent.coordinates, (player) => {
             this.actors.filter((actor) => {
                 if (actor.player.id === player.player.id) {
@@ -75,6 +83,11 @@ export class Game {
         });
     }
 
+    protected createProps(): void {
+        this.projectile = new Projectile(this.game);
+        this.projectile.renderPickup(window.innerWidth / 2, window.innerHeight / 2);
+    }
+
     protected gameUpdate(): void {
         if (this.actor && this.actor.controls) {
             this.actor.view();
@@ -88,14 +101,25 @@ export class Game {
             });
 
             this.game.physics.arcade.collide(this.actor.player, this.actors.map((actor) => actor.player));
-            this.game.physics.arcade.collide(this.actor.projectile.weapon.bullets, this.actors.map((actor) => actor.player), (enemy, projectile) => {
-                if (enemy.id !== this.actor.player.id) {
-                    window.socket.emit(PlayerEvent.hit, enemy.id);
-                    this.actor.projectile.kaboom(projectile);
-                    enemy.kill();
-                    projectile.kill();
-                }
-            });
+
+            if (this.actor.projectile) {
+                this.game.physics.arcade.collide(this.actor.projectile.weapon.bullets, this.actors.map((actor) => actor.player), (enemy, projectile) => {
+                    if (enemy.id !== this.actor.player.id) {
+                        window.socket.emit(PlayerEvent.hit, enemy.id);
+                        this.actor.projectile.kaboom(projectile);
+                        enemy.kill();
+                        projectile.kill();
+                    }
+                });
+            }
+
+            if (this.projectile) {
+                this.game.physics.arcade.overlap(this.projectile.pickup, this.actors.map((actor) => actor.player), (projectile, actor) => {
+                    window.socket.emit(PlayerEvent.pickup, actor.id);
+                    this.actor.assignPickup(this.game, actor);
+                    this.projectile = null;
+                });
+            }
         }
     }
 
