@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 
-const config = {
+module.exports = {
     entry: './main',
     output: {
         path: path.resolve(__dirname, 'public/dist'),
@@ -22,8 +22,11 @@ const config = {
         ]
     },
     plugins: [
-        // new webpack.optimize.UglifyJsPlugin()
-    ]
+        new webpack.optimize.UglifyJsPlugin()
+    ],
+    devServer: {
+        contentBase: path.join(__dirname, 'public/dist'),
+        port: 9000,
+        hot: true
+    }
 };
-
-module.exports = config;
