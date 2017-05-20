@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:dev": "tsc src/server/server.ts && node src/server/server.js && webpack -w",
+    "server:watch": "tsc -w src/server/server",
+    "server:run": "nodemon src/server/server",
+    "start:dev": "webpack -w",
     "start": "npm i && webpack && node ./src/server/server.js"
   },
   "repository": {
@@ -37,7 +39,6 @@
     "ts-loader": "^1.3.3",
     "typescript": "^2.3.1",
     "webpack": "^2.4.1",
-    "webpack-dev-server": "^2.4.5",
     "yarn": "^0.22.0"
   }
 }
