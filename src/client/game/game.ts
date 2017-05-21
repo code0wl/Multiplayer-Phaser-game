@@ -21,7 +21,6 @@ export class Game {
 
     protected createActors(): void {
         this.actors = [];
-
         window.socket.on(PlayerEvent.joined, (player) => {
             this.actors.push(new Player(this.game, player));
         });
