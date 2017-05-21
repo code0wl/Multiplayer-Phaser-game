@@ -1,10 +1,8 @@
 import {KeyBoardControl} from '../../controls/keyboard.class';
 import {Projectile} from '../../props/powers/projectile/projectile.class';
 import {Hud} from '../../hud/hud.class';
-import {Explode} from '../../props/powers/explosion/explosion.class';
 
 declare const Phaser: any;
-declare const window: any;
 
 export class Player {
     public player: any;
@@ -12,9 +10,8 @@ export class Player {
     public controls: KeyBoardControl;
     public playerState: Map<string, boolean>;
     public hud: Hud;
+    public angularVelocity: number = 300;
 
-    private explode: Explode;
-    private angularVelocity: number = 300;
     private powerUps = [];
 
     constructor(private gameInstance: any, public playerInstance: any) {
