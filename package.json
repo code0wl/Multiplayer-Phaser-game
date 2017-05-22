@@ -30,7 +30,6 @@
     "whatwg-fetch": "^2.0.1"
   },
   "devDependencies": {
-    "@types/rx": "^4.1.1",
     "@types/socket.io": "^1.4.29",
     "@types/socket.io-client": "^1.4.29",
     "@types/uuid": "^2.0.29",
