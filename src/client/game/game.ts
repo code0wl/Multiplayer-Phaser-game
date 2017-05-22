@@ -114,8 +114,8 @@ export class Game {
 
             if (this.projectile) {
                 this.game.physics.arcade.overlap(this.projectile.pickup, this.actors.map((actor) => actor.player), (projectile, actor) => {
-                    window.socket.emit(PlayerEvent.pickup, actor.id);
                     this.actor.assignPickup(this.game, actor);
+                    window.socket.emit(PlayerEvent.pickup, {uuid: actor.id, ammo: this.actor.projectile.bulletCount});
                     projectile.kill();
                     setTimeout(() => {
                         this.projectile = new Projectile(this.game);

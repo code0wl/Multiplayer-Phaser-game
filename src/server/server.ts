@@ -46,8 +46,12 @@ class GameServer {
     }
 
     private addPickupListener(socket) {
-        socket.on(PlayerEvent.pickup, (playerId) => {
-            socket.broadcast.emit(PlayerEvent.pickup, playerId);
+        socket.on(PlayerEvent.pickup, (player) => {
+            if (socket.player) {
+                socket.player.ammo = player.ammo;
+                console.log(socket.player);
+            }
+            socket.broadcast.emit(PlayerEvent.pickup, player.uuid);
         });
     }
 
