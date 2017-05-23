@@ -4,7 +4,9 @@ body {
     background: black;
     display: flex;
     justify-content: center;
-    align-content: center;
+    align-items:center;
+    background: url('galaxy.jpg');
+    background-size: cover;
     height: 100vh;
 }
 
@@ -107,8 +109,4 @@ body {
     position: absolute;
     height: 100%;
     width: 100%;
-}
-
-canvas {
-    margin: 0 auto;
 }
