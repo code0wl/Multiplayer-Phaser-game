@@ -15,7 +15,7 @@ export class Game {
     protected game: any;
 
     constructor() {
-        window.socket = io.connect() as any;
+        window.socket = io.connect();
         this.authentication = new Login();
     }
 
