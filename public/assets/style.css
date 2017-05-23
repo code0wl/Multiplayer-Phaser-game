@@ -1,6 +1,11 @@
 body {
     overflow: hidden;
     margin: 0;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    height: 100vh;
 }
 
 .visible {
@@ -102,4 +107,8 @@ body {
     position: absolute;
     height: 100%;
     width: 100%;
+}
+
+canvas {
+    margin: 0 auto;
 }

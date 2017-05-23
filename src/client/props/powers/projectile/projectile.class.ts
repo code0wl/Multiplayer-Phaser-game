@@ -25,8 +25,8 @@ export class Projectile {
         this.bulletCount = this.weapon.fireLimit - this.weapon.shots;
     }
 
-    public renderPickup(x, y): void {
-        this.pickup = this.gameInstance.add.sprite(x, y, 'pickup');
+    public renderPickup(coors): void {
+        this.pickup = this.gameInstance.add.sprite(coors.x, coors.y, 'pickup');
         this.pickup.enableBody = true;
         this.gameInstance.physics.enable(this.pickup, Phaser.Physics.ARCADE);
     }

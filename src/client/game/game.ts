@@ -1,4 +1,4 @@
-import {PlayerEvent} from '../../shared/events.model';
+import {GameEvent, PlayerEvent} from '../../shared/events.model';
 import {Player} from '../actors/player/player.class';
 import {Login} from '../scenes/login';
 import {Projectile} from '../props/powers/projectile/projectile.class';
@@ -44,6 +44,15 @@ export class Game {
             });
         });
 
+        window.socket.on(GameEvent.drop, (coors) => {
+            if (this.projectile) {
+                this.projectile.pickup.kill();
+            }
+
+            this.projectile = new Projectile(this.game);
+            this.projectile.renderPickup(coors);
+        });
+
         window.socket.on(PlayerEvent.hit, (enemy) => {
             this.actors.forEach(() => {
                 if (this.actor.player.id === enemy) {
@@ -54,12 +63,17 @@ export class Game {
             })
         });
 
+        window.socket.on(GameEvent.pickup, (coordinates) => {
+            this.projectile = new Projectile(this.game);
+            this.projectile.renderPickup(coordinates);
+        })
+
         window.socket.on(PlayerEvent.pickup, (player) => {
             this.actors.map((actor) => {
                 if (actor.player.id === player) {
                     actor.assignPickup(this.game, actor.player);
                 }
-            })
+            });
         });
 
         window.socket.on(PlayerEvent.coordinates, (player) => {
@@ -80,11 +94,6 @@ export class Game {
                 }
             });
         });
-    }
-
-    protected createProps(): void {
-        this.projectile = new Projectile(this.game);
-        this.projectile.renderPickup(window.innerWidth / 2, window.innerHeight / 2);
     }
 
     protected gameUpdate(): void {
@@ -113,14 +122,10 @@ export class Game {
             }
 
             if (this.projectile) {
-                this.game.physics.arcade.overlap(this.projectile.pickup, this.actors.map((actor) => actor.player), (projectile, actor) => {
+                this.game.physics.arcade.overlap(this.projectile.pickup, this.actors.map((actor) => actor.player), (pickup, actor) => {
                     this.actor.assignPickup(this.game, actor);
                     window.socket.emit(PlayerEvent.pickup, {uuid: actor.id, ammo: this.actor.projectile.bulletCount});
-                    projectile.kill();
-                    setTimeout(() => {
-                        this.projectile = new Projectile(this.game);
-                        this.projectile.renderPickup(window.innerWidth / 2, window.innerHeight / 2);
-                    }, 5000)
+                    pickup.kill();
                 });
             }
         }

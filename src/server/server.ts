@@ -1,5 +1,5 @@
-import {GameEvent, PlayerEvent, ServerEvent} from "./../shared/events.model";
-import {Player} from "./modules/model/models";
+import {GameEvent, PlayerEvent, ServerEvent} from './../shared/events.model';
+import {Player} from './modules/model/models';
 import Socket = SocketIO.Socket;
 const express = require('express');
 const app = express();
@@ -15,6 +15,8 @@ app.get('/', (req, res) => {
 
 class GameServer {
 
+    private timer: any;
+
     constructor() {
         this.socketEvents();
     }
@@ -27,7 +29,7 @@ class GameServer {
 
     private socketEvents() {
         io.on(ServerEvent.connected, socket => {
-            this.attachListeners(socket)
+            this.attachListeners(socket);
         });
     }
 
@@ -45,11 +47,20 @@ class GameServer {
         });
     }
 
+    private generatePickup(socket): void {
+        if (this.getAllPlayers().length === 1) {
+            setInterval(() => {
+                const coordinates = {x: Math.floor(Math.random() * 800) + 1, y: Math.floor(Math.random() * 600) + 1};
+                socket.emit(GameEvent.drop, coordinates);
+                socket.broadcast.emit(GameEvent.drop, coordinates);
+            }, 5000);
+        }
+    }
+
     private addPickupListener(socket) {
         socket.on(PlayerEvent.pickup, (player) => {
             if (socket.player) {
                 socket.player.ammo = player.ammo;
-                console.log(socket.player);
             }
             socket.broadcast.emit(PlayerEvent.pickup, player.uuid);
         });
@@ -65,7 +76,6 @@ class GameServer {
         socket.on(ServerEvent.disconnected, () => {
             if (socket.player) {
                 socket.broadcast.emit(PlayerEvent.quit, socket.player.id);
-                console.info("Total number of players:", this.players);
             }
         });
     }
@@ -76,7 +86,7 @@ class GameServer {
             this.createPlayer(socket, player, gameSize);
             socket.emit(PlayerEvent.protagonist, socket.player);
             socket.broadcast.emit(PlayerEvent.joined, socket.player);
-            console.info("Total number of players:", this.players);
+            this.generatePickup(socket);
         });
     }
 

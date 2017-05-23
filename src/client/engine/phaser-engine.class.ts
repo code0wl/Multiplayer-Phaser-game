@@ -6,7 +6,7 @@ export class PhaserSpaceGame extends Game implements LifeCycle {
 
     constructor() {
         super();
-        this.game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.AUTO, 'space-shooter', {
+        this.game = new Phaser.Game(800, 600, Phaser.AUTO, 'space-shooter', {
             preload: this.preload,
             create: this.create,
             update: this.update
@@ -26,7 +26,6 @@ export class PhaserSpaceGame extends Game implements LifeCycle {
     create(): void {
         super.gameProperties();
         super.createActors();
-        super.createProps();
     }
 
     update(): void {
