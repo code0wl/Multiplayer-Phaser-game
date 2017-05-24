@@ -23,10 +23,5 @@ module.exports = {
     },
     plugins: [
         new webpack.optimize.UglifyJsPlugin()
-    ],
-    devServer: {
-        contentBase: path.join(__dirname, 'public/dist'),
-        port: 9000,
-        hot: true
-    }
+    ]
 };
