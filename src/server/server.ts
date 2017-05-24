@@ -48,12 +48,17 @@ class GameServer {
     }
 
     private generatePickup(socket): void {
+        const pickupGen = setInterval(genPickup, 5000);
         if (this.getAllPlayers().length === 1) {
-            setInterval(() => {
-                const coordinates = {x: Math.floor(Math.random() * 800) + 1, y: Math.floor(Math.random() * 600) + 1};
-                socket.emit(GameEvent.drop, coordinates);
-                socket.broadcast.emit(GameEvent.drop, coordinates);
-            }, 5000);
+            genPickup();
+        } else {
+            clearInterval(pickupGen);
+        }
+        function genPickup() {
+            console.log('called');
+            const coordinates = {x: Math.floor(Math.random() * 800) + 1, y: Math.floor(Math.random() * 600) + 1};
+            socket.emit(GameEvent.drop, coordinates);
+            socket.broadcast.emit(GameEvent.drop, coordinates);
         }
     }
 
