@@ -5,7 +5,7 @@
     "rules": {
         "max-line-length": {
             "options": [
-                120
+                180
             ]
         },
         "new-parens": true,

@@ -55,7 +55,6 @@ class GameServer {
             clearInterval(pickupGen);
         }
         function genPickup() {
-            console.log('called');
             const coordinates = {x: Math.floor(Math.random() * 800) + 1, y: Math.floor(Math.random() * 600) + 1};
             socket.emit(GameEvent.drop, coordinates);
             socket.broadcast.emit(GameEvent.drop, coordinates);
