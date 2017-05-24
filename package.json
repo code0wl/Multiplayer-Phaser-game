@@ -22,7 +22,6 @@
     },
     "homepage": "https://github.com/code0wl/typescript-rxjs-webpack#readme",
     "dependencies": {
-        "connect": "^3.6.1",
         "express": "4.15.2",
         "phaser-ce": "^2.7.9",
         "socket.io": "^2.0.1",

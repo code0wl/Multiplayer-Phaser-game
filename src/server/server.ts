@@ -16,6 +16,7 @@ app.get('/', (req, res) => {
 class GameServer {
 
     private timer: any;
+    private dirtyFlag: boolean = false;
 
     constructor() {
         this.socketEvents();
@@ -48,16 +49,13 @@ class GameServer {
     }
 
     private generatePickup(socket): void {
-        const pickupGen = setInterval(genPickup, 5000);
-        if (this.getAllPlayers().length === 1) {
-            genPickup();
-        } else {
-            clearInterval(pickupGen);
-        }
-        function genPickup() {
-            const coordinates = {x: Math.floor(Math.random() * 800) + 1, y: Math.floor(Math.random() * 600) + 1};
-            socket.emit(GameEvent.drop, coordinates);
-            socket.broadcast.emit(GameEvent.drop, coordinates);
+        if (!this.dirtyFlag) {
+            this.dirtyFlag = true;
+            setInterval(() => {
+                const coordinates = {x: Math.floor(Math.random() * 800) + 1, y: Math.floor(Math.random() * 600) + 1};
+                socket.emit(GameEvent.drop, coordinates);
+                socket.broadcast.emit(GameEvent.drop, coordinates);
+            }, 5000);
         }
     }
 
