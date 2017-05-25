@@ -4,7 +4,6 @@ export class GameEvent {
     public static start: 'game:start';
     public static loot: string = 'loot';
     public static drop: string = 'drop';
-    public static pickup: 'game:pickup';
 }
 
 export class ServerEvent {

@@ -12,8 +12,6 @@ export class Player {
     public hud: Hud;
     public angularVelocity: number = 300;
 
-    private powerUps = [];
-
     constructor(private gameInstance: any, public playerInstance: any) {
         this.createPlayer(this.gameInstance);
         this.playerInstance = playerInstance;
@@ -36,8 +34,7 @@ export class Player {
 
     public assignPickup(game, player): void {
         this.projectile = new Projectile(game, player);
-        this.powerUps.push(this.projectile);
-        this.hud.setAmmo(game, player, this.projectile)
+        this.hud.setAmmo(game, player, this.projectile);
     }
 
     public view(): void {

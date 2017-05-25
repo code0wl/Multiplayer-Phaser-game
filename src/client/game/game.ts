@@ -63,11 +63,6 @@ export class Game {
             })
         });
 
-        window.socket.on(GameEvent.pickup, (coordinates) => {
-            this.projectile = new Projectile(this.game);
-            this.projectile.renderPickup(coordinates);
-        })
-
         window.socket.on(PlayerEvent.pickup, (player) => {
             this.actors.map((actor) => {
                 if (actor.player.id === player) {

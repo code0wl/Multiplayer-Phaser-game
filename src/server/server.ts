@@ -55,7 +55,7 @@ class GameServer {
                 const coordinates = {x: Math.floor(Math.random() * 800) + 1, y: Math.floor(Math.random() * 600) + 1};
                 socket.emit(GameEvent.drop, coordinates);
                 socket.broadcast.emit(GameEvent.drop, coordinates);
-            }, 5000);
+            }, 10000);
         }
     }
 
@@ -96,6 +96,7 @@ class GameServer {
         socket.player = {
             name: player.name,
             id: uuid(),
+            ammo: 0,
             x: this.randomInt(0, windowSize.x),
             y: this.randomInt(0, windowSize.y)
         };
