@@ -27,6 +27,7 @@ export class Game {
 
         window.socket.on(PlayerEvent.protagonist, (player) => {
             this.actor = new Player(this.game, player);
+            this.actors.push(this.actor);
         });
 
         window.socket.on(PlayerEvent.players, (players) => {
@@ -117,9 +118,9 @@ export class Game {
 
             if (this.projectile) {
                 this.game.physics.arcade.overlap(this.projectile.pickup.item, this.actors.map((actor) => actor.player), (pickup, actor) => {
-                    pickup.kill();
                     this.actor.assignPickup(this.game, actor);
                     window.socket.emit(PlayerEvent.pickup, actor.id);
+                    pickup.kill();
                 });
             }
         }

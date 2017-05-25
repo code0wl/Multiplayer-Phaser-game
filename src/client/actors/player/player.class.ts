@@ -32,7 +32,7 @@ export class Player {
         this.hud.setName(gameInstance, this.player);
     }
 
-    public assignPickup(game, player): void {
+    public assignPickup(game, player?): void {
         this.projectile = new Projectile(game, player);
         this.hud.setAmmo(game, player, this.projectile);
     }
