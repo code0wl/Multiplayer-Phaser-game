@@ -11,7 +11,6 @@ export class KeyBoardControl {
     }
 
     public update(): void {
-
         if (this.playerInstance.player.alive) {
             this.playerInstance.playerState.set('fire', false);
 
@@ -36,6 +35,7 @@ export class KeyBoardControl {
                 if (this.playerInstance.projectile) {
                     this.playerInstance.projectile.fireWeapon();
                     this.playerInstance.playerState.set('fire', true);
+                    this.playerInstance.playerState.set('ammo', this.playerInstance.projectile.bulletCount);
                 } else {
                     this.playerInstance.playerState.set('fire', false);
                 }

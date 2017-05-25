@@ -79,7 +79,8 @@ export class Game {
 
                     if (player.coors.f) {
                         actor.projectile.fireWeapon();
-                        actor.hud.update(actor.projectile);
+                        actor.hud.update(actor.playerState.get('bulletCount'));
+                        actor.playerState.set('ammo', actor.projectile.bulletCount);
                     }
 
                     if (player.coors.a) {

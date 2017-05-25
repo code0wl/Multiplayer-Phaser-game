@@ -16,8 +16,8 @@ export class Hud {
         player.addChild(this.name);
     }
 
-    public update(weapon): void {
-        this.ammo.setText(`${weapon.bulletCount ? weapon.bulletCount : ''}`);
+    public update(ammo): void {
+        this.ammo.setText(`${ammo ? ammo : ''}`);
     }
 
     public setAmmo(game, player, weapon): void {
