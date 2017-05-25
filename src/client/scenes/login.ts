@@ -13,6 +13,7 @@ export class Login {
         this.name = document.querySelector('#your-name');
         const button = document.querySelector('button');
         this.createPlayer = this.createPlayer.bind(this);
+        this.name.focus();
         button.addEventListener('click', this.createPlayer);
     }
 
