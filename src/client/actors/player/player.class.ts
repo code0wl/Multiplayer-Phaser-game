@@ -33,8 +33,8 @@ export class Player {
     }
 
     public assignPickup(game, player?): void {
-        this.projectile = new Projectile(game, player);
-        this.hud.setAmmo(game, player, this.projectile);
+        this.projectile = new Projectile(game, player.player);
+        this.hud.setAmmo(game, player.player, this.projectile);
         this.playerState.set('ammo', this.projectile.bulletCount);
     }
 

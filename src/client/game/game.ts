@@ -32,7 +32,11 @@ export class Game {
 
         window.socket.on(PlayerEvent.players, (players) => {
             players.map((player: any) => {
-                this.actors.push(new Player(this.game, player));
+                const enemy = new Player(this.game, player);
+                if (player.ammo) {
+                    enemy.assignPickup(this.game, enemy);
+                }
+                this.actors.push(enemy);
             });
         });
 
@@ -53,9 +57,8 @@ export class Game {
         });
 
         window.socket.on(PlayerEvent.hit, (enemy) => {
-            this.actors.forEach(() => {
-                if (this.actor.player.id === enemy) {
-                    this.actor.projectile.kaboom(this.actor.player);
+            this.actors.map((actor) => {
+                if (actor.player.id === enemy) {
                     this.actor.player.destroy();
                     window.location.reload();
                 }
@@ -65,7 +68,7 @@ export class Game {
         window.socket.on(PlayerEvent.pickup, (player) => {
             this.actors.map((actor) => {
                 if (actor.player.id === player) {
-                    actor.assignPickup(this.game, actor.player);
+                    actor.assignPickup(this.game, actor);
                 }
             });
         });
@@ -108,17 +111,17 @@ export class Game {
             if (this.actor.projectile) {
                 this.game.physics.arcade.collide(this.actor.projectile.weapon.bullets, this.actors.map((actor) => actor.player), (enemy, projectile) => {
                     if (enemy.id !== this.actor.player.id) {
-                        window.socket.emit(PlayerEvent.hit, enemy.id);
                         this.actor.projectile.kaboom(projectile);
                         enemy.kill();
                         projectile.kill();
+                        window.socket.emit(PlayerEvent.hit, enemy.id);
                     }
                 });
             }
 
             if (this.projectile) {
                 this.game.physics.arcade.overlap(this.projectile.pickup.item, this.actors.map((actor) => actor.player), (pickup, actor) => {
-                    window.socket.emit(PlayerEvent.pickup, actor.id);
+                    window.socket.emit(PlayerEvent.pickup, {uuid: actor.id, ammo: 10});
                     pickup.kill();
                 });
             }
