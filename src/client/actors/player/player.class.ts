@@ -8,7 +8,7 @@ export class Player {
     public player: any;
     public projectile: Projectile;
     public controls: KeyBoardControl;
-    public playerState: Map<string, boolean>;
+    public playerState: Map<string, boolean | number>;
     public hud: Hud;
     public angularVelocity: number = 300;
 
@@ -33,14 +33,15 @@ export class Player {
     }
 
     public assignPickup(game, player?): void {
-        this.projectile = new Projectile(game, player);
-        this.hud.setAmmo(game, player, this.projectile);
+        this.projectile = new Projectile(game, player.player);
+        this.hud.setAmmo(game, player.player, this.projectile);
+        this.playerState.set('ammo', this.projectile.bulletCount);
     }
 
     public view(): void {
         this.controls.update();
         if (this.projectile) {
-            this.hud.update(this.projectile);
+            this.hud.update(this.playerState.get('ammo'));
         }
     }
 

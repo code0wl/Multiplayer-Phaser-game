@@ -7,6 +7,7 @@ export class Projectile {
     public weapon: any;
     public bulletCount: number = 10;
     public pickup: any;
+    private player: any;
     private gameInstance: any;
 
     public constructor(gameInstance, player?) {
@@ -17,7 +18,8 @@ export class Projectile {
         this.weapon.fireRate = 1000;
         this.weapon.physicsBodyType = Phaser.Physics.ARCADE;
         if (player) {
-            this.weapon.trackSprite(player, 10, 0, true);
+            this.player = player;
+            this.weapon.trackSprite(this.player, 10, 0, true);
         }
     }
 

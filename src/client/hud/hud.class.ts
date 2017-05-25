@@ -16,15 +16,14 @@ export class Hud {
         player.addChild(this.name);
     }
 
-    public update(weapon): void {
-        this.ammo.setText(`${weapon.bulletCount ? weapon.bulletCount : ''}`);
+    public update(ammo): void {
+        this.ammo.setText(`${ammo ? ammo : ''}`);
     }
 
     public setAmmo(game, player, weapon): void {
         if (this.ammo) {
             this.ammo.setText('');
         }
-
         this.ammo = game.add.text(0, 25, weapon.bulletCount, this.style);
         player.addChild(this.ammo);
     }

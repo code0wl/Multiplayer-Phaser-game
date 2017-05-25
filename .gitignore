@@ -4,6 +4,7 @@ node_modules/
 bundle.js
 *.log
 /src/**/*.js
+/src/**/*.map
 *.iml
 /src/*.js
 .DS_Store

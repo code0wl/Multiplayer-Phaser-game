@@ -52,7 +52,7 @@ class GameServer {
         if (!this.dirtyFlag) {
             this.dirtyFlag = true;
             setInterval(() => {
-                const coordinates = {x: Math.floor(Math.random() * 800) + 1, y: Math.floor(Math.random() * 600) + 1};
+                const coordinates = {x: Math.floor(Math.random() * 1024) + 1, y: Math.floor(Math.random() * 768) + 1};
                 socket.emit(GameEvent.drop, coordinates);
                 socket.broadcast.emit(GameEvent.drop, coordinates);
             }, 10000);
@@ -61,7 +61,8 @@ class GameServer {
 
     private addPickupListener(socket) {
         socket.on(PlayerEvent.pickup, (player) => {
-            socket.broadcast.emit(PlayerEvent.pickup, player);
+            socket.player.ammo = player.ammo;
+            socket.broadcast.emit(PlayerEvent.pickup, player.uuid);
         });
     }
 
