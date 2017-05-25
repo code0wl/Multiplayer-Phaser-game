@@ -58,8 +58,7 @@ export class Game {
 
         window.socket.on(PlayerEvent.hit, (enemy) => {
             this.actors.map((actor) => {
-                if (actor.player.id === enemy) {
-                    this.actor.player.destroy();
+                if (this.actor.player.id === enemy) {
                     window.location.reload();
                 }
             })
@@ -112,9 +111,9 @@ export class Game {
                 this.game.physics.arcade.collide(this.actor.projectile.weapon.bullets, this.actors.map((actor) => actor.player), (enemy, projectile) => {
                     if (enemy.id !== this.actor.player.id) {
                         this.actor.projectile.kaboom(projectile);
-                        enemy.kill();
-                        projectile.kill();
                         window.socket.emit(PlayerEvent.hit, enemy.id);
+                        projectile.kill();
+                        enemy.kill();
                     }
                 });
             }
