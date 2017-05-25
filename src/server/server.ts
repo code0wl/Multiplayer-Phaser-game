@@ -48,7 +48,7 @@ class GameServer {
         });
     }
 
-    private generatePickup(socket): void {
+    private gameInitialised(socket): void {
         if (!this.dirtyFlag) {
             this.dirtyFlag = true;
             setInterval(() => {
@@ -61,10 +61,7 @@ class GameServer {
 
     private addPickupListener(socket) {
         socket.on(PlayerEvent.pickup, (player) => {
-            if (socket.player) {
-                socket.player.ammo = player.ammo;
-            }
-            socket.broadcast.emit(PlayerEvent.pickup, player.uuid);
+            socket.broadcast.emit(PlayerEvent.pickup, player);
         });
     }
 
@@ -88,7 +85,7 @@ class GameServer {
             this.createPlayer(socket, player, gameSize);
             socket.emit(PlayerEvent.protagonist, socket.player);
             socket.broadcast.emit(PlayerEvent.joined, socket.player);
-            this.generatePickup(socket);
+            this.gameInitialised(socket);
         });
     }
 

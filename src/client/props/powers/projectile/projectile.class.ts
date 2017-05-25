@@ -1,4 +1,5 @@
 import {Explode} from '../explosion/explosion.class';
+import {Pickup} from '../pickup/pickup.class';
 
 declare const Phaser: any;
 
@@ -26,9 +27,7 @@ export class Projectile {
     }
 
     public renderPickup(coors): void {
-        this.pickup = this.gameInstance.add.sprite(coors.x, coors.y, 'pickup');
-        this.pickup.enableBody = true;
-        this.gameInstance.physics.enable(this.pickup, Phaser.Physics.ARCADE);
+        this.pickup = new Pickup(this.gameInstance, coors);
     }
 
     public kaboom(projectile) {

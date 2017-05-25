@@ -46,9 +46,8 @@ export class Game {
 
         window.socket.on(GameEvent.drop, (coors) => {
             if (this.projectile) {
-                this.projectile.pickup.kill();
+                this.projectile.pickup.item.kill();
             }
-
             this.projectile = new Projectile(this.game);
             this.projectile.renderPickup(coors);
         });
@@ -117,10 +116,10 @@ export class Game {
             }
 
             if (this.projectile) {
-                this.game.physics.arcade.overlap(this.projectile.pickup, this.actors.map((actor) => actor.player), (pickup, actor) => {
-                    this.actor.assignPickup(this.game, actor);
-                    window.socket.emit(PlayerEvent.pickup, {uuid: actor.id, ammo: this.actor.projectile.bulletCount});
+                this.game.physics.arcade.overlap(this.projectile.pickup.item, this.actors.map((actor) => actor.player), (pickup, actor) => {
                     pickup.kill();
+                    this.actor.assignPickup(this.game, actor);
+                    window.socket.emit(PlayerEvent.pickup, actor.id);
                 });
             }
         }

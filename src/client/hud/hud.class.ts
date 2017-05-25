@@ -24,6 +24,7 @@ export class Hud {
         if (this.ammo) {
             this.ammo.setText('');
         }
+
         this.ammo = game.add.text(0, 25, weapon.bulletCount, this.style);
         player.addChild(this.ammo);
     }
