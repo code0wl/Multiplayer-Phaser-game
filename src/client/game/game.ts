@@ -71,7 +71,7 @@ export class Game {
         });
 
         window.socket.on(PlayerEvent.coordinates, (player) => {
-            this.actors.filter((actor) => {
+            this.actors.filter((actor: Player) => {
                 if (actor.player.id === player.player.id) {
                     actor.player.x = player.coors.x;
                     actor.player.y = player.coors.y;
@@ -79,8 +79,8 @@ export class Game {
 
                     if (player.coors.f) {
                         actor.projectile.fireWeapon();
-                        actor.hud.update(actor.playerState.get('bulletCount'));
                         actor.playerState.set('ammo', actor.projectile.bulletCount);
+                        actor.hud.update(actor.playerState.get('ammo'));
                     }
 
                     if (player.coors.a) {
