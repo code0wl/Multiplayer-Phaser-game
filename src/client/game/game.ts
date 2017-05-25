@@ -33,7 +33,6 @@ export class Game {
         window.socket.on(PlayerEvent.players, (players) => {
             players.map((player: any) => {
                 this.actors.push(new Player(this.game, player));
-                console.log('all players map', this.actors.map(actor => actor.player.name));
             });
         });
 
