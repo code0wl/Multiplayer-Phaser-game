@@ -79,10 +79,10 @@ export class Game {
 
                     if (player.coors.f) {
                         actor.projectile.fireWeapon();
-                        actor.hud.update(player.coors.b);
+                        actor.hud.update(player.coors.a);
                     }
 
-                    if (player.coors.a) {
+                    if (player.coors.m) {
                         actor.player.animations.play('accelerating');
                     }
                 }
@@ -99,8 +99,8 @@ export class Game {
                 y: this.actor.player.position.y,
                 r: this.actor.player.rotation,
                 f: this.actor.playerState.get('fire'),
-                a: this.actor.playerState.get('moving'),
-                b: this.actor.playerState.get('ammo')
+                m: this.actor.playerState.get('moving'),
+                a: this.actor.playerState.get('ammo')
             });
 
             this.game.physics.arcade.collide(this.actor.player, this.actors.map((actor) => actor.player));
@@ -118,7 +118,6 @@ export class Game {
 
             if (this.projectile) {
                 this.game.physics.arcade.overlap(this.projectile.pickup.item, this.actors.map((actor) => actor.player), (pickup, actor) => {
-                    this.actor.assignPickup(this.game, actor);
                     window.socket.emit(PlayerEvent.pickup, actor.id);
                     pickup.kill();
                 });
