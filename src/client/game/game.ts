@@ -79,8 +79,7 @@ export class Game {
 
                     if (player.coors.f) {
                         actor.projectile.fireWeapon();
-                        actor.playerState.set('ammo', actor.projectile.bulletCount);
-                        actor.hud.update(actor.playerState.get('ammo'));
+                        actor.hud.update(player.coors.b);
                     }
 
                     if (player.coors.a) {
@@ -100,7 +99,8 @@ export class Game {
                 y: this.actor.player.position.y,
                 r: this.actor.player.rotation,
                 f: this.actor.playerState.get('fire'),
-                a: this.actor.playerState.get('moving')
+                a: this.actor.playerState.get('moving'),
+                b: this.actor.playerState.get('ammo')
             });
 
             this.game.physics.arcade.collide(this.actor.player, this.actors.map((actor) => actor.player));
