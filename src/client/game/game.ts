@@ -19,7 +19,7 @@ export class Game {
         this.authentication = new Login();
     }
 
-    protected createActors(): void {
+    protected manageAssets(): void {
         this.actors = [];
         window.socket.on(PlayerEvent.joined, (player) => {
             this.actors.push(new Player(this.game, player));
@@ -117,9 +117,9 @@ export class Game {
 
             if (this.projectile) {
                 this.game.physics.arcade.overlap(this.projectile.pickup.item, this.actors.map((actor) => actor.player), (pickup, actor) => {
-                    pickup.kill();
                     this.actor.assignPickup(this.game, actor);
                     window.socket.emit(PlayerEvent.pickup, actor.id);
+                    pickup.kill();
                 });
             }
         }
