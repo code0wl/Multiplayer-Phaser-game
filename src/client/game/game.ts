@@ -19,7 +19,7 @@ export class Game {
         this.authentication = new Login();
     }
 
-    protected createActors(): void {
+    protected manageAssets(): void {
         this.actors = [];
         window.socket.on(PlayerEvent.joined, (player) => {
             this.actors.push(new Player(this.game, player));
@@ -27,12 +27,12 @@ export class Game {
 
         window.socket.on(PlayerEvent.protagonist, (player) => {
             this.actor = new Player(this.game, player);
-            this.actors.push(this.actor);
         });
 
         window.socket.on(PlayerEvent.players, (players) => {
             players.map((player: any) => {
                 this.actors.push(new Player(this.game, player));
+                console.log('all players map', this.actors.map(actor => actor.player.name));
             });
         });
 
