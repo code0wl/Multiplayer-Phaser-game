@@ -1,7 +1,7 @@
-describe('poop', () => {
+import {Player} from './player.class';
 
+describe('Player', () => {
    it('should poop', () => {
-       expect(true).toBeTruthy;
+       expect(Player).toBeTruthy;
    });
-
 });

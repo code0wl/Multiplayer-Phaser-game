@@ -12,11 +12,14 @@ module.exports = {
         rules: [
             {
                 test: /\.ts$/,
-                loaders: ['awesome-typescript-loader'],
+                loader: 'awesome-typescript-loader',
                 exclude: [
                     path.resolve(__dirname, "typings"),
                     path.resolve(__dirname, "node_modules")
-                ]
+                ],
+                options: {
+                    transpileOnly: true
+                }
             }
         ]
     }
