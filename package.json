@@ -1,57 +1,57 @@
 {
-    "name": "starter-kit",
-    "version": "1.0.0",
-    "description": "Simple multiplayer game with rxjs, phaser and typescript",
-    "main": "index.js",
-    "scripts": {
-        "precommit": "tslint -c tslint.json 'src/**/*.ts'",
-        "start:dev": "concurrently \"webpack -w --env=dev\" \"tsc -w src/server/server\" \"nodemon src/server/server\"",
-        "test:tdd": "karma start test.config.js",
-        "test:ci": "karma start test.config.js --singleRun",
-        "test": "npm run test:ci",
-        "build:release": "webpack --env=prod",
-        "start": "npm i && webpack --env=dev && node ./src/server/server.js"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/code0wl/Multiplayer-Phaser-game.git"
-    },
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/code0wl/Multiplayer-Phaser-game/issues"
-    },
-    "homepage": "https://github.com/code0wl/Multiplayer-Phaser-game#readme",
-    "dependencies": {
-        "express": "4.15.2",
-        "phaser-ce": "^2.7.9",
-        "socket.io": "^2.0.1",
-        "socket.io-client": "^2.0.1",
-        "uuid": "^3.0.1",
-        "whatwg-fetch": "^2.0.1"
-    },
-    "devDependencies": {
-        "@types/jasmine": "^2.5.47",
-        "@types/pixi.js": "^4.4.4",
-        "@types/socket.io": "^1.4.29",
-        "@types/socket.io-client": "^1.4.29",
-        "@types/uuid": "^2.0.29",
-        "concurrently": "3.4.0",
-        "husky": "^0.13.3",
-        "jasmine": "^2.6.0",
-        "jasmine-webpack-plugin": "^0.1.1",
-        "karma": "^1.7.0",
-        "karma-chrome-launcher": "^2.1.1",
-        "karma-jasmine": "^1.1.0",
-        "karma-sourcemap-loader": "^0.3.7",
-        "karma-webpack": "^2.0.3",
-        "karma-webpack-preprocessor": "^1.0.1",
-        "nodemon": "^1.11.0",
-        "ts-loader": "^1.3.3",
-        "tslint": "^5.3.2",
-        "typescript": "^2.3.3",
-        "typings": "^2.1.1",
-        "webpack": "^2.6.1",
-        "yarn": "^0.22.0"
-    }
+  "name": "starter-kit",
+  "version": "1.0.0",
+  "description": "Simple multiplayer game with rxjs, phaser and typescript",
+  "main": "index.js",
+  "scripts": {
+    "precommit": "tslint -c tslint.json 'src/**/*.ts'",
+    "start:dev": "concurrently \"webpack -w --env=dev\" \"tsc -w src/server/server\" \"nodemon src/server/server\"",
+    "test:tdd": "karma start test.config.js",
+    "test:ci": "karma start test.config.js --singleRun",
+    "test": "npm run test:ci",
+    "build:release": "webpack --env=prod",
+    "start": "npm i && webpack --env=dev && node ./src/server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/code0wl/Multiplayer-Phaser-game.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/code0wl/Multiplayer-Phaser-game/issues"
+  },
+  "homepage": "https://github.com/code0wl/Multiplayer-Phaser-game#readme",
+  "dependencies": {
+    "express": "4.15.2",
+    "phaser-ce": "^2.7.9",
+    "socket.io": "^2.0.1",
+    "socket.io-client": "^2.0.1",
+    "uuid": "^3.0.1",
+    "whatwg-fetch": "^2.0.1"
+  },
+  "devDependencies": {
+    "@types/jasmine": "^2.5.47",
+    "@types/pixi.js": "^4.4.4",
+    "@types/socket.io": "^1.4.29",
+    "@types/socket.io-client": "^1.4.29",
+    "@types/uuid": "^2.0.29",
+    "concurrently": "3.4.0",
+    "husky": "^0.13.3",
+    "jasmine": "^2.6.0",
+    "jasmine-webpack-plugin": "^0.1.1",
+    "karma": "^1.7.0",
+    "karma-chrome-launcher": "^2.1.1",
+    "karma-jasmine": "^1.1.0",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-webpack": "^2.0.3",
+    "karma-webpack-preprocessor": "^1.0.1",
+    "nodemon": "^1.11.0",
+    "ts-loader": "^1.3.3",
+    "tslint": "^5.3.2",
+    "typescript": "^2.3.3",
+    "typings": "^2.1.1",
+    "webpack": "^2.6.1",
+    "yarn": "^0.22.0"
+  }
 }

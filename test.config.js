@@ -1,27 +1,30 @@
 const webpack = require('webpack');
 
-
-if (process.env.TRAVIS) {
-    config.browsers = ['Chrome_travis_ci'];
-}
-
-config.set(configuration);
-
 module.exports = (config) => {
     config.set({
         basePath: '',
         frameworks: ['jasmine'],
-        files: [
-            './src/**/*.spec.js',
-        ],
-        webpackPreprocessor: {
-            configPath: './webpack.dev.config.js'
+        files: ['main.spec.ts'],
+        preprocessors: {
+            'spec/main.spec.ts': ['webpack'],
         },
-        customLaunchers: {
-            Chrome_travis_ci: {
-                base: 'Chrome',
-                flags: ['--no-sandbox']
-            }
+        mime: { 'text/x-typescript': ['ts','tsx'] },
+        webpack: {
+            resolve: {
+                extensions: ['', '.js', '.ts', '.tsx']
+            },
+            module: {
+                loaders: [
+                    {test: /\.tsx?$/, loader: 'ts-loader'}
+                ]
+            },
+            stats: {
+                colors: true,
+                modules: true,
+                reasons: true,
+                errorDetails: true
+            },
+            devtool: 'inline-source-map',
         },
         reporters: ['progress'],
         port: 9876,
