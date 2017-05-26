@@ -15,7 +15,6 @@ app.get('/', (req, res) => {
 
 class GameServer {
 
-    private timer: any;
     private dirtyFlag: boolean = false;
 
     constructor() {
@@ -55,7 +54,7 @@ class GameServer {
                 const coordinates = {x: Math.floor(Math.random() * 1024) + 1, y: Math.floor(Math.random() * 768) + 1};
                 socket.emit(GameEvent.drop, coordinates);
                 socket.broadcast.emit(GameEvent.drop, coordinates);
-            }, 10000);
+            }, 5000);
         }
     }
 

@@ -3,16 +3,14 @@ import {Player} from '../actors/player/player.class';
 import {Login} from '../scenes/login';
 import {Projectile} from '../props/powers/projectile/projectile.class';
 
-declare const io: any;
-declare const Phaser: any;
 declare const window: any;
 
 export class Game {
     public actors: Array<Player>;
-    private actor: any;
+    private actor: Player;
     private projectile: Projectile;
     private authentication: Login;
-    protected game: any;
+    protected game: Phaser.Game;
 
     constructor() {
         window.socket = io.connect();
@@ -134,7 +132,6 @@ export class Game {
         this.game.add.sprite(0, 0, 'space');
         this.game.time.desiredFps = 60;
         this.game.renderer.clearBeforeRender = false;
-        this.game.renderer.roundPixels = true;
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
     }
 

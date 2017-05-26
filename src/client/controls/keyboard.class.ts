@@ -1,8 +1,8 @@
-declare const Phaser: any;
+import {Player} from '../actors/player/player.class';
 
 export class KeyBoardControl {
     public gameControls: any = {};
-    private playerInstance: any;
+    private playerInstance: Player;
 
     constructor(private gameInstance: any, player) {
         this.playerInstance = player;

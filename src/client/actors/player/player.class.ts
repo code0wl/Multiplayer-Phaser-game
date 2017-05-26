@@ -2,10 +2,8 @@ import {KeyBoardControl} from '../../controls/keyboard.class';
 import {Projectile} from '../../props/powers/projectile/projectile.class';
 import {Hud} from '../../hud/hud.class';
 
-declare const Phaser: any;
-
 export class Player {
-    public player: any;
+    public player: Phaser.Sprite;
     public projectile: Projectile;
     public controls: KeyBoardControl;
     public playerState: Map<string, boolean | number>;
@@ -53,7 +51,6 @@ export class Player {
         gameInstance.physics.enable(this.player, Phaser.Physics.ARCADE);
         this.player.body.collideWorldBounds = true;
         this.player.body.bounce.setTo(10, 10);
-        this.player.enableBody = true;
         this.player.body.gravity.y = 0;
         this.player.body.drag.set(80);
         this.player.body.maxVelocity.set(100);

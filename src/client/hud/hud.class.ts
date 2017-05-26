@@ -1,6 +1,6 @@
 export class Hud {
 
-    private ammo: any;
+    private ammo: Phaser.Text;
     private name: string;
     private style: { font, fill };
 
