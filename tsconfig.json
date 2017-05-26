@@ -1,15 +1,21 @@
 {
     "compilerOptions": {
-        "target": "es5",
-        "module": "es2015",
-        "allowJs": true,
-        "sourceMap": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
         "lib": [
-            "dom",
-            "es7"
-        ]
+            "es2015",
+            "dom"
+        ],
+        "module": "es2015",
+        "noEmitOnError": true,
+        "moduleResolution": "node",
+        "noImplicitAny": false,
+        "sourceMap": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "target": "es6"
     },
     "exclude": [
-        "./node_modules"
+        "node_modules",
+        "*.spec.ts"
     ]
 }
