@@ -12,7 +12,7 @@ export class PhaserSpaceGame extends Game implements LifeCycle {
         });
     }
 
-    preload(): void {
+    public preload(): void {
         this.game.load.crossOrigin = 'anonymous';
         this.game.load.image('space', 'assets/background.jpg');
         this.game.load.image('laser', 'assets/bullet.png');
@@ -22,12 +22,12 @@ export class PhaserSpaceGame extends Game implements LifeCycle {
         this.game.load.spritesheet('shooter-sprite', 'assets/ship.png', 32, 32);
     }
 
-    create(): void {
+    public create(): void {
         super.properties();
         super.manageAssets();
     }
 
-    update(): void {
+    public update(): void {
         super.gameUpdate();
     }
 
