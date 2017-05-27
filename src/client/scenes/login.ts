@@ -2,7 +2,7 @@ import { GameEvent } from '../../shared/events.model';
 
 declare const window: any;
 
-export class Login {
+export class LoginScene {
 
     private name: any;
     private formContainer: any;

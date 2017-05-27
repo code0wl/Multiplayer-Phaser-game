@@ -23,7 +23,7 @@ export class PhaserSpaceGame extends Game implements LifeCycle {
     }
 
     create(): void {
-        super.gameProperties();
+        super.properties();
         super.manageAssets();
     }
 

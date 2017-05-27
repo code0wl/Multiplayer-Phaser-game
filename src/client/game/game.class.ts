@@ -1,20 +1,19 @@
 import { GameEvent, PlayerEvent } from '../../shared/events.model';
 import { Player } from '../actors/player/player.class';
-import { Login } from '../scenes/login';
+import { LoginScene } from '../scenes/login';
 import { Projectile } from '../props/powers/projectile/projectile.class';
 
 declare const window: any;
 
 export class Game {
-    public actors: Array<Player>;
+    private actors: Array<Player>;
     private actor: Player;
     private projectile: Projectile;
-    private authentication: Login;
     protected game: Phaser.Game;
 
     constructor() {
         window.socket = io.connect();
-        this.authentication = new Login();
+        new LoginScene();
     }
 
     protected manageAssets(): void {
@@ -126,7 +125,7 @@ export class Game {
         }
     }
 
-    protected gameProperties(): void {
+    protected properties(): void {
         this.game.stage.disableVisibilityChange = true;
         this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'space');
         this.game.add.sprite(0, 0, 'space');
