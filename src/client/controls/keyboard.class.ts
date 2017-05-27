@@ -1,4 +1,4 @@
-import {Player} from '../actors/player/player.class';
+import { Player } from '../actors/player/player.class';
 
 export class KeyBoardControl {
     public gameControls: any = {};
