@@ -1,6 +1,6 @@
-import {KeyBoardControl} from '../../controls/keyboard.class';
-import {Projectile} from '../../props/powers/projectile/projectile.class';
-import {Hud} from '../../hud/hud.class';
+import { KeyBoardControl } from '../../controls/keyboard.class';
+import { Projectile } from '../../props/powers/projectile/projectile.class';
+import { Hud } from '../../hud/hud.class';
 
 export class Player {
     public player: Phaser.Sprite;

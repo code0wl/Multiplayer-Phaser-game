@@ -1,7 +1,7 @@
-import {GameEvent, PlayerEvent} from '../../shared/events.model';
-import {Player} from '../actors/player/player.class';
-import {Login} from '../scenes/login';
-import {Projectile} from '../props/powers/projectile/projectile.class';
+import { GameEvent, PlayerEvent } from '../../shared/events.model';
+import { Player } from '../actors/player/player.class';
+import { Login } from '../scenes/login';
+import { Projectile } from '../props/powers/projectile/projectile.class';
 
 declare const window: any;
 
@@ -119,7 +119,7 @@ export class Game {
             if (this.projectile) {
                 this.game.physics.arcade.overlap(this.projectile.pickup.item, this.actors.map((actor) => actor.player), (pickup, actor) => {
                     this.actor.assignPickup(this.game, this.actor);
-                    window.socket.emit(PlayerEvent.pickup, {uuid: actor.id, ammo: 10});
+                    window.socket.emit(PlayerEvent.pickup, { uuid: actor.id, ammo: 10 });
                     pickup.kill();
                 });
             }

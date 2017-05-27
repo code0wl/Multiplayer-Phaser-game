@@ -1,5 +1,5 @@
-import {Game} from "../game/game";
-import {LifeCycle} from "./lifecycle";
+import { Game } from "../game/game.class";
+import { LifeCycle } from "./lifecycle";
 
 export class PhaserSpaceGame extends Game implements LifeCycle {
 
