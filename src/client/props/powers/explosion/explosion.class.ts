@@ -2,16 +2,12 @@ export class Explode {
     private explosions: any;
 
     constructor(gameInstance, projectile) {
-        this.explosions = gameInstance.add.group();
-        this.explosions.getFirstExists(false);
-        this.explosions.createMultiple(1, 'kaboom');
-
-        const explosion = this.explosions.getFirstExists(false);
-        explosion.reset(projectile.body.x + -20, projectile.body.y - 30);
-        explosion.play('kaboom', 50, false, true);
-
+        this.explosions = gameInstance.add.sprite(64, 64, 'kaboom');
+        this.explosions.animations.add('kaboom');
+        this.explosions.reset(projectile.body.x + -20, projectile.body.y - 30);
+        this.explosions.animations.play('kaboom', 15, false);
         setTimeout(() => {
-            explosion.kill();
-        }, 200);
+            this.explosions.kill();
+        }, 500);
     }
 }
