@@ -1,6 +1,5 @@
-import { Explode } from '../explosion/explosion.class';
-import { Pickup } from '../pickup/pickup.class';
-import { Player } from '../../../actors/player/player.class';
+import {Explode} from '../../explosion/explosion.class';
+import {Pickup} from '../pickup/pickup.class';
 
 export class Projectile {
     public weapon: Phaser.Weapon;

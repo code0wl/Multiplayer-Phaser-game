@@ -1,6 +1,7 @@
-import { KeyBoardControl } from '../../controls/keyboard.class';
-import { Projectile } from '../../props/powers/projectile/projectile.class';
-import { Hud } from '../../hud/hud.class';
+import {KeyBoardControl} from '../../controls/keyboard.class';
+import {Projectile} from '../../props/powers/projectile/projectile.class';
+import {Hud} from '../../hud/hud.class';
+import {Particle} from '../../props/particle/particle.class';
 
 export class Player {
     public player: Phaser.Sprite;
@@ -9,6 +10,7 @@ export class Player {
     public playerState: Map<string, boolean | number>;
     public hud: Hud;
     public angularVelocity: number = 300;
+    private particle: Particle;
 
     constructor(private gameInstance: any, public playerInstance: any) {
         this.createPlayer(this.gameInstance);
@@ -26,6 +28,7 @@ export class Player {
         this.player.name = this.playerInstance.name;
         this.attachPhysics(gameInstance);
         this.hud.setName(gameInstance, this.player);
+        this.particle = new Particle(gameInstance, this.player);
     }
 
     public assignPickup(game, player?): void {

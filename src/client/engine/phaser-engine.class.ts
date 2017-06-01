@@ -16,6 +16,7 @@ export class PhaserSpaceGame extends Game implements LifeCycle {
         this.game.load.crossOrigin = 'anonymous';
         this.game.load.image('space', 'assets/background.jpg');
         this.game.load.image('laser', 'assets/bullet.png');
+        this.game.load.spritesheet('dust', 'assets/dust.png', 64, 64, 16);
         this.game.load.spritesheet('kaboom', 'assets/explosions.png', 64, 64, 16);
         this.game.load.image('pickup', 'assets/pickup.png');
         this.game.load.spritesheet('shooter-sprite', 'assets/ship.png', 32, 32);

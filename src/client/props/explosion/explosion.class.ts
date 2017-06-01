@@ -1,5 +1,5 @@
 export class Explode {
-    private explosions: any;
+    private explosions: Phaser.Sprite;
 
     constructor(gameInstance, projectile) {
         this.explosions = gameInstance.add.sprite(64, 64, 'kaboom');
