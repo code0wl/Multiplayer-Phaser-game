@@ -1,7 +1,7 @@
-import { GameEvent, PlayerEvent } from '../../shared/events.model';
-import { Player } from '../actors/player/player.class';
-import { LoginScene } from '../scenes/login';
-import { Projectile } from '../props/powers/projectile/projectile.class';
+import {GameEvent, PlayerEvent} from '../../shared/events.model';
+import {Player} from '../actors/player/player.class';
+import {Projectile} from '../props/powers/projectile/projectile.class';
+import {LoginScene} from '../scenes/login';
 
 declare const window: any;
 
@@ -105,22 +105,27 @@ export class Game {
             this.game.physics.arcade.collide(this.actor.player, this.actors.map((actor) => actor.player));
 
             if (this.actor.projectile) {
-                this.game.physics.arcade.collide(this.actor.projectile.weapon.bullets, this.actors.map((actor) => actor.player), (enemy, projectile) => {
-                    if (enemy.id !== this.actor.player.id) {
-                        this.actor.projectile.kaboom(projectile);
-                        window.socket.emit(PlayerEvent.hit, enemy.id);
-                        projectile.kill();
-                        enemy.kill();
-                    }
-                });
+                this.game.physics.arcade.collide(this.actor.projectile.weapon.bullets, this.actors.map((actor) => actor.player),
+                    (enemy, projectile) => {
+                        if (enemy.id !== this.actor.player.id) {
+                            this.actor.projectile.kaboom(projectile);
+                            window.socket.emit(PlayerEvent.hit, enemy.id);
+                            projectile.kill();
+                            enemy.kill();
+                        }
+                    });
             }
 
             if (this.projectile) {
-                this.game.physics.arcade.overlap(this.projectile.pickup.item, this.actors.map((actor) => actor.player), (pickup, actor) => {
-                    this.actor.assignPickup(this.game, this.actor);
-                    window.socket.emit(PlayerEvent.pickup, { uuid: actor.id, ammo: 10 });
-                    pickup.kill();
-                });
+                this.game.physics.arcade.overlap(this.projectile.pickup.item, this.actors.map((actor) => actor.player),
+                    (pickup, actor) => {
+                        this.actors
+                            .filter((actorInstance) => actor.id === actorInstance.player.id)
+                            .map((actorInstance) => actorInstance.assignPickup(this.game, actorInstance));
+                        debugger;
+                        window.socket.emit(PlayerEvent.pickup, {uuid: actor.id, ammo: 10});
+                        pickup.kill();
+                    });
             }
         }
     }
