@@ -2,7 +2,6 @@ import {GameEvent, PlayerEvent} from '../../shared/events.model';
 import {Player} from '../actors/player/player.class';
 import {Projectile} from '../props/powers/projectile/projectile.class';
 import {LoginScene} from '../scenes/login';
-import {Particle} from '../props/particle/particle.class';
 
 declare const window: any;
 
@@ -52,7 +51,6 @@ export class Game {
             }
             this.projectile = new Projectile(this.game);
             this.projectile.renderPickup(coors);
-            new Particle(this.game, this.projectile.pickup.item);
         });
 
         window.socket.on(PlayerEvent.hit, (enemy) => {

@@ -1,5 +1,6 @@
 import {Explode} from '../../explosion/explosion.class';
 import {Pickup} from '../pickup/pickup.class';
+import {Particle} from '../../particle/particle.class';
 
 export class Projectile {
     public weapon: Phaser.Weapon;
@@ -26,6 +27,7 @@ export class Projectile {
 
     public renderPickup(coors): void {
         this.pickup = new Pickup(this.gameInstance, coors);
+        new Particle(this.gameInstance, this.pickup.item);
     }
 
     public kaboom(projectile) {
