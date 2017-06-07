@@ -2,6 +2,7 @@ import {KeyBoardControl} from '../../controls/keyboard.class';
 import {Projectile} from '../../props/powers/projectile/projectile.class';
 import {Hud} from '../../hud/hud.class';
 import {Particle} from '../../props/particle/particle.class';
+import {SpaceShip} from './spaceship.model';
 
 export class Player {
     public player: Phaser.Sprite;
@@ -12,7 +13,7 @@ export class Player {
     public angularVelocity: number = 300;
     private particle: Particle;
 
-    constructor(private gameInstance: any, public playerInstance: any) {
+    constructor(private gameInstance: Phaser.Game, public playerInstance: SpaceShip) {
         this.createPlayer(this.gameInstance);
         this.playerInstance = playerInstance;
         this.playerState = new Map();
