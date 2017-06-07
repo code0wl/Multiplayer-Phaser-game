@@ -3,6 +3,8 @@ import { LifeCycle } from "./lifecycle";
 
 export class PhaserSpaceGame extends Game implements LifeCycle {
 
+    private game: Phaser.Game
+
     constructor() {
         super();
         this.game = new Phaser.Game(1024, 768, Phaser.AUTO, 'space-shooter', {
@@ -23,12 +25,12 @@ export class PhaserSpaceGame extends Game implements LifeCycle {
     }
 
     public create(): void {
-        super.properties();
-        super.manageAssets();
+        super.properties(this.game);
+        super.manageAssets(this.game);
     }
 
     public update(): void {
-        super.gameUpdate();
+        super.gameUpdate(this.game);
     }
 
 }
