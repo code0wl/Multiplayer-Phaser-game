@@ -1,6 +1,6 @@
 import {Player} from "./player.class";
 
-describe("Player", () => {
+describe("SpaceShip", () => {
 
 	let player: Player;
 

@@ -1,4 +1,4 @@
-export interface Player {
+export interface SpaceShip {
     name: string;
     id: string;
     x: number;

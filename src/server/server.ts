@@ -1,5 +1,5 @@
 import {GameEvent, PlayerEvent, ServerEvent} from './../shared/events.model';
-import {Player} from './modules/model/models';
+import {SpaceShip} from './modules/model/models';
 import Socket = SocketIO.Socket;
 const express = require('express');
 const app = express();
@@ -89,7 +89,7 @@ class GameServer {
         });
     }
 
-    private createPlayer(socket, player: Player, windowSize: { x, y }): void {
+    private createPlayer(socket, player: SpaceShip, windowSize: { x, y }): void {
         socket.player = {
             name: player.name,
             id: uuid(),
@@ -103,7 +103,7 @@ class GameServer {
         return Object.keys(io.sockets.connected).length;
     }
 
-    private getAllPlayers(): Array<Player> {
+    private getAllPlayers(): Array<SpaceShip> {
         const players = [];
         Object.keys(io.sockets.connected).map((socketID) => {
             const player = io.sockets.connected[socketID].player;
