@@ -1,5 +1,5 @@
 import {GameEvent, PlayerEvent, ServerEvent} from './../shared/events.model';
-import {SpaceShip} from './modules/model/models';
+import {SpaceShip} from '../shared/models';
 import Socket = SocketIO.Socket;
 const express = require('express');
 const app = express();

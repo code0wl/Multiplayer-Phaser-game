@@ -2,7 +2,7 @@ import {KeyBoardControl} from '../../controls/keyboard.class';
 import {Projectile} from '../../props/powers/projectile/projectile.class';
 import {Hud} from '../../hud/hud.class';
 import {Particle} from '../../props/particle/particle.class';
-import {SpaceShip} from '../../../server/modules/model/models';
+import {SpaceShip} from '../../../shared/models';
 
 export class Player {
     public player: Phaser.Sprite;
