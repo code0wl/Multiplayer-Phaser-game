@@ -5,7 +5,8 @@
 
 [The book is found here on LeanPub](https://leanpub.com/buildmultiplayergame)
 
-![Leanpub book](https://s3.amazonaws.com/titlepages.leanpub.com/buildmultiplayergame/hero?1495139084)
+![Leanpub book](https://s3.amazonaws.com/titlepages.leanpub.com/buildmultiplayergame/hero?1496987117)
+
 
 Use great technologies such as TypeScript, Phaser and socket.io to create a fun little multiplayer game that can entertain you and your friends for a minute or two. Take over the galaxy with your space-ship and shoot any enemy ship who dares to enter your game world.
 This is a complimentary code repo to accompany my book on the same subject.
