@@ -2,7 +2,6 @@ import {GameEvent, PlayerEvent} from '../../shared/events.model';
 import {Player} from '../actors/player/player.class';
 import {Projectile} from '../props/powers/projectile/projectile.class';
 import {LoginScene} from '../scenes/login';
-import {PhaserSpaceGame} from '../engine/phaser-engine.class';
 
 declare const window: any;
 
@@ -38,11 +37,9 @@ export class Game {
         });
 
         window.socket.on(PlayerEvent.quit, (playerId) => {
-            this.actors.map((actor) => {
-                if (actor.player.id === playerId) {
-                    actor.player.body.sprite.destroy();
-                }
-            });
+            this.actors
+                .filter(actor => actor.player.id === playerId)
+                .map(actor => actor.player.body.sprite.destroy());
         });
 
         window.socket.on(GameEvent.drop, (coors) => {
@@ -54,19 +51,15 @@ export class Game {
         });
 
         window.socket.on(PlayerEvent.hit, (enemy) => {
-            this.actors.map((actor) => {
-                if (this.actor.player.id === enemy) {
-                    window.location.reload();
-                }
-            })
+            this.actors
+                .filter(actor => this.actor.player.id === enemy)
+                .map(actor => window.location.reload());
         });
 
         window.socket.on(PlayerEvent.pickup, (player) => {
-            this.actors.map((actor) => {
-                if (actor.player.id === player) {
-                    actor.assignPickup(this.actor, actor);
-                }
-            });
+            this.actors
+                .filter(actor => actor.player.id === player)
+                .map(actor => actor.assignPickup(this.actor, actor.player));
         });
 
         window.socket.on(PlayerEvent.coordinates, (player) => {
