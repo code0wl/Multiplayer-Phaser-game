@@ -2,10 +2,8 @@ import {Player} from '../actors/player/player.class';
 
 export class KeyBoardControl {
     public gameControls: any = {};
-    private playerInstance: Player;
 
-    constructor(private gameInstance: any, player) {
-        this.playerInstance = player;
+    constructor(private gameInstance: any, private playerInstance: Player) {
         this.gameControls.cursors = this.gameInstance.input.keyboard.createCursorKeys();
         this.gameControls.fireWeapon = this.gameInstance.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
     }
