@@ -1,7 +1,8 @@
 import {Player} from '../actors/player/player.class';
+import {Controls} from './keyboard.model';
 
 export class KeyBoardControl {
-    public gameControls: {cursors: Phaser.CursorKeys, fireWeapon: Phaser.Key};
+    public gameControls: Controls;
 
     constructor(private gameInstance: any, private playerInstance: Player) {
         this.gameControls = {
