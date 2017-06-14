@@ -1,11 +1,13 @@
 import {Player} from '../actors/player/player.class';
 
 export class KeyBoardControl {
-    public gameControls: any = {};
+    public gameControls: {cursors: Phaser.CursorKeys, fireWeapon: Phaser.Key};
 
     constructor(private gameInstance: any, private playerInstance: Player) {
-        this.gameControls.cursors = this.gameInstance.input.keyboard.createCursorKeys();
-        this.gameControls.fireWeapon = this.gameInstance.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
+        this.gameControls = {
+            cursors: this.gameInstance.input.keyboard.createCursorKeys(),
+            fireWeapon: this.gameInstance.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR)
+        }
     }
 
     public update(): void {
