@@ -15,7 +15,6 @@ export class Player {
 
     constructor(private gameInstance: Phaser.Game, public playerInstance: SpaceShip) {
         this.createPlayer(this.gameInstance);
-        this.playerInstance = playerInstance;
         this.playerState = new Map();
     }
 
