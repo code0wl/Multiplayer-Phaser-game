@@ -26,7 +26,7 @@ export class KeyBoardControl {
 
             if (this.gameControls.cursors.left.isDown) {
                 this.playerInstance.player.body.angularVelocity = -this.playerInstance.angularVelocity;
-            } else if (this.playerInstance.controls.gameControls.cursors.right.isDown) {
+            } else if (this.gameControls.cursors.right.isDown) {
                 this.playerInstance.player.body.angularVelocity = this.playerInstance.angularVelocity;
             } else {
                 this.playerInstance.player.body.angularVelocity = 0;
