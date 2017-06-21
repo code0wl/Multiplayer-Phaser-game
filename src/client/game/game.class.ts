@@ -95,7 +95,7 @@ export class Game {
                 a: this.actor.playerState.get('ammo')
             });
 
-            game.physics.arcade.collide(this.actor.player, this.actors.map((actor) => actor.player));
+            game.physics.arcade.collide(this.actor.player, this.actors.map(actor => actor.player));
 
             if (this.actor.projectile) {
                 game.physics.arcade.collide(this.actor.projectile.weapon.bullets, this.actors.map((actor) => actor.player),
@@ -113,8 +113,8 @@ export class Game {
                 game.physics.arcade.overlap(this.projectile.pickup.item, this.actors.map((actor) => actor.player),
                     (pickup, actor) => {
                         this.actors
-                            .filter((actorInstance) => actor.id === actorInstance.player.id)
-                            .map((actorInstance) => actorInstance.assignPickup(game, actorInstance));
+                            .filter(actorInstance => actor.id === actorInstance.player.id)
+                            .map(actorInstance => actorInstance.assignPickup(game, actorInstance));
                         window.socket.emit(PlayerEvent.pickup, {uuid: actor.id, ammo: 10});
                         pickup.kill();
                     });
