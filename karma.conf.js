@@ -9,7 +9,7 @@ module.exports = function (config) {
         colors: true,
         logLevel: config.LOG_INFO,
         autoWatch: true,
-        browsers: ['PhantomJS2'],
+        browsers: ['Chrome'],
         phantomjsLauncher: {
             exitOnResourceError: true
         },
@@ -19,9 +19,9 @@ module.exports = function (config) {
             clearContext: false
         },
         files: [
-            './src/**/*.spec.ts',
             './public/dist/phaser.min.js',
             './public/dist/socket.io.js',
+            './src/**/*.spec.ts',
         ],
         preprocessors: {
             './src/**/*.ts': ['webpack']

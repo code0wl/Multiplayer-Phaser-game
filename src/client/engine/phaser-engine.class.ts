@@ -34,4 +34,8 @@ export class PhaserSpaceGame extends Game implements LifeCycle {
         super.gameUpdate(this.game);
     }
 
+    public get gameInstance(): Phaser.Game {
+        return this.game;
+    }
+
 }

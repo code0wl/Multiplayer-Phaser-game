@@ -6,13 +6,14 @@ import {LoginScene} from '../scenes/login';
 declare const window: any;
 
 export class Game {
+    public login: LoginScene;
     private actors: Array<Player>;
     private actor: Player;
     private projectile: Projectile;
 
     constructor() {
         window.socket = io.connect();
-        new LoginScene();
+        this.login = new LoginScene();
     }
 
     protected manageAssets(game): void {
