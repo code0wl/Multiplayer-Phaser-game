@@ -1,5 +1,4 @@
 import {Particle} from '../../particle/particle.class';
-declare const Phaser: any;
 
 export class Pickup {
 

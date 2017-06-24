@@ -10,9 +10,7 @@ export class LoginScene {
     public loginForm: HTMLFormElement;
     public input: HTMLInputElement;
     public button: HTMLButtonElement;
-
     private name: any;
-    private formContainer: any;
 
     constructor() {
         this.createForm()
@@ -29,7 +27,6 @@ export class LoginScene {
         this.form.className = 'form';
 
         this.loginForm = document.createElement('form');
-        this.loginForm.className = 'form';
 
         this.input = document.createElement('input');
         this.input.setAttribute('type', 'text');
@@ -43,8 +40,8 @@ export class LoginScene {
 
         this.loginForm.appendChild(this.input);
         this.loginForm.appendChild(this.button);
-        this.form.appendChild(this.loginForm);
         this.loginPage.appendChild(this.form);
+        this.form.appendChild(this.loginForm);
         this.formContainer.appendChild(this.loginPage);
 
         document.body.appendChild(this.formContainer);
