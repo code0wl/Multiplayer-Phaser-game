@@ -8,7 +8,7 @@
     "start:dev": "concurrently \"webpack -w --env=dev\" \"tsc -w src/server/server\" \"nodemon src/server/server\"",
     "test:tdd": "karma start",
     "test:ci": "karma start --singleRun",
-    "test": "console.log('no test')",
+    "test": "",
     "build:release": "webpack --env=prod",
     "start": "npm i && webpack --env=dev && node ./src/server/server.js"
   },
