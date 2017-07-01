@@ -1,11 +1,12 @@
+import {KeyBoardControl} from '../../controls/keyboard.class';
+
 export class Player {
     public player: Phaser.Sprite;
-    public projectile: Projectile;
     public controls: KeyBoardControl;
     public playerState: Map<string, boolean | number>;
     public angularVelocity: number = 300;
 
-    constructor(private gameInstance: any, public playerInstance: any) {
+    constructor(private gameInstance: Phaser.Game, public playerInstance: any) {
         this.createPlayer(this.gameInstance);
         this.playerState = new Map();
     }
@@ -13,20 +14,13 @@ export class Player {
     public createPlayer(gameInstance): void {
         this.addControls();
         this.player = gameInstance.add.sprite(
-            100,
-            100,
-            'shooter-sprite'
+            100, 100, 'shooter-sprite'
         );
-        this.player.id = "1";
+        this.player.id = '1';
         this.player.anchor.setTo(0.5, 0.5);
         this.player.animations.add('accelerating', [1, 0], 60, false);
-        this.player.name = "your name";
+        this.player.name = "Your name";
         this.attachPhysics(gameInstance);
-    }
-
-    public assignPickup(game, player?): void {
-        this.projectile = new Projectile(game, player.player);
-        this.playerState.set('ammo', this.projectile.bulletCount);
     }
 
     public view(): void {

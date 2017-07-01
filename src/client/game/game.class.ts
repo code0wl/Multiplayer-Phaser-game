@@ -1,26 +1,30 @@
+import {Player} from '../actors/player/player.class';
+
+declare const window: any;
+
 export class Game {
-    private actors: Array<any>;
-    private actor: any;
+    private actors: Array<Player>;
+    private actor: Player;
 
-    protected game: Phaser.Game;
-
-    protected manageAssets(): void {
-
+    protected manageAssets(game): void {
+        this.actors = [];
+        // later will contain all of our game logic code
+        this.actor = new Player(game);
     }
 
-    protected gameUpdate(): void {
+    protected gameUpdate(game): void {
         if (this.actor && this.actor.controls) {
             this.actor.view();
         }
     }
 
-    protected properties(): void {
-        this.game.stage.disableVisibilityChange = true;
-        this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'space');
-        this.game.add.sprite(0, 0, 'space');
-        this.game.time.desiredFps = 60;
-        this.game.renderer.clearBeforeRender = false;
-        this.game.physics.startSystem(Phaser.Physics.ARCADE);
+    protected properties(game): void {
+        game.stage.disableVisibilityChange = true;
+        game.add.tileSprite(0, 0, game.width, game.height, 'space');
+        game.add.sprite(0, 0, 'space');
+        game.time.desiredFps = 60;
+        game.renderer.clearBeforeRender = false;
+        game.physics.startSystem(Phaser.Physics.ARCADE);
     }
 
 }
