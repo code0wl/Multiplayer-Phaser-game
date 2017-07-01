@@ -60,7 +60,7 @@ export class Game {
         window.socket.on(PlayerEvent.pickup, (player) => {
             this.actors
                 .filter(actor => actor.player.id === player)
-                .map(actor => actor.assignPickup(this.actor, actor.player));
+                .map(actor => actor.assignPickup(game, actor));
         });
 
         window.socket.on(PlayerEvent.coordinates, (player) => {
@@ -111,14 +111,18 @@ export class Game {
             }
 
             if (this.projectile) {
-                game.physics.arcade.overlap(this.projectile.pickup.item, this.actors.map((actor) => actor.player),
-                    (pickup, actor) => {
-                        this.actors
-                            .filter(actorInstance => actor.id === actorInstance.player.id)
-                            .map(actorInstance => actorInstance.assignPickup(game, actorInstance));
-                        window.socket.emit(PlayerEvent.pickup, {uuid: actor.id, ammo: 10});
-                        pickup.kill();
+                game.physics.arcade.overlap(this.projectile.pickup.item, this.actors.map((actor) => actor.player), (pickup, actor) => {
+                    this.actors
+                        .filter(actorInstance => actor.id === actorInstance.player.id)
+                        .map(actorInstance => actorInstance.assignPickup(game, actorInstance));
+
+                    window.socket.emit(PlayerEvent.pickup, {
+                        uuid: actor.id,
+                        ammo: 10
                     });
+
+                    pickup.kill();
+                });
             }
         }
     }
