@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
 
 class GameServer {
 
-    private dirtyFlag: boolean = false;
+    private gameHasStarted: boolean = false;
 
     constructor() {
         this.socketEvents();
@@ -48,8 +48,8 @@ class GameServer {
     }
 
     private gameInitialised(socket): void {
-        if (!this.dirtyFlag) {
-            this.dirtyFlag = true;
+        if (!this.gameHasStarted) {
+            this.gameHasStarted = true;
             setInterval(() => {
                 const coordinates = {x: Math.floor(Math.random() * 1024) + 1, y: Math.floor(Math.random() * 768) + 1};
                 socket.emit(GameEvent.drop, coordinates);
