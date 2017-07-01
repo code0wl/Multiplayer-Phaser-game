@@ -36,6 +36,17 @@ export class KeyBoardControl {
                 this.playerInstance.player.body.angularVelocity = 0;
             }
 
+            // add the ability to shoot
+            if (this.gameControls.fireWeapon.isDown) {
+                if (this.playerInstance.projectile) {
+                    this.playerInstance.projectile.fireWeapon();
+                    this.playerInstance.playerState.set('fire', true);
+                    this.playerInstance.playerState.set('ammo',
+                        this.playerInstance.projectile.bulletCount);
+                } else {
+                    this.playerInstance.playerState.set('fire', false);
+                }
+            }
         }
     }
 }
