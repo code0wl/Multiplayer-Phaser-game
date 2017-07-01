@@ -1,4 +1,5 @@
 import {Pickup} from '../pickup/pickup.class';
+import {Explode} from '../explosion/explosion.class';
 
 export class Projectile {
     public weapon: Phaser.Weapon;
@@ -23,6 +24,12 @@ export class Projectile {
 
     public renderPickup(): void {
         this.pickup = new Pickup(this.gameInstance, {x: 12, y: 12});
+    }
+
+    // our kaboom class is fairly short and straight forward
+    public kaboom(projectile) {
+        // all we need a new class instance with the following arguments
+        new Explode(this.gameInstance, projectile);
     }
 
 }
