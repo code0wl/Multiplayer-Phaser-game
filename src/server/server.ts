@@ -1,6 +1,6 @@
 import {GameEvent, PlayerEvent, ServerEvent} from './../shared/events.model';
-import {SpaceShip} from '../shared/models';
 import Socket = SocketIO.Socket;
+import {SpaceShip} from '../shared/models';
 const express = require('express');
 const app = express();
 const http = require('http').Server(app);
@@ -15,8 +15,7 @@ app.get('/', (req, res) => {
 
 class GameServer {
 
-    // A simple boolean to detect if the game has been already started
-    private dirtyFlag: boolean = false;
+    private gameHasStarted: boolean = false;
 
     constructor() {
         this.socketEvents();
@@ -43,21 +42,14 @@ class GameServer {
     }
 
     private addHitListener(socket) {
-        // If the player has been hit, we a player hit event including the
-        // player id, notifying the others that this specific player has
-        // been struck
         socket.on(PlayerEvent.hit, (playerId) => {
             socket.broadcast.emit(PlayerEvent.hit, playerId);
         });
     }
 
     private gameInitialised(socket): void {
-        // initialise the game if the first user logs in
-        if (!this.dirtyFlag) {
-            this.dirtyFlag = true;
-
-            // Generate pickup loot on every 10 seconds so the players can
-            // replenish their ammo
+        if (!this.gameHasStarted) {
+            this.gameHasStarted = true;
             setInterval(() => {
                 const coordinates = {x: Math.floor(Math.random() * 1024) + 1, y: Math.floor(Math.random() * 768) + 1};
                 socket.emit(GameEvent.drop, coordinates);
@@ -67,9 +59,6 @@ class GameServer {
     }
 
     private addPickupListener(socket) {
-
-        // If the player picks up an item. Emit the pickup event to notify
-        // the frontend
         socket.on(PlayerEvent.pickup, (player) => {
             socket.player.ammo = player.ammo;
             socket.broadcast.emit(PlayerEvent.pickup, player.uuid);
@@ -77,14 +66,12 @@ class GameServer {
     }
 
     private addMovementListener(socket) {
-        // Keep track of the player positions
         socket.on(PlayerEvent.coordinates, (coors) => {
             socket.broadcast.emit(PlayerEvent.coordinates, {coors: coors, player: socket.player});
         });
     }
 
     private addSignOutListener(socket): void {
-        // Detect if a player has died or has quit the session
         socket.on(ServerEvent.disconnected, () => {
             if (socket.player) {
                 socket.broadcast.emit(PlayerEvent.quit, socket.player.id);
@@ -93,7 +80,6 @@ class GameServer {
     }
 
     private addSignOnListener(socket): void {
-        // Detect if a player has joined the session
         socket.on(GameEvent.authentication, (player, gameSize) => {
             socket.emit(PlayerEvent.players, this.getAllPlayers());
             this.createPlayer(socket, player, gameSize);
@@ -104,8 +90,6 @@ class GameServer {
     }
 
     private createPlayer(socket, player: SpaceShip, windowSize: { x, y }): void {
-        // here is where the magic happens. We create a new player and add
-        // the following properties to her
         socket.player = {
             name: player.name,
             id: uuid(),
@@ -116,13 +100,10 @@ class GameServer {
     }
 
     private get players(): number {
-        // a method for collecting the total player length
         return Object.keys(io.sockets.connected).length;
     }
 
     private getAllPlayers(): Array<SpaceShip> {
-        // We need a way to notify all of the players. Using this method we
-        // can always get all of the current players logged into our session
         const players = [];
         Object.keys(io.sockets.connected).map((socketID) => {
             const player = io.sockets.connected[socketID].player;
@@ -134,9 +115,6 @@ class GameServer {
     }
 
     private randomInt(low, high) {
-        // for generating random coordinates, we shall be using this one a
-        // lot as we are generating both random coordinates for our players
-        // and our loot
         return Math.floor(Math.random() * (high - low) + low);
     }
 }
