@@ -2,7 +2,6 @@ export class GameEvent {
     public static authentication: string = 'authentication:successful';
     public static end: 'game:over';
     public static start: 'game:start';
-    public static loot: string = 'loot';
     public static drop: string = 'drop';
 }
 
