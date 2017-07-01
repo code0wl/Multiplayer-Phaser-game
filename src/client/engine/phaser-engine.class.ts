@@ -3,7 +3,7 @@ import { LifeCycle } from "./lifecycle";
 
 export class PhaserSpaceGame extends Game implements LifeCycle {
 
-    private game: Phaser.Game;
+    protected game: Phaser.Game;
 
     constructor() {
         super();
