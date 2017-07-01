@@ -61,6 +61,8 @@ export class Game {
             this.actors
                 .filter(actor => actor.player.id === player)
                 .map(actor => actor.assignPickup(game, actor));
+
+            this.projectile.pickup.item.kill();
         });
 
         window.socket.on(PlayerEvent.coordinates, (player) => {
