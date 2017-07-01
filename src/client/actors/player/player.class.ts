@@ -18,19 +18,11 @@ export class Player {
     public createPlayer(gameInstance): void {
         this.hud = new Hud();
         this.addControls();
-        this.player = gameInstance.add.sprite(
-            this.playerInstance.x,
-            this.playerInstance.y,
-            'shooter-sprite'
-        );
-        this.player.id = '1';
+        this.player = gameInstance.add.sprite(this.playerInstance.x, this.playerInstance.y, 'shooter-sprite');
+        this.player.id = this.playerInstance.id;
         this.player.anchor.setTo(0.5, 0.5);
         this.player.animations.add('accelerating', [1, 0], 60, false);
-
-        // will show up as 'your n' because of our name shortner logic found
-        // in the hud class
-        this.player.name = 'your name';
-
+        this.player.name = this.playerInstance.name;
         this.attachPhysics(gameInstance);
         this.hud.setName(gameInstance, this.player);
     }

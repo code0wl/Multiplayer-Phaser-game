@@ -5,22 +5,18 @@ export class KeyBoardControl {
     public gameControls: Controls;
 
     constructor(private gameInstance: any, private playerInstance: Player) {
-        const space = Phaser.KeyCode.SPACEBAR;
         this.gameControls = {
             cursors: this.gameInstance.input.keyboard.createCursorKeys(),
-            fireWeapon: this.gameInstance.input.keyboard.addKey(space)
+            fireWeapon: this.gameInstance.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR)
         }
     }
 
     public update(): void {
         if (this.playerInstance.player.alive) {
             this.playerInstance.playerState.set('fire', false);
-            const vel = this.playerInstance.angularVelocity;
+
             if (this.gameControls.cursors.up.isDown) {
-                this.gameInstance.physics.arcade.accelerationFromRotation(
-                    this.playerInstance.player.rotation,
-                    100,
-                    this.playerInstance.player.body.acceleration);
+                this.gameInstance.physics.arcade.accelerationFromRotation(this.playerInstance.player.rotation, 100, this.playerInstance.player.body.acceleration);
                 this.playerInstance.player.animations.play('accelerating');
                 this.playerInstance.playerState.set('moving', true);
             } else {
@@ -29,20 +25,18 @@ export class KeyBoardControl {
             }
 
             if (this.gameControls.cursors.left.isDown) {
-                this.playerInstance.player.body.angularVelocity = -vel;
+                this.playerInstance.player.body.angularVelocity = -this.playerInstance.angularVelocity;
             } else if (this.gameControls.cursors.right.isDown) {
-                this.playerInstance.player.body.angularVelocity = vel;
+                this.playerInstance.player.body.angularVelocity = this.playerInstance.angularVelocity;
             } else {
                 this.playerInstance.player.body.angularVelocity = 0;
             }
 
-            // add the ability to shoot
             if (this.gameControls.fireWeapon.isDown) {
                 if (this.playerInstance.projectile) {
                     this.playerInstance.projectile.fireWeapon();
                     this.playerInstance.playerState.set('fire', true);
-                    this.playerInstance.playerState.set('ammo',
-                        this.playerInstance.projectile.bulletCount);
+                    this.playerInstance.playerState.set('ammo', this.playerInstance.projectile.bulletCount);
                 } else {
                     this.playerInstance.playerState.set('fire', false);
                 }
