@@ -2,17 +2,20 @@ import {Player} from '../actors/player/player.class';
 import {Projectile} from '../props/powers/projectile/projectile.class';
 // import our created events
 import {GameEvent, PlayerEvent} from '../../shared/events.model';
+import {LoginScene} from '../scenes/login.class';
 
 declare const window: any;
 
 export class Game {
+    public login: LoginScene;
     private actors: Array<Player>;
     private actor: Player;
     private projectile: Projectile;
 
-    // create a new socket io session
     constructor() {
         window.socket = io.connect();
+        // create the new instance for the login screen
+        this.login = new LoginScene();
     }
 
     protected manageAssets(game): void {

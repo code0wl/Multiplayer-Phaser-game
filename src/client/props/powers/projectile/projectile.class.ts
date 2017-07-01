@@ -22,13 +22,11 @@ export class Projectile {
         this.bulletCount = this.weapon.fireLimit - this.weapon.shots;
     }
 
-    public renderPickup(): void {
-        this.pickup = new Pickup(this.gameInstance, {x: 12, y: 12});
+    public renderPickup(coors): void {
+        this.pickup = new Pickup(this.gameInstance, coors);
     }
 
-    // our kaboom class is fairly short and straight forward
     public kaboom(projectile) {
-        // all we need a new class instance with the following arguments
         new Explode(this.gameInstance, projectile);
     }
 
