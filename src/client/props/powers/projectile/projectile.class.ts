@@ -11,7 +11,7 @@ export class Projectile {
 
     public constructor(gameInstance, player?) {
         this.gameInstance = gameInstance;
-        this.weapon = gameInstance.add.weapon(10, 'laser');
+        this.weapon = gameInstance.add.weapon(this.bulletCount, 'laser');
         this.weapon.fireLimit = this.bulletCount;
         this.weapon.fireRate = 1000;
         if (player) {
