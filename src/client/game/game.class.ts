@@ -71,6 +71,10 @@ export class Game {
                     actor.player.y = player.coors.y;
                     actor.player.rotation = player.coors.r;
 
+                    if (actor.projectile) {
+                        actor.hud.update(player.coors.a);
+                    }
+
                     if (player.coors.f) {
                         actor.projectile.fireWeapon();
                         actor.hud.update(player.coors.a);
@@ -119,7 +123,7 @@ export class Game {
 
                     window.socket.emit(PlayerEvent.pickup, {
                         uuid: actor.id,
-                        ammo: 10
+                        ammo: true
                     });
 
                     pickup.kill();

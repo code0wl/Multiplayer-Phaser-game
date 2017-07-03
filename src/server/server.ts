@@ -21,19 +21,19 @@ class GameServer {
         this.socketEvents();
     }
 
-    public connect(port) {
+    public connect(port): void {
         http.listen(port, () => {
             console.info(`Listening on port ${port}`);
         });
     }
 
-    private socketEvents() {
+    private socketEvents(): void {
         io.on(ServerEvent.connected, socket => {
             this.attachListeners(socket);
         });
     }
 
-    private attachListeners(socket) {
+    private attachListeners(socket): void {
         this.addSignOnListener(socket);
         this.addMovementListener(socket);
         this.addSignOutListener(socket);
@@ -41,7 +41,7 @@ class GameServer {
         this.addPickupListener(socket);
     }
 
-    private addHitListener(socket) {
+    private addHitListener(socket): void {
         socket.on(PlayerEvent.hit, (playerId) => {
             socket.broadcast.emit(PlayerEvent.hit, playerId);
         });
@@ -51,23 +51,29 @@ class GameServer {
         if (!this.gameHasStarted) {
             this.gameHasStarted = true;
             setInterval(() => {
-                const coordinates = {x: Math.floor(Math.random() * 1024) + 1, y: Math.floor(Math.random() * 768) + 1};
+                const coordinates = {
+                    x: Math.floor(Math.random() * 1024) + 1,
+                    y: Math.floor(Math.random() * 768) + 1
+                };
                 socket.emit(GameEvent.drop, coordinates);
                 socket.broadcast.emit(GameEvent.drop, coordinates);
             }, 10000);
         }
     }
 
-    private addPickupListener(socket) {
+    private addPickupListener(socket): void {
         socket.on(PlayerEvent.pickup, (player) => {
             socket.player.ammo = player.ammo;
             socket.broadcast.emit(PlayerEvent.pickup, player.uuid);
         });
     }
 
-    private addMovementListener(socket) {
+    private addMovementListener(socket): void {
         socket.on(PlayerEvent.coordinates, (coors) => {
-            socket.broadcast.emit(PlayerEvent.coordinates, {coors: coors, player: socket.player});
+            socket.broadcast.emit(PlayerEvent.coordinates, {
+                coors: coors,
+                player: socket.player
+            });
         });
     }
 
@@ -114,7 +120,7 @@ class GameServer {
         return players;
     }
 
-    private randomInt(low, high) {
+    private randomInt(low, high): number {
         return Math.floor(Math.random() * (high - low) + low);
     }
 }
