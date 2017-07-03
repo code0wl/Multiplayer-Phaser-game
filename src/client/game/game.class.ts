@@ -77,7 +77,6 @@ export class Game {
 
                     if (player.coors.f) {
                         actor.projectile.fireWeapon();
-                        actor.hud.update(player.coors.a);
                     }
 
                     if (player.coors.m) {
