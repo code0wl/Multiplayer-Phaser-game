@@ -12,7 +12,7 @@ create a modern multiplayer spaceship shooter!
 
 [The book is found here on LeanPub](https://leanpub.com/buildmultiplayergame)
 
-![Leanpub book](https://s3.amazonaws.com/titlepages.leanpub.com/buildmultiplayergame/hero?1496987117)
+![Leanpub book](https://github.com/code0wl/Multiplayer-Phaser-game/blob/develop/public/assets/book-template.png?raw=true)
 
 Once you have forked or downloaded this repo you can start it with the following command
 
