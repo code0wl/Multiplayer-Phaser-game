@@ -1,8 +1,6 @@
 import {Explode} from '../../explosion/explosion.class';
 import {Pickup} from '../pickup/pickup.class';
-leanpub-start-insert
 import {Particle} from '../../particle/particle.class';
-leanpub-end-insert
 
 export class Projectile {
     public weapon: Phaser.Weapon;
@@ -29,9 +27,7 @@ export class Projectile {
 
     public renderPickup(coors): void {
         this.pickup = new Pickup(this.gameInstance, coors);
-        leanpub-start-insert
         new Particle(this.gameInstance, this.pickup.item);
-        leanpub-end-insert
     }
 
     public kaboom(projectile) {
