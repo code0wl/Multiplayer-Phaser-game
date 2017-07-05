@@ -2,6 +2,7 @@ import {GameEvent, PlayerEvent} from '../../shared/events.model';
 import {Player} from '../actors/player/player.class';
 import {Projectile} from '../props/powers/projectile/projectile.class';
 import {LoginScene} from '../scenes/login';
+import {Asteroid} from '../props/asteroids/asteroids.class';
 
 declare const window: any;
 
@@ -17,6 +18,7 @@ export class Game {
     }
 
     protected manageAssets(game): void {
+        new Asteroid(game);
         this.actors = [];
         window.socket.on(PlayerEvent.joined, (player) => {
             this.actors.push(new Player(game, player));
