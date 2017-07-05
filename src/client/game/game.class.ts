@@ -9,7 +9,7 @@ declare const window: any;
 export class Game {
     public login: LoginScene;
     private actors: Array<Player>;
-    private asteroids: Array<Asteroid>;
+    private comet: Asteroid;
     private actor: Player;
     private projectile: Projectile;
 
@@ -20,7 +20,6 @@ export class Game {
 
     protected manageAssets(game): void {
         this.actors = [];
-        this.asteroids = [];
         window.socket.on(PlayerEvent.joined, (player) => {
             this.actors.push(new Player(game, player));
         });
@@ -54,20 +53,17 @@ export class Game {
             this.projectile.renderPickup(coors);
         });
 
-        window.socket.on(GameEvent.asteroid, (coors) => {
-            if (!this.asteroids.length) {
-                this.asteroids.push(new Asteroid(game));
-                window.socket.emit(GameEvent.updateAsteroid);
+        window.socket.on(GameEvent.asteroid, () => {
+            if (!this.comet) {
+                this.comet = new Asteroid(game);
             }
         });
 
         window.socket.on(GameEvent.asteroidCoodinates, (coors) => {
-            this.asteroids.map((comet: Asteroid) => {
-                if (comet) {
-                    comet.asteroid.x = coors.x;
-                    comet.asteroid.y = coors.y;
-                }
-            })
+            if (this.comet) {
+                this.comet.asteroid.x = 50;
+                this.comet.asteroid.y = 50;
+            }
         });
 
         window.socket.on(PlayerEvent.hit, (enemy) => {
@@ -80,6 +76,7 @@ export class Game {
             this.actors
                 .filter(actor => actor.player.id === player)
                 .map(actor => actor.assignPickup(game, actor));
+
             this.projectile.pickup.item.kill();
         });
 
@@ -118,11 +115,9 @@ export class Game {
                 }
             });
 
-            if (this.comet.asteroid.x < -128) {
-                this.comet.asteroid.kill();
+            this.comet.asteroid.events.onOutOfBounds.add(() => {
                 this.comet = null;
-            }
-
+            }, this);
         }
 
         if (this.actor && this.actor.controls) {

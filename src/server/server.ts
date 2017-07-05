@@ -17,8 +17,6 @@ class GameServer {
 
     private gameHasStarted: boolean = false;
 
-    private asteroidCoordinates = this.generateRandomCoordinates();
-
     constructor() {
         this.socketEvents();
     }
@@ -51,12 +49,13 @@ class GameServer {
     }
 
     private addAsteroidListener(socket): void {
-        socket.on(GameEvent.updateAsteroid, () => {
-            this.asteroidCoordinates.y += 1;
-            this.asteroidCoordinates.x -= 1;
-            socket.emit(GameEvent.asteroidCoodinates, this.asteroidCoordinates);
-            socket.broadcast.emit(GameEvent.asteroidCoodinates, this.asteroidCoordinates);
-        });
+        let asteroidCoordinates = this.generateRandomCoordinates();
+        setInterval(() => {
+            asteroidCoordinates.y += 1;
+            asteroidCoordinates.x -= 1;
+            socket.emit(GameEvent.asteroidCoodinates, asteroidCoordinates);
+            socket.broadcast.emit(GameEvent.asteroidCoodinates, asteroidCoordinates);
+        }, 10);
     }
 
     private gameInitialised(socket): void {

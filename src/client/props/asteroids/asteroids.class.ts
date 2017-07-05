@@ -12,6 +12,7 @@ export class Asteroid {
     private attachPhysics(gameInstance): void {
         gameInstance.physics.enable(this.asteroid, Phaser.Physics.ARCADE);
         this.asteroid.body.collideWorldBounds = false;
+        this.asteroid.checkWorldBounds = true;
         this.asteroid.body.bounce.setTo(0);
         this.asteroid.body.gravity.y = 0;
         this.asteroid.body.drag.set(80);
