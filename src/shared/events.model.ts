@@ -5,6 +5,7 @@ export class GameEvent {
     public static drop: string = 'drop';
     public static asteroid: string = 'asteroid';
     public static asteroidCoodinates: string = 'coordinates';
+    public static updateAsteroid: string = 'update';
 }
 
 export class ServerEvent {

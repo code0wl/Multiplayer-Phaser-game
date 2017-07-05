@@ -13,7 +13,8 @@ export class Player {
     public angularVelocity: number = 300;
     private particle: Particle;
 
-    constructor(private gameInstance: Phaser.Game, public playerInstance: SpaceShip) {
+    constructor(private gameInstance: Phaser.Game,
+                public playerInstance: SpaceShip) {
         this.createPlayer(this.gameInstance);
         this.playerState = new Map();
     }
