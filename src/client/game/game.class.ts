@@ -11,6 +11,7 @@ export class Game {
     private actors: Array<Player>;
     private actor: Player;
     private projectile: Projectile;
+    private comet: Asteroid;
 
     constructor() {
         window.socket = io.connect();
@@ -18,7 +19,6 @@ export class Game {
     }
 
     protected manageAssets(game): void {
-        new Asteroid(game);
         this.actors = [];
         window.socket.on(PlayerEvent.joined, (player) => {
             this.actors.push(new Player(game, player));
@@ -51,6 +51,19 @@ export class Game {
             }
             this.projectile = new Projectile(game);
             this.projectile.renderPickup(coors);
+        });
+
+        window.socket.on(GameEvent.asteroid, (coors) => {
+            if (!this.comet) {
+                this.comet = new Asteroid(game);
+            }
+        });
+
+        window.socket.on(GameEvent.asteroidCoodinates, (coors) => {
+            if (this.comet) {
+                this.comet.asteroid.x = coors.x;
+                this.comet.asteroid.y = coors.y;
+            }
         });
 
         window.socket.on(PlayerEvent.hit, (enemy) => {
@@ -90,6 +103,24 @@ export class Game {
     }
 
     protected gameUpdate(game): void {
+
+        if (this.comet) {
+            game.physics.arcade.collide(this.comet.asteroid, this.actors.map(actor => actor.player), (comet, actor) => {
+                if (actor.id !== this.actor.player.id) {
+                    window.socket.emit(PlayerEvent.hit, actor.id);
+                    actor.kill();
+                } else {
+                    window.location.reload();
+                }
+            });
+
+            if (this.comet.asteroid.x < -128) {
+                this.comet.asteroid.kill();
+                this.comet = null;
+            }
+
+        }
+
         if (this.actor && this.actor.controls) {
             this.actor.view();
 

@@ -47,14 +47,28 @@ class GameServer {
         });
     }
 
+    private addAsteroidListener(socket): void {
+        let coors = this.generateRandomCoordinates();
+        setInterval(() => {
+            coors.y += 1;
+            coors.x -= 1;
+            socket.emit(GameEvent.asteroidCoodinates, coors);
+            socket.broadcast.emit(GameEvent.asteroidCoodinates, coors);
+        }, 10);
+    }
+
     private gameInitialised(socket): void {
         if (!this.gameHasStarted) {
             this.gameHasStarted = true;
+
             setInterval(() => {
-                const coordinates = {
-                    x: Math.floor(Math.random() * 1024) + 1,
-                    y: Math.floor(Math.random() * 768) + 1
-                };
+                socket.emit(GameEvent.asteroid);
+                socket.broadcast.emit(GameEvent.asteroid);
+                this.addAsteroidListener(socket);
+            }, 1000);
+
+            setInterval(() => {
+                const coordinates = this.generateRandomCoordinates();
                 socket.emit(GameEvent.drop, coordinates);
                 socket.broadcast.emit(GameEvent.drop, coordinates);
             }, 10000);
@@ -118,6 +132,13 @@ class GameServer {
             }
         });
         return players;
+    }
+
+    private generateRandomCoordinates(): { x: number, y: number } {
+        return {
+            x: Math.floor(Math.random() * 1024) + 1,
+            y: Math.floor(Math.random() * 768) + 1
+        };
     }
 
     private randomInt(low, high): number {

@@ -3,6 +3,8 @@ export class GameEvent {
     public static end: 'game:over';
     public static start: 'game:start';
     public static drop: string = 'drop';
+    public static asteroid: string = 'asteroid';
+    public static asteroidCoodinates: string = 'coordinates';
 }
 
 export class ServerEvent {
