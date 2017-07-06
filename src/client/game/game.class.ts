@@ -43,7 +43,7 @@ export class Game {
         window.socket.on(PlayerEvent.quit, (playerId) => {
             this.actors
                 .filter(actor => actor.player.id === playerId)
-                .map(actor => actor.player.body.sprite.destroy());
+                .map(actor => actor.player.kill());
         });
 
         window.socket.on(GameEvent.drop, (coors) => {
@@ -114,6 +114,7 @@ export class Game {
         if (this.comet) {
             game.physics.arcade.collide(this.comet.asteroid, this.actors.map(actor => actor.player), (comet, actor) => {
                 if (actor.id !== this.actor.player.id) {
+                    actor.destroy();
                     window.socket.emit(PlayerEvent.hit, actor.id);
                 } else {
                     window.location.reload();
@@ -141,6 +142,7 @@ export class Game {
                         if (enemy.id !== this.actor.player.id) {
                             window.socket.emit(PlayerEvent.hit, enemy.id);
                             projectile.kill();
+                            enemy.destroy();
                         }
                     });
             }
