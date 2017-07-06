@@ -4,7 +4,7 @@ body {
     background: black;
     display: flex;
     justify-content: center;
-    align-items:center;
+    align-items: center;
     background: url('galaxy.jpg');
     background-size: cover;
     height: 100vh;

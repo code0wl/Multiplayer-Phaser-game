@@ -5,6 +5,12 @@ export class GameEvent {
     public static drop: string = 'drop';
 }
 
+export class CometEvent {
+    public static create: string = 'comet:create';
+    public static destroy: string = 'comet:destroy';
+    public static coordinates: string = 'comet:coordinates';
+}
+
 export class ServerEvent {
     public static connected: string = 'connection';
     public static disconnected: string = 'disconnect';
