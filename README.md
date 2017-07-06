@@ -9,6 +9,8 @@
 Such as TypeScript, Phaser and socket.io to create a fun little multiplayer 
 game that can entertain you and your friends for a minute or two.
 
+[For a preview of the game](http://www.codeowl.tech:3000/)
+
 You will learn to animate sprites, work with physics, and develop logic to 
 create a modern multiplayer spaceship shooter!
 
