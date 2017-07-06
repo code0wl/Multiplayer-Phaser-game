@@ -54,9 +54,7 @@ export class Game {
         });
 
         window.socket.on(CometEvent.create, () => {
-            if (!this.comet) {
-                this.comet = new Asteroid(game);
-            }
+            this.comet = new Asteroid(game);
         });
 
         window.socket.on(CometEvent.coordinates, (coors) => {
