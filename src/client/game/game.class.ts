@@ -58,8 +58,10 @@ export class Game {
         });
 
         window.socket.on(CometEvent.coordinates, (coors) => {
-            this.comet.asteroid.x = coors.x;
-            this.comet.asteroid.y = coors.y;
+            if (this.comet) {
+                this.comet.asteroid.x = coors.x;
+                this.comet.asteroid.y = coors.y;
+            }
         });
 
         window.socket.on(PlayerEvent.hit, (enemy) => {
@@ -105,7 +107,7 @@ export class Game {
             game.physics.arcade.collide(this.comet.asteroid, this.actors.map(actor => actor.player), (comet, actor) => {
                 if (actor.id !== this.actor.player.id) {
                     window.socket.emit(PlayerEvent.hit, actor.id);
-                    actor.kill();
+                    this.actor.player.destroy();
                 } else {
                     window.location.reload();
                 }
@@ -133,13 +135,11 @@ export class Game {
             game.physics.arcade.collide(this.actor.player, this.actors.map(actor => actor.player));
 
             if (this.actor.projectile) {
-                game.physics.arcade.collide(this.actor.projectile.weapon.bullets, this.actors.map((actor) => actor),
+                game.physics.arcade.collide(this.actor.projectile.weapon.bullets, this.actors.map((actor) => actor.player),
                     (enemy, projectile) => {
                         if (enemy.id !== this.actor.player.id) {
-                            this.actor.destroy();
                             window.socket.emit(PlayerEvent.hit, enemy.id);
                             projectile.kill();
-                            enemy.kill();
                         }
                     });
             }

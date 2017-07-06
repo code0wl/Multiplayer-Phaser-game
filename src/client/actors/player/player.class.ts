@@ -29,12 +29,12 @@ export class Player {
         this.player.animations.add('accelerating', [1, 0], 60, false);
         this.player.name = this.playerInstance.name;
         this.attachPhysics(gameInstance);
+        this.player.destroy = () => {
+            new Explode(this.gameInstance, this.player);
+            this.player.kill();
+        }
         this.hud.setName(gameInstance, this.player);
         this.particle = new Particle(gameInstance, this.player);
-    }
-
-    public destroy() {
-        new Explode(this.gameInstance, this.player);
     }
 
     public assignPickup(game, player?): void {
