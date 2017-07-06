@@ -3,6 +3,7 @@ import {Projectile} from '../../props/powers/projectile/projectile.class';
 import {Hud} from '../../hud/hud.class';
 import {Particle} from '../../props/particle/particle.class';
 import {SpaceShip} from '../../../shared/models';
+import {Explode} from '../../props/explosion/explosion.class';
 
 export class Player {
     public player: Phaser.Sprite;
@@ -32,6 +33,10 @@ export class Player {
         this.particle = new Particle(gameInstance, this.player);
     }
 
+    public destroy() {
+        new Explode(this.gameInstance, this.player);
+    }
+
     public assignPickup(game, player?): void {
         this.projectile = new Projectile(game, player.player);
         this.hud.setAmmo(game, player.player, this.projectile);
@@ -58,4 +63,5 @@ export class Player {
         this.player.body.maxVelocity.set(100);
         this.player.body.immovable = false;
     }
+
 }

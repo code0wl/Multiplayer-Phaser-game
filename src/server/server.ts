@@ -1,6 +1,12 @@
-import {GameEvent, PlayerEvent, ServerEvent} from './../shared/events.model';
+import {
+    CometEvent,
+    GameEvent,
+    PlayerEvent,
+    ServerEvent
+} from './../shared/events.model';
 import {SpaceShip} from '../shared/models';
 import Socket = SocketIO.Socket;
+import Timer = NodeJS.Timer;
 const express = require('express');
 const app = express();
 const http = require('http').Server(app);
@@ -16,6 +22,7 @@ app.get('/', (req, res) => {
 class GameServer {
 
     private gameHasStarted: boolean = false;
+    private hasComet: boolean = false;
 
     constructor() {
         this.socketEvents();
@@ -39,7 +46,7 @@ class GameServer {
         this.addSignOutListener(socket);
         this.addHitListener(socket);
         this.addPickupListener(socket);
-        this.addAsteroidListener(socket);
+        this.addCometListener(socket);
     }
 
     private addHitListener(socket): void {
@@ -48,22 +55,38 @@ class GameServer {
         });
     }
 
-    private addAsteroidListener(socket): void {
-        let asteroidCoordinates = this.generateRandomCoordinates();
-        setInterval(() => {
-            asteroidCoordinates.y += 1;
-            asteroidCoordinates.x -= 1;
-            socket.emit(GameEvent.asteroidCoodinates, asteroidCoordinates);
-            socket.broadcast.emit(GameEvent.asteroidCoodinates, asteroidCoordinates);
-        }, 10);
+    private addCometListener(socket): void {
+        socket.on(CometEvent.destroy, () => {
+            this.hasComet = false;
+        });
+    }
+
+    private updateComet(socket) {
+        let cometGenerator;
+        if (this.hasComet) {
+            let asteroidCoordinates = this.generateRandomCoordinates();
+            asteroidCoordinates.y = -128;
+            cometGenerator = setInterval(() => {
+                asteroidCoordinates.y += 1;
+                asteroidCoordinates.x -= 1;
+                socket.emit(CometEvent.coordinates, asteroidCoordinates);
+                socket.broadcast.emit(CometEvent.coordinates, asteroidCoordinates);
+            }, 25);
+        } else {
+            global.clearInterval(cometGenerator);
+        }
     }
 
     private gameInitialised(socket): void {
         if (!this.gameHasStarted) {
             this.gameHasStarted = true;
             setInterval(() => {
-                socket.emit(GameEvent.asteroid);
-                socket.broadcast.emit(GameEvent.asteroid);
+                if (!this.hasComet) {
+                    this.hasComet = true;
+                    socket.emit(CometEvent.create);
+                    socket.broadcast.emit(CometEvent.create);
+                    this.updateComet(socket);
+                }
             }, 1000);
 
             setInterval(() => {

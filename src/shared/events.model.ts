@@ -3,9 +3,12 @@ export class GameEvent {
     public static end: 'game:over';
     public static start: 'game:start';
     public static drop: string = 'drop';
-    public static asteroid: string = 'asteroid';
-    public static asteroidCoodinates: string = 'coordinates';
-    public static updateAsteroid: string = 'update';
+}
+
+export class CometEvent {
+    public static create: string = 'comet:create';
+    public static destroy: string = 'comet:destroy';
+    public static coordinates: string = 'comet:coordinates';
 }
 
 export class ServerEvent {

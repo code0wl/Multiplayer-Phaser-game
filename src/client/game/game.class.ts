@@ -1,4 +1,4 @@
-import {GameEvent, PlayerEvent} from '../../shared/events.model';
+import {CometEvent, GameEvent, PlayerEvent} from '../../shared/events.model';
 import {Player} from '../actors/player/player.class';
 import {Projectile} from '../props/powers/projectile/projectile.class';
 import {LoginScene} from '../scenes/login';
@@ -53,17 +53,13 @@ export class Game {
             this.projectile.renderPickup(coors);
         });
 
-        window.socket.on(GameEvent.asteroid, () => {
-            if (!this.comet) {
-                this.comet = new Asteroid(game);
-            }
+        window.socket.on(CometEvent.create, () => {
+            this.comet = new Asteroid(game);
         });
 
-        window.socket.on(GameEvent.asteroidCoodinates, (coors) => {
-            if (this.comet) {
-                this.comet.asteroid.x = 50;
-                this.comet.asteroid.y = 50;
-            }
+        window.socket.on(CometEvent.coordinates, (coors) => {
+            this.comet.asteroid.x = coors.x;
+            this.comet.asteroid.y = coors.y;
         });
 
         window.socket.on(PlayerEvent.hit, (enemy) => {
@@ -115,9 +111,11 @@ export class Game {
                 }
             });
 
-            this.comet.asteroid.events.onOutOfBounds.add(() => {
+            if (this.comet.asteroid.x < -this.comet.asteroid.width) {
+                window.socket.emit(CometEvent.destroy);
+                this.comet.asteroid.kill();
                 this.comet = null;
-            }, this);
+            }
         }
 
         if (this.actor && this.actor.controls) {
@@ -135,10 +133,10 @@ export class Game {
             game.physics.arcade.collide(this.actor.player, this.actors.map(actor => actor.player));
 
             if (this.actor.projectile) {
-                game.physics.arcade.collide(this.actor.projectile.weapon.bullets, this.actors.map((actor) => actor.player),
+                game.physics.arcade.collide(this.actor.projectile.weapon.bullets, this.actors.map((actor) => actor),
                     (enemy, projectile) => {
                         if (enemy.id !== this.actor.player.id) {
-                            this.actor.projectile.kaboom(projectile);
+                            this.actor.destroy();
                             window.socket.emit(PlayerEvent.hit, enemy.id);
                             projectile.kill();
                             enemy.kill();

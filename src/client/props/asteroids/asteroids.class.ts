@@ -3,7 +3,7 @@ export class Asteroid {
     public asteroid: Phaser.Sprite;
 
     constructor(gameInstance) {
-        this.asteroid = gameInstance.add.sprite(0, 0, 'asteroid');
+        this.asteroid = gameInstance.add.sprite(0, -128, 'asteroid');
         this.asteroid.animations.add('asteroid');
         this.asteroid.animations.play('asteroid', 10, true, false);
         this.attachPhysics(gameInstance);
