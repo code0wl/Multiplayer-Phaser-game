@@ -1,4 +1,4 @@
-import {GameEvent, PlayerEvent} from '../../shared/events.model';
+import {CometEvent, GameEvent, PlayerEvent} from '../../shared/events.model';
 import {Player} from '../actors/player/player.class';
 import {Projectile} from '../props/powers/projectile/projectile.class';
 import {LoginScene} from '../scenes/login';
@@ -9,9 +9,9 @@ declare const window: any;
 export class Game {
     public login: LoginScene;
     private actors: Array<Player>;
+    private comet: Asteroid;
     private actor: Player;
     private projectile: Projectile;
-    private comet: Asteroid;
 
     constructor() {
         window.socket = io.connect();
@@ -53,16 +53,21 @@ export class Game {
             this.projectile.renderPickup(coors);
         });
 
-        window.socket.on(GameEvent.asteroid, (coors) => {
-            if (!this.comet) {
-                this.comet = new Asteroid(game);
-            }
+        window.socket.on(CometEvent.create, () => {
+            this.comet = new Asteroid(game);
         });
 
-        window.socket.on(GameEvent.asteroidCoodinates, (coors) => {
+        window.socket.on(CometEvent.coordinates, (coors) => {
             if (this.comet) {
                 this.comet.asteroid.x = coors.x;
                 this.comet.asteroid.y = coors.y;
+            }
+        });
+
+        window.socket.on(CometEvent.destroy, () => {
+            if (this.comet) {
+                this.comet.asteroid.kill();
+                this.comet = null;
             }
         });
 
@@ -76,6 +81,7 @@ export class Game {
             this.actors
                 .filter(actor => actor.player.id === player)
                 .map(actor => actor.assignPickup(game, actor));
+
             this.projectile.pickup.item.kill();
         });
 
@@ -108,17 +114,10 @@ export class Game {
             game.physics.arcade.collide(this.comet.asteroid, this.actors.map(actor => actor.player), (comet, actor) => {
                 if (actor.id !== this.actor.player.id) {
                     window.socket.emit(PlayerEvent.hit, actor.id);
-                    actor.kill();
                 } else {
                     window.location.reload();
                 }
             });
-
-            if (this.comet.asteroid.x < -128) {
-                this.comet.asteroid.kill();
-                this.comet = null;
-            }
-
         }
 
         if (this.actor && this.actor.controls) {
@@ -139,10 +138,8 @@ export class Game {
                 game.physics.arcade.collide(this.actor.projectile.weapon.bullets, this.actors.map((actor) => actor.player),
                     (enemy, projectile) => {
                         if (enemy.id !== this.actor.player.id) {
-                            this.actor.projectile.kaboom(projectile);
                             window.socket.emit(PlayerEvent.hit, enemy.id);
                             projectile.kill();
-                            enemy.kill();
                         }
                     });
             }

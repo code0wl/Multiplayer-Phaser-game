@@ -3,6 +3,7 @@ import {Projectile} from '../../props/powers/projectile/projectile.class';
 import {Hud} from '../../hud/hud.class';
 import {Particle} from '../../props/particle/particle.class';
 import {SpaceShip} from '../../../shared/models';
+import {Explode} from '../../props/explosion/explosion.class';
 
 export class Player {
     public player: Phaser.Sprite;
@@ -13,7 +14,8 @@ export class Player {
     public angularVelocity: number = 300;
     private particle: Particle;
 
-    constructor(private gameInstance: Phaser.Game, public playerInstance: SpaceShip) {
+    constructor(private gameInstance: Phaser.Game,
+                public playerInstance: SpaceShip) {
         this.createPlayer(this.gameInstance);
         this.playerState = new Map();
     }
@@ -27,6 +29,10 @@ export class Player {
         this.player.animations.add('accelerating', [1, 0], 60, false);
         this.player.name = this.playerInstance.name;
         this.attachPhysics(gameInstance);
+        this.player.destroy = () => {
+            new Explode(this.gameInstance, this.player);
+            this.player.kill();
+        }
         this.hud.setName(gameInstance, this.player);
         this.particle = new Particle(gameInstance, this.player);
     }
@@ -57,4 +63,5 @@ export class Player {
         this.player.body.maxVelocity.set(100);
         this.player.body.immovable = false;
     }
+
 }
