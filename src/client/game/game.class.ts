@@ -20,6 +20,7 @@ export class Game {
 
     protected manageAssets(game): void {
         this.actors = [];
+        this.comet = new Asteroid(game);
         window.socket.on(PlayerEvent.joined, (player) => {
             this.actors.push(new Player(game, player));
         });

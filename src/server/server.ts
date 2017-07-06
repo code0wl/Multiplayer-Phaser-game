@@ -63,13 +63,17 @@ class GameServer {
                 asteroidCoordinates.x -= 1;
                 socket.emit(CometEvent.coordinates, asteroidCoordinates);
                 socket.broadcast.emit(CometEvent.coordinates, asteroidCoordinates);
-                if (asteroidCoordinates.x < -128) {
-                    socket.emit(CometEvent.destroy);
-                    socket.broadcast.emit(CometEvent.destroy);
-                    this.hasComet = false;
-                    global.clearInterval(update);
-                }
+                this.destroyComet(asteroidCoordinates, socket, update)
             }, 25);
+        }
+    }
+
+    private destroyComet(asteroidCoordinates, socket, update): void {
+        if (asteroidCoordinates.x < -128) {
+            socket.emit(CometEvent.destroy);
+            socket.broadcast.emit(CometEvent.destroy);
+            this.hasComet = false;
+            global.clearInterval(update);
         }
     }
 
