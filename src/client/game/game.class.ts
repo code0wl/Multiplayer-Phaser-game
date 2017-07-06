@@ -54,13 +54,22 @@ export class Game {
         });
 
         window.socket.on(CometEvent.create, () => {
-            this.comet = new Asteroid(game);
+            if (!this.comet) {
+                this.comet = new Asteroid(game);
+            }
         });
 
         window.socket.on(CometEvent.coordinates, (coors) => {
             if (this.comet) {
                 this.comet.asteroid.x = coors.x;
                 this.comet.asteroid.y = coors.y;
+            }
+        });
+
+        window.socket.on(CometEvent.destroy, () => {
+            if (this.comet) {
+                this.comet.asteroid.kill();
+                this.comet = null;
             }
         });
 
@@ -107,17 +116,10 @@ export class Game {
             game.physics.arcade.collide(this.comet.asteroid, this.actors.map(actor => actor.player), (comet, actor) => {
                 if (actor.id !== this.actor.player.id) {
                     window.socket.emit(PlayerEvent.hit, actor.id);
-                    this.actor.player.destroy();
                 } else {
                     window.location.reload();
                 }
             });
-
-            if (this.comet.asteroid.x < -this.comet.asteroid.width) {
-                window.socket.emit(CometEvent.destroy);
-                this.comet.asteroid.kill();
-                this.comet = null;
-            }
         }
 
         if (this.actor && this.actor.controls) {
