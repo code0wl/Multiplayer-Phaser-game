@@ -2,7 +2,7 @@ import {CometEvent, GameEvent, PlayerEvent} from '../../shared/events.model';
 import {Player} from '../actors/player/player.class';
 import {Projectile} from '../props/powers/projectile/projectile.class';
 import {LoginScene} from '../scenes/login';
-import {Asteroid} from '../props/asteroids/asteroids.class';
+import {Asteroid} from '../props/asteroid/asteroid.class';
 
 declare const window: any;
 
