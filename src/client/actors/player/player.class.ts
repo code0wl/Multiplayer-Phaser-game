@@ -15,15 +15,15 @@ export class Player {
     private particle: Particle;
 
     constructor(private gameInstance: Phaser.Game,
-                public playerInstance: SpaceShip) {
-        this.createPlayer(this.gameInstance);
+                public playerInstance: SpaceShip, type) {
+        this.createPlayer(this.gameInstance, type);
         this.playerState = new Map();
     }
 
-    public createPlayer(gameInstance): void {
+    public createPlayer(gameInstance, type): void {
         this.hud = new Hud();
         this.addControls();
-        this.player = gameInstance.add.sprite(this.playerInstance.x, this.playerInstance.y, 'shooter-sprite');
+        this.player = gameInstance.add.sprite(this.playerInstance.x, this.playerInstance.y, type);
         this.player.id = this.playerInstance.id;
         this.player.anchor.setTo(0.5, 0.5);
         this.player.animations.add('accelerating', [1, 0], 60, false);

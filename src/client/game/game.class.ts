@@ -22,17 +22,17 @@ export class Game {
         this.actors = [];
         this.comet = new Asteroid(game);
         window.socket.on(PlayerEvent.joined, (player) => {
-            this.actors.push(new Player(game, player));
+            this.actors.push(new Player(game, player, 'shooter-sprite-enemy'));
         });
 
         window.socket.on(PlayerEvent.protagonist, (player) => {
-            this.actor = new Player(game, player);
+            this.actor = new Player(game, player, 'shooter-sprite');
             this.actors.push(this.actor);
         });
 
         window.socket.on(PlayerEvent.players, (players) => {
             players.map((player: any) => {
-                const enemy = new Player(game, player);
+                const enemy = new Player(game, player, 'shooter-sprite-enemy');
                 if (player.ammo) {
                     enemy.assignPickup(game, enemy);
                 }
