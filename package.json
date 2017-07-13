@@ -1,7 +1,7 @@
 {
-  "name": "starter-kit",
+  "name": "Multiplayer-game",
   "version": "1.0.0",
-  "description": "Simple multiplayer game with rxjs, phaser and typescript",
+  "description": "Simple multiplayer using socket.io, phaser and typescript",
   "main": "index.js",
   "scripts": {
     "precommit": "tslint -c tslint.json 'src/**/*.ts'",
