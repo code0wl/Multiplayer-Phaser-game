@@ -5,11 +5,10 @@
 
 [![Leanpub book](https://github.com/code0wl/Multiplayer-Phaser-game/blob/develop/public/assets/book-template.png?raw=true)](https://leanpub.com/buildmultiplayergame)
 
-### Use great technologies 
+# Use great technologies
+
 Such as TypeScript, Phaser and socket.io to create a fun little multiplayer 
 game that can entertain you and your friends for a minute or two.
-
-[For a preview of the game](http://www.codeowl.tech:3000/)
 
 You will learn to animate sprites, work with physics, and develop logic to 
 create a modern multiplayer spaceship shooter!
@@ -18,7 +17,7 @@ create a modern multiplayer spaceship shooter!
 
 Once you have forked or downloaded this repo you can start it with the following command
 
-### How to run
+## How to run
 ```bash
 npm start
 ```
