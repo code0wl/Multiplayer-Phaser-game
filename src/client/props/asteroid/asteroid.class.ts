@@ -1,8 +1,7 @@
-import {Explode} from "../explosion/explosion.class";
+import {Explode} from '../explosion/explosion.class';
 
 export class Asteroid {
 
-    public health: number;
     public asteroid: Phaser.Sprite;
 
     constructor(private gameInstance, public cometInstance) {
@@ -11,7 +10,6 @@ export class Asteroid {
         this.asteroid.animations.add('asteroid');
         this.asteroid.animations.play('asteroid', 10, true, false);
         this.attachPhysics(gameInstance);
-        this.health = 100;
         this.asteroid.destroy = () => {
             new Explode(this.gameInstance, this.asteroid, true);
             this.asteroid.kill();
@@ -20,10 +18,7 @@ export class Asteroid {
     }
 
     public hit(): void {
-        this.health = this.health - 50;
-        if (!this.health) {
-            this.asteroid.destroy();
-        }
+        this.asteroid.destroy();
     }
 
     private attachPhysics(gameInstance): void {
