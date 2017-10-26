@@ -9,6 +9,7 @@ declare const window: any;
 export class Game {
     public login: LoginScene;
     private actors: Array<Player>;
+    private comets: Array<Asteroid>;
     private comet: Asteroid;
     private actor: Player;
     private projectile: Projectile;
@@ -20,7 +21,7 @@ export class Game {
 
     protected manageAssets(game): void {
         this.actors = [];
-        this.comet = new Asteroid(game);
+        this.comets = [];
         window.socket.on(PlayerEvent.joined, (player) => {
             this.actors.push(new Player(game, player, 'shooter-sprite-enemy'));
         });
@@ -54,8 +55,9 @@ export class Game {
             this.projectile.renderPickup(coors);
         });
 
-        window.socket.on(CometEvent.create, () => {
-            this.comet = new Asteroid(game);
+        window.socket.on(CometEvent.create, (comet) => {
+            this.comet = new Asteroid(game, comet);
+            this.comets.push(this.comet);
         });
 
         window.socket.on(CometEvent.coordinates, (coors) => {
@@ -69,6 +71,12 @@ export class Game {
             if (this.comet) {
                 this.comet.asteroid.kill();
                 this.comet = null;
+            }
+        });
+
+        window.socket.on(CometEvent.hit, () => {
+            if (this.comet) {
+                this.comet.hit();
             }
         });
 
@@ -120,6 +128,15 @@ export class Game {
                     window.location.reload();
                 }
             });
+
+            if (this.actor && this.actor.projectile) {
+                game.physics.arcade.collide(this.actor.projectile.weapon.bullets, this.comets.map((comet) => comet.asteroid),
+                    (comet, projectile) => {
+                        window.socket.emit(CometEvent.hit, comet.id);
+                        projectile.kill();
+                        this.comet.hit();
+                    });
+            }
         }
 
         if (this.actor && this.actor.controls) {

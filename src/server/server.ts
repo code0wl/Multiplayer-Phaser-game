@@ -5,8 +5,7 @@ import {
     ServerEvent
 } from './../shared/events.model';
 import {SpaceShip} from '../shared/models';
-import Socket = SocketIO.Socket;
-import Timer = NodeJS.Timer;
+
 const express = require('express');
 const app = express();
 const http = require('http').Server(app);
@@ -45,6 +44,7 @@ class GameServer {
         this.addMovementListener(socket);
         this.addSignOutListener(socket);
         this.addHitListener(socket);
+        this.addCometHitListener(socket);
         this.addPickupListener(socket);
     }
 
@@ -77,6 +77,12 @@ class GameServer {
         }
     }
 
+    private addCometHitListener(socket): void {
+        socket.on(CometEvent.hit, (playerId) => {
+            socket.broadcast.emit(CometEvent.hit, playerId);
+        });
+    }
+
     private gameInitialised(socket): void {
         if (!this.gameHasStarted) {
             this.gameHasStarted = true;
@@ -96,9 +102,12 @@ class GameServer {
     private createComet(socket, interval: number) {
         setInterval(() => {
             if (!this.hasComet) {
+                socket.comet = {
+                    id: uuid()
+                };
                 this.hasComet = true;
-                socket.emit(CometEvent.create);
-                socket.broadcast.emit(CometEvent.create);
+                socket.emit(CometEvent.create, socket.comet);
+                socket.broadcast.emit(CometEvent.create, socket.comet);
                 this.updateComet(socket);
             }
         }, interval);

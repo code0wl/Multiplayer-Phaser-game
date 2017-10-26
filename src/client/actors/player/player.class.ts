@@ -32,7 +32,7 @@ export class Player {
         this.player.destroy = () => {
             new Explode(this.gameInstance, this.player);
             this.player.kill();
-        }
+        };
         this.hud.setName(gameInstance, this.player);
         this.particle = new Particle(gameInstance, this.player);
     }

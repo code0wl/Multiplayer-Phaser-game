@@ -8,6 +8,7 @@ export class GameEvent {
 export class CometEvent {
     public static create: string = 'comet:create';
     public static destroy: string = 'comet:destroy';
+    public static hit: string = 'comet:hit';
     public static coordinates: string = 'comet:coordinates';
 }
 
