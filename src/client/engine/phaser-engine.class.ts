@@ -21,6 +21,7 @@ export class PhaserSpaceGame extends Game implements LifeCycle {
         game.image('laser', 'assets/bullet.png');
         game.spritesheet('dust', 'assets/dust.png', 64, 64, 16);
         game.spritesheet('kaboom', 'assets/explosions.png', 64, 64, 16);
+        game.spritesheet('kaboom-big', 'assets/explosions-big.png', 152, 152, 16);
         game.image('pickup', 'assets/pickup.png');
         game.spritesheet('shooter-sprite', 'assets/ship.png', 32, 32);
         game.spritesheet('shooter-sprite-enemy', 'assets/ship-enemy.png', 32, 32);

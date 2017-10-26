@@ -13,9 +13,9 @@ export class Asteroid {
         this.attachPhysics(gameInstance);
         this.health = 100;
         this.asteroid.destroy = () => {
-            new Explode(this.gameInstance, this.asteroid);
+            new Explode(this.gameInstance, this.asteroid, true);
             this.asteroid.kill();
-        }
+        };
         this.asteroid.id = this.cometInstance.id;
     }
 
