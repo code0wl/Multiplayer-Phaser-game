@@ -24,7 +24,7 @@
   "homepage": "https://github.com/code0wl/Multiplayer-Phaser-game#readme",
   "dependencies": {
     "express": "4.15.2",
-    "phaser-ce": "^2.8.1",
+    "phaser-ce": "^2.11.0",
     "socket.io": "^2.0.3",
     "socket.io-client": "^2.0.3",
     "uuid": "^3.1.0",
