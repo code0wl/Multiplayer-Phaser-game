@@ -4,7 +4,8 @@
   "description": "Simple multiplayer using socket.io, phaser and typescript",
   "main": "index.js",
   "scripts": {
-    "precommit": "tslint -c tslint.json 'src/**/*.ts'",
+    "precommit": "npm run lint",
+    "lint": "tslint -c tslint.json -p .",
     "start:dev": "webpack -w --env=dev & tsc -w --noEmit src/server/server & nodemon src/server/server",
     "build:release": "webpack --env=prod --optimize-minimize",
     "prestart": "npm i",
