@@ -5,8 +5,8 @@ export class Projectile {
     public weapon: Phaser.Weapon;
     public bulletCount: number = 10;
     public pickup: Pickup;
-    private player: Phaser.Sprite;
-    private gameInstance: Phaser.Game;
+    private readonly player: Phaser.Sprite;
+    private readonly gameInstance: Phaser.Game;
 
     public constructor(gameInstance, player?) {
         this.gameInstance = gameInstance;
