@@ -1,6 +1,6 @@
 {
     "rulesDirectory": [
-        "./"
+        "./src"
     ],
     "rules": {
         "max-line-length": {
