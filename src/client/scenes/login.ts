@@ -1,4 +1,4 @@
-import {GameEvent} from '../../shared/events.model';
+import { GameEvent } from '../../shared/events.model';
 
 declare const window: any;
 
@@ -10,10 +10,9 @@ export class LoginScene {
     public loginForm: HTMLFormElement;
     public input: HTMLInputElement;
     public button: HTMLButtonElement;
-    private name: any;
 
     constructor() {
-        this.createForm()
+        this.createForm();
     }
 
     private createForm() {
@@ -51,7 +50,7 @@ export class LoginScene {
         e.preventDefault();
         this.toggleLogin();
         const name = this.input.value;
-        window.socket.emit(GameEvent.authentication, {name}, {
+        window.socket.emit(GameEvent.authentication, { name }, {
             x: window.innerWidth,
             y: window.innerHeight
         });

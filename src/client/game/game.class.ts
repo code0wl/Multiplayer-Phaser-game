@@ -7,6 +7,7 @@ import { Player } from '../actors/player/player.class';
 import { Projectile } from '../props/powers/projectile/projectile.class';
 import { LoginScene } from '../scenes/login';
 import { Asteroid } from '../props/asteroid/asteroid.class';
+import * as Phaser from 'phaser-ce';
 
 declare const window: any;
 

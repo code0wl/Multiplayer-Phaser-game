@@ -8,7 +8,7 @@ export class Hud {
         this.style = {
             font: '10px Arial',
             fill: '#ffffff'
-        }
+        };
     }
 
     public setName(game, player): void {

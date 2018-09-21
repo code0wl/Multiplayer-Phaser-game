@@ -1,4 +1,5 @@
-import {Particle} from '../../particle/particle.class';
+import * as Phaser from 'phaser-ce';
+import { Particle } from '../../particle/particle.class';
 
 export class Pickup {
 

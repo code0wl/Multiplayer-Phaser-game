@@ -1,5 +1,5 @@
-import {Pickup} from '../pickup/pickup.class';
-import {Particle} from '../../particle/particle.class';
+import { Pickup } from '../pickup/pickup.class';
+import { Particle } from '../../particle/particle.class';
 
 export class Projectile {
     public weapon: Phaser.Weapon;
