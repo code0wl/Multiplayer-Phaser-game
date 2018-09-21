@@ -1,5 +1,5 @@
-import {Player} from '../actors/player/player.class';
-import {Controls} from './keyboard.model';
+import { Player } from '../actors/player/player.class';
+import { Controls } from './keyboard.model';
 
 export class KeyBoardControl {
     public gameControls: Controls;
@@ -8,7 +8,7 @@ export class KeyBoardControl {
         this.gameControls = {
             cursors: this.gameInstance.input.keyboard.createCursorKeys(),
             fireWeapon: this.gameInstance.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR)
-        }
+        };
     }
 
     public update(): void {

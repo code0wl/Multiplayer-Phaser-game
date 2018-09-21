@@ -1,12 +1,12 @@
-import {KeyBoardControl} from '../../controls/keyboard.class';
-import {Projectile} from '../../props/powers/projectile/projectile.class';
-import {Hud} from '../../hud/hud.class';
-import {Particle} from '../../props/particle/particle.class';
-import {SpaceShip} from '../../../shared/models';
-import {Explode} from '../../props/explosion/explosion.class';
+import { KeyBoardControl } from '../../controls/keyboard.class';
+import { Projectile } from '../../props/powers/projectile/projectile.class';
+import { Hud } from '../../hud/hud.class';
+import { Particle } from '../../props/particle/particle.class';
+import { SpaceShip } from '../../../shared/models';
+import { Explode } from '../../props/explosion/explosion.class';
 
 export class Player {
-    public player: Phaser.Sprite;
+    public player: Phaser.Sprite & { id: string };
     public projectile: Projectile;
     public controls: KeyBoardControl;
     public playerState: Map<string, boolean | number>;

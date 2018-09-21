@@ -6,7 +6,7 @@
   "scripts": {
     "precommit": "tslint -c tslint.json 'src/**/*.ts'",
     "start:dev": "webpack -w --env=dev & tsc -w --noEmit src/server/server & nodemon src/server/server",
-    "build:release": "webpack --env=prod",
+    "build:release": "webpack --env=prod --optimize-minimize",
     "prestart": "npm i",
     "start": "webpack --env=dev && node ./src/server/server.js"
   },
