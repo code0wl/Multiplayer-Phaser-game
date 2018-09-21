@@ -1,10 +1,10 @@
-import {Explode} from '../explosion/explosion.class';
+import { Explode } from '../explosion/explosion.class';
 
 export class Asteroid {
 
-    public asteroid: Phaser.Sprite;
+    public asteroid: Phaser.Sprite & { id: number };
 
-    constructor(private gameInstance, public cometInstance) {
+    constructor(private readonly gameInstance, public cometInstance) {
         this.gameInstance = gameInstance;
         this.asteroid = gameInstance.add.sprite(0, -128, 'asteroid');
         this.asteroid.animations.add('asteroid');
