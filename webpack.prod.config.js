@@ -1,20 +1,20 @@
-const path = require('path');
-const webpack = require('webpack');
+const path = require("path");
+const webpack = require("webpack");
 
 module.exports = {
-    entry: './main',
+    entry: "./main",
     output: {
-        path: path.resolve(__dirname, 'public/dist'),
-        filename: 'bundle.js'
+        path: path.resolve(__dirname, "public/dist"),
+        filename: "bundle.js"
     },
     resolve: {
-        extensions: ['.ts', '.js']
+        extensions: [".ts", ".js"]
     },
     module: {
         rules: [
             {
                 test: /\.ts?$/,
-                loader: 'awesome-typescript-loader',
+                loader: "awesome-typescript-loader",
                 exclude: [
                     path.resolve(__dirname, "typings"),
                     path.resolve(__dirname, "node_modules")
@@ -25,7 +25,5 @@ module.exports = {
             }
         ]
     },
-    plugins: [
-        new webpack.optimize.UglifyJsPlugin()
-    ]
+    plugins: [new webpack.optimize.UglifyJsPlugin()]
 };
