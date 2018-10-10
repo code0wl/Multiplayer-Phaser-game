@@ -1,20 +1,19 @@
-import {GameEvent, PlayerEvent, ServerEvent} from './../shared/events.model';
-import {SpaceShip} from '../shared/models';
+import { GameEvent, PlayerEvent, ServerEvent } from "./../shared/events.model";
+import { SpaceShip } from "../shared/model";
 import Socket = SocketIO.Socket;
-const express = require('express');
+const express = require("express");
 const app = express();
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
-const uuid = require('uuid');
+const http = require("http").Server(app);
+const io = require("socket.io")(http);
+const uuid = require("uuid");
 
-app.use(express.static('public'));
+app.use(express.static("public"));
 
-app.get('/', (req, res) => {
+app.get("/", (req, res) => {
     res.sendfile(`./index.html`);
 });
 
 class GameServer {
-
     // A simple boolean to detect if the game has been already started
     private dirtyFlag: boolean = false;
 
@@ -46,7 +45,7 @@ class GameServer {
         // If the player has been hit, we a player hit event including the
         // player id, notifying the others that this specific player has
         // been struck
-        socket.on(PlayerEvent.hit, (playerId) => {
+        socket.on(PlayerEvent.hit, playerId => {
             socket.broadcast.emit(PlayerEvent.hit, playerId);
         });
     }
@@ -59,7 +58,10 @@ class GameServer {
             // Generate pickup loot on every 10 seconds so the players can
             // replenish their ammo
             setInterval(() => {
-                const coordinates = {x: Math.floor(Math.random() * 1024) + 1, y: Math.floor(Math.random() * 768) + 1};
+                const coordinates = {
+                    x: Math.floor(Math.random() * 1024) + 1,
+                    y: Math.floor(Math.random() * 768) + 1
+                };
                 socket.emit(GameEvent.drop, coordinates);
                 socket.broadcast.emit(GameEvent.drop, coordinates);
             }, 10000);
@@ -67,10 +69,9 @@ class GameServer {
     }
 
     private addPickupListener(socket) {
-
         // If the player picks up an item. Emit the pickup event to notify
         // the frontend
-        socket.on(PlayerEvent.pickup, (player) => {
+        socket.on(PlayerEvent.pickup, player => {
             socket.player.ammo = player.ammo;
             socket.broadcast.emit(PlayerEvent.pickup, player.uuid);
         });
@@ -78,8 +79,11 @@ class GameServer {
 
     private addMovementListener(socket) {
         // Keep track of the player positions
-        socket.on(PlayerEvent.coordinates, (coors) => {
-            socket.broadcast.emit(PlayerEvent.coordinates, {coors: coors, player: socket.player});
+        socket.on(PlayerEvent.coordinates, coors => {
+            socket.broadcast.emit(PlayerEvent.coordinates, {
+                coors: coors,
+                player: socket.player
+            });
         });
     }
 
@@ -103,7 +107,11 @@ class GameServer {
         });
     }
 
-    private createPlayer(socket, player: SpaceShip, windowSize: { x, y }): void {
+    private createPlayer(
+        socket,
+        player: SpaceShip,
+        windowSize: { x; y }
+    ): void {
         // here is where the magic happens. We create a new player and add
         // the following properties to her
         socket.player = {
@@ -124,7 +132,7 @@ class GameServer {
         // We need a way to notify all of the players. Using this method we
         // can always get all of the current players logged into our session
         const players = [];
-        Object.keys(io.sockets.connected).map((socketID) => {
+        Object.keys(io.sockets.connected).map(socketID => {
             const player = io.sockets.connected[socketID].player;
             if (player) {
                 players.push(player);
