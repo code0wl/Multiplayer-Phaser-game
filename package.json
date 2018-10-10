@@ -8,7 +8,7 @@
     "lint": "tslint -c tslint.json -p .",
     "start:dev": "webpack -w --env=dev & tsc -w --noEmit src/server/server & nodemon src/server/server",
     "build:release": "webpack --env=prod --optimize-minimize",
-    "prestart": "npm i",
+    "prestart": "npm i && tsc --skipLibCheck --noEmitOnError",
     "start": "webpack --env=dev && node ./src/server/server.js"
   },
   "repository": {
