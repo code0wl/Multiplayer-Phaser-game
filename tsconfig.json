@@ -2,11 +2,8 @@
     "compilerOptions": {
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-        "lib": [
-            "es2015",
-            "dom"
-        ],
-        "module": "es2015",
+        "lib": ["es2015", "dom"],
+        "module": "commonjs",
         "noEmitOnError": true,
         "moduleResolution": "node",
         "noImplicitAny": false,
@@ -14,8 +11,6 @@
         "suppressImplicitAnyIndexErrors": true,
         "target": "es5"
     },
-    "exclude": [
-        "node_modules",
-        "*.spec.ts"
-    ]
+    "include": ["src"],
+    "exclude": ["node_modules", "*.spec.ts"]
 }
