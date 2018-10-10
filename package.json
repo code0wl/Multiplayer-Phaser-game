@@ -1,54 +1,54 @@
 {
-  "name": "Multiplayer-game",
-  "version": "1.0.0",
-  "description": "Simple multiplayer using socket.io, phaser and typescript",
-  "main": "index.js",
-  "scripts": {
-    "precommit": "npm run lint",
-    "lint": "tslint -c tslint.json -p .",
-    "start:dev": "webpack -w --env=dev & tsc -w --noEmit src/server/server & nodemon src/server/server",
-    "build:release": "webpack --env=prod --optimize-minimize",
-    "prestart": "npm i && tsc --skipLibCheck",
-    "start": "webpack --env=dev && node ./src/server/server.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/code0wl/Multiplayer-Phaser-game.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/code0wl/Multiplayer-Phaser-game/issues"
-  },
-  "homepage": "https://github.com/code0wl/Multiplayer-Phaser-game#readme",
-  "dependencies": {
-    "express": "4.16.3",
-    "phaser-ce": "^2.11.0",
-    "socket.io": "^2.1.1",
-    "socket.io-client": "^2.1.1",
-    "uuid": "^3.3.2",
-    "whatwg-fetch": "^3.0.0"
-  },
-  "devDependencies": {
-    "@types/pixi.js": "^4.8.1",
-    "@types/socket.io": "^1.4.38",
-    "@types/socket.io-client": "^1.4.32",
-    "@types/uuid": "^3.4.4",
-    "awesome-typescript-loader": "^5.2.1",
-    "chrome-launcher": "^0.10.4",
-    "extract-text-webpack-plugin": "^3.0.2",
-    "fs-access": "^1.0.1",
-    "graceful-readlink": "^1.0.1",
-    "husky": "^0.14.3",
-    "ignore-loader": "^0.1.2",
-    "nodemon": "^1.18.4",
-    "npm": "^6.4.1",
-    "resolve": "^1.8.1",
-    "ts-loader": "^5.1.1",
-    "tslint": "^5.11.0",
-    "typescript": "^3.0.3",
-    "webpack": "^4.19.1",
-    "webpack-cli": "^3.1.0",
-    "webpack-dev-server": "^3.1.8"
-  }
+    "name": "Multiplayer-game",
+    "version": "1.0.0",
+    "description": "Simple multiplayer using socket.io, phaser and typescript",
+    "main": "index.js",
+    "scripts": {
+        "precommit": "npm run lint",
+        "lint": "tslint -c tslint.json -p .",
+        "start:dev": "webpack -w --env=dev & tsc -w --noEmit src/server/server & nodemon src/server/server",
+        "build:release": "webpack --env=prod --optimize-minimize",
+        "prestart": "npm i && tsc --skipLibCheck --noEmitOnError",
+        "start": "webpack --env=dev && node ./src/server/server.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/code0wl/Multiplayer-Phaser-game.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/code0wl/Multiplayer-Phaser-game/issues"
+    },
+    "homepage": "https://github.com/code0wl/Multiplayer-Phaser-game#readme",
+    "dependencies": {
+        "express": "4.16.3",
+        "phaser-ce": "^2.11.0",
+        "socket.io": "^2.1.1",
+        "socket.io-client": "^2.1.1",
+        "uuid": "^3.3.2",
+        "whatwg-fetch": "^3.0.0"
+    },
+    "devDependencies": {
+        "@types/pixi.js": "^4.8.1",
+        "@types/socket.io": "^1.4.38",
+        "@types/socket.io-client": "^1.4.32",
+        "@types/uuid": "^3.4.4",
+        "awesome-typescript-loader": "^5.2.1",
+        "chrome-launcher": "^0.10.4",
+        "extract-text-webpack-plugin": "^3.0.2",
+        "fs-access": "^1.0.1",
+        "graceful-readlink": "^1.0.1",
+        "husky": "^0.14.3",
+        "ignore-loader": "^0.1.2",
+        "nodemon": "^1.18.4",
+        "npm": "^6.4.1",
+        "resolve": "^1.8.1",
+        "ts-loader": "^5.1.1",
+        "tslint": "^5.11.0",
+        "typescript": "^3.0.3",
+        "webpack": "^4.19.1",
+        "webpack-cli": "^3.1.0",
+        "webpack-dev-server": "^3.1.8"
+    }
 }

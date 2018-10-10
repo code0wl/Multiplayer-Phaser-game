@@ -1,6 +1,7 @@
 {
+    "defaultSeverity": "off",
     "rulesDirectory": [
-        "./src"
+        "./"
     ],
     "rules": {
         "max-line-length": {
