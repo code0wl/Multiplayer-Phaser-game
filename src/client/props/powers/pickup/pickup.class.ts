@@ -1,15 +1,14 @@
-import * as Phaser from 'phaser-ce';
-import { Particle } from '../../particle/particle.class';
+import { Game, Sprite, Physics } from "phaser-ce";
+import { Coordinates } from "src/shared/models";
+import { Particle } from "src/client/props/particle/particle.class";
 
 export class Pickup {
+    public item: Sprite;
+    public particle: Particle;
 
-    public item: Phaser.Sprite;
-    private particle: Particle;
-
-    constructor(game, coors) {
-        this.item = game.add.sprite(coors.x, coors.y, 'pickup');
-        game.physics.enable(this.item, Phaser.Physics.ARCADE);
+    constructor(game: Game, coors: Coordinates) {
+        this.item = game.add.sprite(coors.x, coors.y, "pickup");
+        game.physics.enable(this.item, Physics.ARCADE);
         this.particle = new Particle(game, this.item);
     }
-
 }

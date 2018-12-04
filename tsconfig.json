@@ -1,20 +1,35 @@
 {
     "compilerOptions": {
         "allowJs": true,
+        "baseUrl": ".",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-        "lib": ["es2015", "dom"],
+        "lib": ["dom", "es2017"],
         "module": "commonjs",
         "noEmitOnError": false,
-        "rootDir": "./src",
         "skipLibCheck": true,
         "moduleResolution": "node",
-        "noImplicitAny": false,
+        "alwaysStrict": true,
+        "noUnusedLocals": true,
+        "noImplicitAny": true,
         "sourceMap": true,
-        "suppressImplicitAnyIndexErrors": true,
         "target": "es5"
     },
-    "files": ["src/server/server.ts"],
+    "paths": {
+        "client/*": ["src/client/*"],
+        "server/*": ["src/server/*"],
+        "shared/*": ["src/shared/*"]
+    },
+    "typeRoots": [
+        "./node_modules/@types",
+        "./node_modules/phaser-ce/typescript/"
+    ],
+    "files": [
+        "src/server/server.ts",
+        "src/shared/events.model.ts",
+        "src/shared/models.ts",
+        "main.ts"
+    ],
     "exclude": ["node_modules", "*.spec.ts"],
     "awesomeTypescriptLoaderOptions": {
         "transpileOnly": true

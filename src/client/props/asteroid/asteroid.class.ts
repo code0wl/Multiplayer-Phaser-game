@@ -1,14 +1,22 @@
-import { Explode } from '../explosion/explosion.class';
+import { Explode } from "../explosion/explosion.class";
+import { Sprite, Game } from "phaser-ce";
 
 export class Asteroid {
+    public asteroid: Sprite & { id: string };
+    public id: string;
 
-    public asteroid: Phaser.Sprite & { id: number };
-
-    constructor(private readonly gameInstance, public cometInstance) {
+    constructor(
+        private readonly gameInstance: Game,
+        public cometInstance: Asteroid
+    ) {
         this.gameInstance = gameInstance;
-        this.asteroid = gameInstance.add.sprite(0, -128, 'asteroid');
-        this.asteroid.animations.add('asteroid');
-        this.asteroid.animations.play('asteroid', 10, true, false);
+        this.asteroid = gameInstance.add.sprite(
+            0,
+            -128,
+            "asteroid"
+        ) as Sprite & { id: string };
+        this.asteroid.animations.add("asteroid");
+        this.asteroid.animations.play("asteroid", 10, true, false);
         this.attachPhysics(gameInstance);
         this.asteroid.destroy = () => {
             new Explode(this.gameInstance, this.asteroid, true);
@@ -21,7 +29,7 @@ export class Asteroid {
         this.asteroid.destroy();
     }
 
-    private attachPhysics(gameInstance): void {
+    private attachPhysics(gameInstance: Phaser.Game): void {
         gameInstance.physics.enable(this.asteroid, Phaser.Physics.ARCADE);
         this.asteroid.body.collideWorldBounds = false;
         this.asteroid.body.bounce.setTo(0);

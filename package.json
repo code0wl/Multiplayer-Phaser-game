@@ -7,7 +7,7 @@
         "precommit": "npm run lint",
         "lint": "tslint -c tslint.json -p .",
         "start:dev": "webpack -w --env=dev & tsc -w --noEmit src/server/server & nodemon src/server/server",
-        "build:release": "webpack --env=prod --optimize-minimize",
+        "build:release": "webpack --env=dev --optimize-minimize",
         "prestart": "npm i && tsc -p ./",
         "start": "webpack --env=dev && node ./src/server/server.js"
     },
@@ -30,6 +30,7 @@
         "whatwg-fetch": "^3.0.0"
     },
     "devDependencies": {
+        "@types/express": "^4.16.0",
         "@types/pixi.js": "^4.8.4",
         "@types/socket.io": "^1.4.39",
         "@types/socket.io-client": "^1.4.32",
@@ -43,6 +44,7 @@
         "ignore-loader": "^0.1.2",
         "nodemon": "^1.18.7",
         "npm": "^6.4.1",
+        "prettier": "^1.15.3",
         "resolve": "^1.8.1",
         "ts-loader": "^5.3.1",
         "tslint": "^5.11.0",

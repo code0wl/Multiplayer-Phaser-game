@@ -1,3 +1,4 @@
 module.exports = function(env) {
-    return require(`./webpack.${env}.config.js`)
+    // you may extend to other env to produce a production build for example
+    return require(`./webpack.${env}.config.js`);
 };

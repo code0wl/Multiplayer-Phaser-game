@@ -1,25 +1,26 @@
+import { Socket } from "socket.io";
+import { Request, Response } from "express";
+import { DomainSocket, Player, SpaceShip, Coordinates } from "../shared/models";
 import {
+    ServerEvent,
     CometEvent,
     GameEvent,
     PlayerEvent,
-    ServerEvent
-} from './../shared/events.model';
-import {SpaceShip} from '../shared/models';
+} from "../shared/events.model";
 
-const express = require('express');
+const express = require("express");
 const app = express();
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
-const uuid = require('uuid');
+const http = require("http").Server(app);
+const io = require("socket.io")(http);
+const uuid = require("uuid");
 
-app.use(express.static('public'));
+app.use(express.static("public"));
 
-app.get('/', (req, res) => {
-    res.sendfile(`./index.html`);
+app.get("/", (req: Request, res: Response) => {
+    res.sendfile('./index.html');
 });
 
 class GameServer {
-
     private gameHasStarted: boolean = false;
     private hasComet: boolean = false;
 
@@ -27,19 +28,19 @@ class GameServer {
         this.socketEvents();
     }
 
-    public connect(port): void {
+    public connect(port: number): void {
         http.listen(port, () => {
             console.info(`Listening on port ${port}`);
         });
     }
 
     private socketEvents(): void {
-        io.on(ServerEvent.connected, socket => {
+        io.on(ServerEvent.connected, (socket: DomainSocket) => {
             this.attachListeners(socket);
         });
     }
 
-    private attachListeners(socket): void {
+    private attachListeners(socket: DomainSocket): void {
         this.addSignOnListener(socket);
         this.addMovementListener(socket);
         this.addSignOutListener(socket);
@@ -48,27 +49,34 @@ class GameServer {
         this.addPickupListener(socket);
     }
 
-    private addHitListener(socket): void {
-        socket.on(PlayerEvent.hit, (playerId) => {
+    private addHitListener(socket: Socket): void {
+        socket.on(PlayerEvent.hit, (playerId: string) => {
             socket.broadcast.emit(PlayerEvent.hit, playerId);
         });
     }
 
-    private updateComet(socket) {
+    private updateComet(socket: Socket) {
         if (this.hasComet) {
             let asteroidCoordinates = this.generateRandomCoordinates();
             asteroidCoordinates.y = -128;
-            const update = setInterval(() => {
+            const update: NodeJS.Timer = setInterval(() => {
                 asteroidCoordinates.y += 1;
                 asteroidCoordinates.x -= 1;
                 socket.emit(CometEvent.coordinates, asteroidCoordinates);
-                socket.broadcast.emit(CometEvent.coordinates, asteroidCoordinates);
-                this.destroyComet(asteroidCoordinates, socket, update)
+                socket.broadcast.emit(
+                    CometEvent.coordinates,
+                    asteroidCoordinates
+                );
+                this.destroyComet(asteroidCoordinates, socket, update);
             }, 25);
         }
     }
 
-    private destroyComet(asteroidCoordinates, socket, update): void {
+    private destroyComet(
+        asteroidCoordinates: Coordinates,
+        socket: Socket,
+        update: NodeJS.Timer
+    ): void {
         if (asteroidCoordinates.x < -128) {
             socket.emit(CometEvent.destroy);
             socket.broadcast.emit(CometEvent.destroy);
@@ -77,13 +85,13 @@ class GameServer {
         }
     }
 
-    private addCometHitListener(socket): void {
-        socket.on(CometEvent.hit, (playerId) => {
+    private addCometHitListener(socket: Socket): void {
+        socket.on(CometEvent.hit, (playerId: string) => {
             socket.broadcast.emit(CometEvent.hit, playerId);
         });
     }
 
-    private gameInitialised(socket): void {
+    private gameInitialised(socket: DomainSocket): void {
         if (!this.gameHasStarted) {
             this.gameHasStarted = true;
             this.createComet(socket, 1000);
@@ -91,7 +99,7 @@ class GameServer {
         }
     }
 
-    private calcPickupCoordinates(socket, interval: number) {
+    private calcPickupCoordinates(socket: Socket, interval: number) {
         setInterval(() => {
             const coordinates = this.generateRandomCoordinates();
             socket.emit(GameEvent.drop, coordinates);
@@ -99,11 +107,11 @@ class GameServer {
         }, interval);
     }
 
-    private createComet(socket, interval: number) {
+    private createComet(socket: DomainSocket, interval: number) {
         setInterval(() => {
             if (!this.hasComet) {
                 socket.comet = {
-                    id: uuid()
+                    id: uuid(),
                 };
                 this.hasComet = true;
                 socket.emit(CometEvent.create, socket.comet);
@@ -113,23 +121,23 @@ class GameServer {
         }, interval);
     }
 
-    private addPickupListener(socket): void {
-        socket.on(PlayerEvent.pickup, (player) => {
+    private addPickupListener(socket: DomainSocket): void {
+        socket.on(PlayerEvent.pickup, (player: Player) => {
             socket.player.ammo = player.ammo;
             socket.broadcast.emit(PlayerEvent.pickup, player.uuid);
         });
     }
 
-    private addMovementListener(socket): void {
-        socket.on(PlayerEvent.coordinates, (coors) => {
+    private addMovementListener(socket: DomainSocket): void {
+        socket.on(PlayerEvent.coordinates, (coors: Coordinates) => {
             socket.broadcast.emit(PlayerEvent.coordinates, {
                 coors: coors,
-                player: socket.player
+                player: socket.player,
             });
         });
     }
 
-    private addSignOutListener(socket): void {
+    private addSignOutListener(socket: DomainSocket): void {
         socket.on(ServerEvent.disconnected, () => {
             if (socket.player) {
                 socket.broadcast.emit(PlayerEvent.quit, socket.player.id);
@@ -137,49 +145,51 @@ class GameServer {
         });
     }
 
-    private addSignOnListener(socket): void {
-        socket.on(GameEvent.authentication, (player, gameSize) => {
-            socket.emit(PlayerEvent.players, this.getAllPlayers());
-            this.createPlayer(socket, player, gameSize);
-            socket.emit(PlayerEvent.protagonist, socket.player);
-            socket.broadcast.emit(PlayerEvent.joined, socket.player);
-            this.gameInitialised(socket);
-        });
+    private addSignOnListener(socket: DomainSocket): void {
+        socket.on(
+            GameEvent.authentication,
+            (player: Player, gameSize: Coordinates) => {
+                socket.emit(PlayerEvent.players, this.getAllPlayers());
+                this.createPlayer(socket, player, gameSize);
+                socket.emit(PlayerEvent.protagonist, socket.player);
+                socket.broadcast.emit(PlayerEvent.joined, socket.player);
+                this.gameInitialised(socket);
+            }
+        );
     }
 
-    private createPlayer(socket, player: SpaceShip, windowSize: { x, y }): void {
+    private createPlayer(
+        socket: DomainSocket,
+        player: Player,
+        windowSize: Coordinates
+    ): void {
         socket.player = {
             name: player.name,
             id: uuid(),
             ammo: 0,
+            y: this.randomInt(0, windowSize.y),
             x: this.randomInt(0, windowSize.x),
-            y: this.randomInt(0, windowSize.y)
         };
-    }
-
-    private get players(): number {
-        return Object.keys(io.sockets.connected).length;
     }
 
     private getAllPlayers(): Array<SpaceShip> {
-        const players = [];
-        Object.keys(io.sockets.connected).map((socketID) => {
+        return Object.keys(io.sockets.connected).reduce((acc, socketID) => {
             const player = io.sockets.connected[socketID].player;
             if (player) {
-                players.push(player);
+                acc.push(player);
             }
-        });
-        return players;
+            return acc;
+        }, []);
     }
 
-    private generateRandomCoordinates(): { x: number, y: number } {
+    private generateRandomCoordinates(): { x: number; y: number } {
         return {
             x: Math.floor(Math.random() * 1024) + 1,
-            y: Math.floor(Math.random() * 768) + 1
+            y: Math.floor(Math.random() * 768) + 1,
         };
     }
 
-    private randomInt(low, high): number {
+    private randomInt(low: number, high: number): number {
         return Math.floor(Math.random() * (high - low) + low);
     }
 }
