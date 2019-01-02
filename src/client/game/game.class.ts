@@ -91,8 +91,8 @@ export class Game {
 
         window.socket.on(PlayerEvent.hit, (enemyId: string) => {
             this.actors
-                .filter(actor => this.actor.player.id === enemyId)
-                .map(actor => window.location.reload());
+                .filter(() => this.actor.player.id === enemyId)
+                .map(() => window.location.reload(true));
         });
 
         window.socket.on(PlayerEvent.pickup, (playerId: string) => {
@@ -136,7 +136,7 @@ export class Game {
                         actor.destroy();
                         window.socket.emit(PlayerEvent.hit, actor.id);
                     } else {
-                        window.location.reload();
+                        window.location.reload(true);
                     }
                 }
             );
