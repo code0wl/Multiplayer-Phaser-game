@@ -38,7 +38,7 @@ export interface Player {
 export interface Window {
     socket: SocketIOClient.Emitter;
     location: {
-        reload(): void;
+        reload(forceReload: boolean): void;
     };
     innerHeight: number;
     innerWidth: number;
