@@ -6,10 +6,11 @@
     "scripts": {
         "precommit": "npm run lint",
         "lint": "tslint -c tslint.json -p .",
-        "start:dev": "webpack -w --env=dev & tsc -w --noEmit src/server/server & nodemon src/server/server",
+        "prestart:dev": "npm run prestart",
+        "start:dev": "webpack -w & tsc -w --noEmit src/server/server & nodemon src/server/server.js",
         "build:release": "webpack --env=dev --optimize-minimize",
         "prestart": "npm i && tsc -p ./",
-        "start": "webpack --env=dev && node ./src/server/server.js"
+        "start": "webpack && node ./src/server/server.js"
     },
     "repository": {
         "type": "git",
@@ -51,6 +52,6 @@
         "typescript": "^3.2.1",
         "webpack": "^4.26.1",
         "webpack-cli": "^3.1.2",
-        "webpack-dev-server": "^3.1.10"
+        "webpack-livereload-plugin": "^2.2.0"
     }
 }
