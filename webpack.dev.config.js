@@ -1,6 +1,7 @@
 const path = require("path");
 const tsconfig = require("./tsconfig.json");
 const { TsConfigPathsPlugin } = require("awesome-typescript-loader");
+const LiveReloadPlugin = require("webpack-livereload-plugin");
 
 module.exports = {
     entry: "./main",
@@ -8,10 +9,18 @@ module.exports = {
         path: path.resolve(__dirname, "public/dist"),
         filename: "bundle.js",
     },
+    mode: "development",
     resolve: {
         extensions: [".ts", ".js"],
         plugins: [new TsConfigPathsPlugin()],
     },
+    plugins: [
+        new LiveReloadPlugin({
+            port: 9000,
+            hostname: "localhost",
+            protocol: "http",
+        }),
+    ],
     module: {
         rules: [
             {

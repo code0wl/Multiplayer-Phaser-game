@@ -1,4 +1,3 @@
-module.exports = function(env) {
+module.exports = (env = "dev") =>
     // you may extend to other env to produce a production build for example
-    return require(`./webpack.${env}.config.js`);
-};
+    require(`./webpack.${env}.config.js`);
