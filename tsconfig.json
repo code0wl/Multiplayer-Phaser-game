@@ -28,7 +28,8 @@
         "src/server/server.ts",
         "src/shared/events.model.ts",
         "src/shared/models.ts",
-        "main.ts"
+        "main.ts",
+        "./node_modules/phaser-ce/typescript/phaser.comments.d.ts"
     ],
     "exclude": ["node_modules", "*.spec.ts"],
     "awesomeTypescriptLoaderOptions": {
