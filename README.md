@@ -24,7 +24,7 @@ npm start
 ```
 
 ## Known issues
-Currently when a ship gets destroyed, the window just refreshes with `window.reload()`. Updating this code with `window.reload(true)` will fix the issue where the reload causes just a black screen to appear. This forces the browser to reload all assets instead of partially reloading them, which in turn fixes the bug. This branch includes the fix, but in the book the issue is still there.
+1. Currently when a ship gets destroyed, the window just refreshes with `location.reload()`. Updating this code with `location.reload(true)` will fix the issue where the reload causes just a black screen to appear. This forces the browser to reload all assets instead of partially reloading them, which in turn fixes the bug. This branch includes the fix, but in the book the issue is still there.
 
 # Multiplayer functionality
 If you are running on a local server on your computer, opening a second browser window and visiting the same localhost port (3000) will simulate the multiplayer functionality.
