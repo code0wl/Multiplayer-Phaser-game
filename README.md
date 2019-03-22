@@ -27,9 +27,14 @@ npm start
 
 ## Known issues
 1. Currently when a ship gets destroyed, the window just refreshes with `location.reload()`. Updating this code with `location.reload(true)` will fix the issue where the reload causes just a black screen to appear. This forces the browser to reload all assets instead of partially reloading them, which in turn fixes the bug. This branch includes the fix, but in the book the issue is still there.
+2. "Listing 4-16. src/client/controls/keyboard.model.ts" should be "src/client/controls/keyboard.class.ts"
+3. "Listing 5-2 player.class.ts" should be "game.class.ts"
 
 # Multiplayer functionality
 If you are running on a local server on your computer, opening a second browser window and visiting the same `localhost` port (3000) will simulate the multi-player functionality.
 
 ## Issues
 No project is without issues. Since this is associated with a printed book. The book sadly cannot fix any encountered issues. If encountered. Please mention the issues associated with this [github repo](https://github.com/code0wl/Multiplayer-Phaser-game/issues). I will then drop anything I am doing to assist as best I can! Thank you for your support and for giving me the opportunity to write something for you.
+
+## Special Thanks
+@csajedi who has helped identify the listing issues in the book. The PDF will be updated accordingly.
