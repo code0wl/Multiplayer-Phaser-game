@@ -18,14 +18,12 @@ PS. this process could take up to a minute. This is because the nodejs installat
 docker run -p 80:3000 -d test/chapter7
 ```
 
-## Check your ip tables to verify which port is connected to which IP
-
-Check under Chain DOCKER section which should have at least one reference
-
-Might vary depending on OS
+## Identify the port used
 
 ```bash
-sudo iptables -t nat -L -n
+docker ps
 ```
 
-For my instance I had to run it on `172.17.0.2:3000`
+For my instance I had to run it on `0.0.0.0:80`
+
+Opening the browser using the normal http protocol should display the game at the chapter 7 state.
