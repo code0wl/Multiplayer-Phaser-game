@@ -44,7 +44,7 @@
         "husky": "^0.14.3",
         "ignore-loader": "^0.1.2",
         "nodemon": "^1.18.7",
-        "npm": "^6.4.1",
+        "npm": "^6.13.4",
         "prettier": "^1.15.3",
         "resolve": "^1.8.1",
         "ts-loader": "^5.3.1",
