@@ -1,7 +1,5 @@
 # Multiplayer Phaser Game
 
-## Currently rewriting this project to Phaser 3 and latest TypeScript. The rewrite will be hosted on a different repo and will be available soon.
-
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b1f5cc255c5f40b4a1dcc6f0431447a5)](https://www.codacy.com/app/o.lodriguez/Multiplayer-Phaser-game?utm_source=github.com&utm_medium=referral&utm_content=code0wl/Multiplayer-Phaser-game&utm_campaign=badger)
 [![Build Status](https://travis-ci.org/code0wl/Multiplayer-Phaser-game.svg?branch=develop)](https://travis-ci.org/code0wl/Multiplayer-Phaser-game)
 
