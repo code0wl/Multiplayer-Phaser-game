@@ -2,7 +2,7 @@
 
 [Phaser 3](https://github.com/photonstorm/phaser) is out and [Phaser 4](https://github.com/phaserjs/phaser4) is in the works. This project is based on [Phaser CE](https://github.com/photonstorm/phaser-ce). Due to the ever changing nature of the Phaser projects, keeping up with the changes might mean a complete rewrite every 4-5 months. The structure and patterns would stay in place, but the major changes come from the Phaser api changes.
 
-I will be writing a book on Phaser 4 in the near future as soon as it's stable, and thus initially skipping Phaser 3 altogther.
+I will be writing a book on Phaser 4 in the near future as soon as it's stable, and thus initially skipping Phaser 3 altogether.
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b1f5cc255c5f40b4a1dcc6f0431447a5)](https://www.codacy.com/app/o.lodriguez/Multiplayer-Phaser-game?utm_source=github.com&utm_medium=referral&utm_content=code0wl/Multiplayer-Phaser-game&utm_campaign=badger)
 [![Build Status](https://travis-ci.org/code0wl/Multiplayer-Phaser-game.svg?branch=develop)](https://travis-ci.org/code0wl/Multiplayer-Phaser-game)
