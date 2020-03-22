@@ -9,7 +9,7 @@ I Will be writing a book on Phaser 4 in the near future as soon as it's stable, 
 
 [![Apress book](https://images-na.ssl-images-amazon.com/images/I/41rqssFcz6L._SX327_BO1,204,203,200_.jpg)](https://www.apress.com/gp/book/9781484242483)
 
-# Use great technologies
+## Use great technologies
 
 Such as TypeScript, Phaser and socket.io to create a fun little multi-player
 game that can entertain you and your friends for a minute or two.
@@ -35,7 +35,7 @@ npm start
 2. "Listing 4-16. src/client/controls/keyboard.model.ts" should be "src/client/controls/keyboard.class.ts"
 3. "Listing 5-2 player.class.ts" should be "game.class.ts"
 
-# Multiplayer functionality
+## Multiplayer functionality
 
 If you are running on a local server on your computer, opening a second browser window and visiting the same `localhost` port (3000) will simulate the multi-player functionality.
 
