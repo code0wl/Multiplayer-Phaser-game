@@ -25,7 +25,7 @@
     "dependencies": {
         "express": "4.16.3",
         "phaser-ce": "^2.15.0",
-        "socket.io": "^2.4.0",
+        "socket.io": "^2.5.0",
         "socket.io-client": "^2.2.0",
         "uuid": "^3.3.2",
         "whatwg-fetch": "^3.0.0"
