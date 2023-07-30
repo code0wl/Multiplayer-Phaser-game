@@ -19,8 +19,6 @@ create a modern multi-player spaceship shooter!
 
 [The book is found here on Apress](https://www.apress.com/gp/book/9781484242483)
 
-[A Live preview of the game is available](http://codeowl.tech/game)
-
 Once you have forked or downloaded this repository you can start it with the following command
 
 ## How to run a preview
